@@ -9,8 +9,8 @@ const client = new InflushipAPI({
 
 describe('resource match', () => {
   // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.match.create({
+  test.skip('analyze: only required params', async () => {
+    const responsePromise = client.match.analyze({
       creators: [{ id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' }],
       search_intent: { query: 'fitness brand looking for micro-influencers' },
     });
@@ -24,8 +24,8 @@ describe('resource match', () => {
   });
 
   // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.match.create({
+  test.skip('analyze: required and optional params', async () => {
+    const response = await client.match.analyze({
       creators: [{ id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', platform: 'instagram' }],
       search_intent: { query: 'fitness brand looking for micro-influencers', context: 'context' },
     });

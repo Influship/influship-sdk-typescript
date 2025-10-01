@@ -6,14 +6,14 @@ export { Metadata, Endpoint, HandlerFunction };
 
 import check_health from './health/check-health';
 import find_creators_search from './search/find-creators-search';
-import list_creators from './creators/list-creators';
+import retrieve_creators from './creators/retrieve-creators';
 import autocomplete_creators from './creators/autocomplete-creators';
-import retrieve_profiles_creators from './creators/retrieve-profiles-creators';
-import create_profiles from './profiles/create-profiles';
+import list_profiles_creators from './creators/list-profiles-creators';
+import lookup_profiles from './profiles/lookup-profiles';
 import find_similar_creators_lookalike from './lookalike/find-similar-creators-lookalike';
 import analyze_posts from './posts/analyze-posts';
 import list_by_creator_posts from './posts/list-by-creator-posts';
-import create_match from './match/create-match';
+import analyze_match from './match/analyze-match';
 import analyze_creators_brand_safety from './brand-safety/analyze-creators-brand-safety';
 import analyze_posts_brand_safety from './brand-safety/analyze-posts-brand-safety';
 import analyze_profiles_brand_safety from './brand-safety/analyze-profiles-brand-safety';
@@ -26,14 +26,14 @@ function addEndpoint(endpoint: Endpoint) {
 
 addEndpoint(check_health);
 addEndpoint(find_creators_search);
-addEndpoint(list_creators);
+addEndpoint(retrieve_creators);
 addEndpoint(autocomplete_creators);
-addEndpoint(retrieve_profiles_creators);
-addEndpoint(create_profiles);
+addEndpoint(list_profiles_creators);
+addEndpoint(lookup_profiles);
 addEndpoint(find_similar_creators_lookalike);
 addEndpoint(analyze_posts);
 addEndpoint(list_by_creator_posts);
-addEndpoint(create_match);
+addEndpoint(analyze_match);
 addEndpoint(analyze_creators_brand_safety);
 addEndpoint(analyze_posts_brand_safety);
 addEndpoint(analyze_profiles_brand_safety);
