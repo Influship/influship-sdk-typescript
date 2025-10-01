@@ -16,7 +16,7 @@ export class Match extends APIResource {
    *
    * **Pricing**: 0.1 credits per creator analyzed
    */
-  create(body: MatchCreateParams, options?: RequestOptions): APIPromise<MatchCreateResponse> {
+  analyze(body: MatchAnalyzeParams, options?: RequestOptions): APIPromise<MatchAnalyzeResponse> {
     return this._client.post('/v1/match', { body, ...options });
   }
 }
@@ -33,67 +33,65 @@ export interface CreatorReferenceByID {
   platform?: 'instagram';
 }
 
-export interface MatchCreateResponse {
-  items?: Array<MatchCreateResponse.Item>;
+export interface MatchResult {
+  creator?: MatchResult.Creator;
+
+  /**
+   * AI recommendation decision:
+   *
+   * - `good`: Strong fit for the campaign, recommended
+   * - `neutral`: Acceptable fit, evaluate based on other factors
+   * - `avoid`: Not recommended for this campaign
+   */
+  decision?: 'good' | 'neutral' | 'avoid';
+
+  /**
+   * Array of specific evidence supporting the match decision. Includes relevant
+   * content examples and audience insights.
+   */
+  evidence?: Array<string>;
+
+  /**
+   * Human-readable explanation of the match assessment. Summarizes why this creator
+   * fits or doesn't fit the campaign.
+   */
+  explanation?: string;
+
+  /**
+   * Match score from 0 to 100 indicating campaign fit.
+   *
+   * - 80-100: Excellent match
+   * - 60-79: Good match
+   * - 40-59: Moderate match
+   * - 0-39: Poor match
+   */
+  match_score?: number;
 }
 
-export namespace MatchCreateResponse {
-  export interface Item {
-    creator?: Item.Creator;
+export namespace MatchResult {
+  export interface Creator {
+    id?: string;
 
-    /**
-     * AI recommendation decision:
-     *
-     * - `good`: Strong fit for the campaign, recommended
-     * - `neutral`: Acceptable fit, evaluate based on other factors
-     * - `avoid`: Not recommended for this campaign
-     */
-    decision?: 'good' | 'neutral' | 'avoid';
+    platform?: 'instagram';
 
-    /**
-     * Array of specific evidence supporting the match decision. Includes relevant
-     * content examples and audience insights.
-     */
-    evidence?: Array<string>;
-
-    /**
-     * Human-readable explanation of the match assessment. Summarizes why this creator
-     * fits or doesn't fit the campaign.
-     */
-    explanation?: string;
-
-    /**
-     * Match score from 0 to 100 indicating campaign fit.
-     *
-     * - 80-100: Excellent match
-     * - 60-79: Good match
-     * - 40-59: Moderate match
-     * - 0-39: Poor match
-     */
-    match_score?: number;
-  }
-
-  export namespace Item {
-    export interface Creator {
-      id?: string;
-
-      platform?: 'instagram';
-
-      username?: string;
-    }
+    username?: string;
   }
 }
 
-export interface MatchCreateParams {
+export interface MatchAnalyzeResponse {
+  items?: Array<MatchResult>;
+}
+
+export interface MatchAnalyzeParams {
   /**
    * Creators to match against campaign. Max 100 creators per request.
    */
   creators: Array<CreatorReferenceByID | ProfilesAPI.CreatorReferenceByHandle>;
 
-  search_intent: MatchCreateParams.SearchIntent;
+  search_intent: MatchAnalyzeParams.SearchIntent;
 }
 
-export namespace MatchCreateParams {
+export namespace MatchAnalyzeParams {
   export interface SearchIntent {
     /**
      * Campaign search intent
@@ -110,7 +108,8 @@ export namespace MatchCreateParams {
 export declare namespace Match {
   export {
     type CreatorReferenceByID as CreatorReferenceByID,
-    type MatchCreateResponse as MatchCreateResponse,
-    type MatchCreateParams as MatchCreateParams,
+    type MatchResult as MatchResult,
+    type MatchAnalyzeResponse as MatchAnalyzeResponse,
+    type MatchAnalyzeParams as MatchAnalyzeParams,
   };
 }

@@ -19,22 +19,25 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   BrandSafety,
+  BrandSafetyAnalysis,
   BrandSafetyAnalyzeCreatorsParams,
   BrandSafetyAnalyzeCreatorsResponse,
   BrandSafetyAnalyzePostsParams,
   BrandSafetyAnalyzePostsResponse,
   BrandSafetyAnalyzeProfilesParams,
   BrandSafetyAnalyzeProfilesResponse,
+  BrandSafetyFlag,
   BrandSafetyResult,
 } from './resources/brand-safety';
 import {
   Creator,
+  CreatorAutocomplete,
   CreatorAutocompleteParams,
   CreatorAutocompleteResponse,
-  CreatorListParams,
-  CreatorListResponse,
-  CreatorRetrieveProfilesParams,
-  CreatorRetrieveProfilesResponse,
+  CreatorListProfilesParams,
+  CreatorListProfilesResponse,
+  CreatorRetrieveParams,
+  CreatorRetrieveResponse,
   Creators,
   SocialAccountDetailed,
   SocialAccountLite,
@@ -46,9 +49,16 @@ import {
   LookalikeFindSimilarCreatorsResponse,
   LookalikeSeedBase,
 } from './resources/lookalike';
-import { CreatorReferenceByID, Match, MatchCreateParams, MatchCreateResponse } from './resources/match';
 import {
-  BrandSafetyAnalysis,
+  CreatorReferenceByID,
+  Match,
+  MatchAnalyzeParams,
+  MatchAnalyzeResponse,
+  MatchResult,
+} from './resources/match';
+import {
+  AIAnalysis,
+  CursorPagination,
   PostAnalysis,
   PostAnalyzeParams,
   PostListByCreatorParams,
@@ -57,8 +67,8 @@ import {
 } from './resources/posts';
 import {
   CreatorReferenceByHandle,
-  ProfileCreateParams,
-  ProfileCreateResponse,
+  ProfileLookupParams,
+  ProfileLookupResponse,
   Profiles,
 } from './resources/profiles';
 import { Search, SearchFindCreatorsParams, SearchFindCreatorsResponse, SearchItem } from './resources/search';
@@ -777,21 +787,22 @@ export declare namespace InflushipAPI {
   export {
     Creators as Creators,
     type Creator as Creator,
+    type CreatorAutocomplete as CreatorAutocomplete,
     type SocialAccountDetailed as SocialAccountDetailed,
     type SocialAccountLite as SocialAccountLite,
-    type CreatorListResponse as CreatorListResponse,
+    type CreatorRetrieveResponse as CreatorRetrieveResponse,
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
-    type CreatorRetrieveProfilesResponse as CreatorRetrieveProfilesResponse,
-    type CreatorListParams as CreatorListParams,
+    type CreatorListProfilesResponse as CreatorListProfilesResponse,
+    type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
-    type CreatorRetrieveProfilesParams as CreatorRetrieveProfilesParams,
+    type CreatorListProfilesParams as CreatorListProfilesParams,
   };
 
   export {
     Profiles as Profiles,
     type CreatorReferenceByHandle as CreatorReferenceByHandle,
-    type ProfileCreateResponse as ProfileCreateResponse,
-    type ProfileCreateParams as ProfileCreateParams,
+    type ProfileLookupResponse as ProfileLookupResponse,
+    type ProfileLookupParams as ProfileLookupParams,
   };
 
   export {
@@ -803,7 +814,8 @@ export declare namespace InflushipAPI {
 
   export {
     Posts as Posts,
-    type BrandSafetyAnalysis as BrandSafetyAnalysis,
+    type AIAnalysis as AIAnalysis,
+    type CursorPagination as CursorPagination,
     type PostAnalysis as PostAnalysis,
     type PostListByCreatorResponse as PostListByCreatorResponse,
     type PostAnalyzeParams as PostAnalyzeParams,
@@ -813,12 +825,15 @@ export declare namespace InflushipAPI {
   export {
     Match as Match,
     type CreatorReferenceByID as CreatorReferenceByID,
-    type MatchCreateResponse as MatchCreateResponse,
-    type MatchCreateParams as MatchCreateParams,
+    type MatchResult as MatchResult,
+    type MatchAnalyzeResponse as MatchAnalyzeResponse,
+    type MatchAnalyzeParams as MatchAnalyzeParams,
   };
 
   export {
     BrandSafety as BrandSafety,
+    type BrandSafetyAnalysis as BrandSafetyAnalysis,
+    type BrandSafetyFlag as BrandSafetyFlag,
     type BrandSafetyResult as BrandSafetyResult,
     type BrandSafetyAnalyzeCreatorsResponse as BrandSafetyAnalyzeCreatorsResponse,
     type BrandSafetyAnalyzePostsResponse as BrandSafetyAnalyzePostsResponse,

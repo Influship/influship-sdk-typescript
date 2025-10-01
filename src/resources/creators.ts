@@ -25,12 +25,12 @@ export class Creators extends APIResource {
    *
    * @example
    * ```ts
-   * const creators = await client.creators.list({
+   * const creator = await client.creators.retrieve({
    *   creator_ids: 'creator_ids',
    * });
    * ```
    */
-  list(query: CreatorListParams, options?: RequestOptions): APIPromise<CreatorListResponse> {
+  retrieve(query: CreatorRetrieveParams, options?: RequestOptions): APIPromise<CreatorRetrieveResponse> {
     return this._client.get('/v1/creators', { query, ...options });
   }
 
@@ -113,16 +113,16 @@ export class Creators extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.creators.retrieveProfiles(
+   * const response = await client.creators.listProfiles(
    *   '123e4567-e89b-12d3-a456-426614174000',
    * );
    * ```
    */
-  retrieveProfiles(
+  listProfiles(
     id: string,
-    query: CreatorRetrieveProfilesParams | null | undefined = {},
+    query: CreatorListProfilesParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CreatorRetrieveProfilesResponse> {
+  ): APIPromise<CreatorListProfilesResponse> {
     return this._client.get(path`/v1/creators/${id}/profiles`, { query, ...options });
   }
 }
@@ -150,6 +150,60 @@ export interface Creator {
    * Creator's display name
    */
   name?: string | null;
+}
+
+/**
+ * Creator autocomplete result
+ */
+export interface CreatorAutocomplete {
+  /**
+   * Unique creator identifier
+   */
+  id: string;
+
+  /**
+   * Creator's avatar URL
+   */
+  avatar: string;
+
+  /**
+   * Creator's display name
+   */
+  name: string;
+
+  /**
+   * Matching social media platforms
+   */
+  platforms: Array<CreatorAutocomplete.Platform>;
+}
+
+export namespace CreatorAutocomplete {
+  export interface Platform {
+    /**
+     * Display name on the platform
+     */
+    display_name: string;
+
+    /**
+     * Field that matched the search
+     */
+    match_field: string;
+
+    /**
+     * Type of match found
+     */
+    match_type: 'name' | 'username' | 'display_name';
+
+    /**
+     * Social media platform
+     */
+    platform: 'instagram' | 'tiktok';
+
+    /**
+     * Username on the platform
+     */
+    username: string;
+  }
 }
 
 /**
@@ -261,11 +315,11 @@ export interface SocialAccountLite {
   follower_count?: number | null;
 }
 
-export interface CreatorListResponse {
-  creators?: Array<CreatorListResponse.CreatorWithProfiles | Creator>;
+export interface CreatorRetrieveResponse {
+  creators?: Array<CreatorRetrieveResponse.CreatorWithProfiles | Creator>;
 }
 
-export namespace CreatorListResponse {
+export namespace CreatorRetrieveResponse {
   /**
    * Creator with embedded social account profiles
    */
@@ -311,7 +365,7 @@ export namespace CreatorAutocompleteResponse {
   }
 }
 
-export interface CreatorRetrieveProfilesResponse {
+export interface CreatorListProfilesResponse {
   /**
    * Array of social account objects. The structure depends on the `mode` parameter:
    *
@@ -322,7 +376,7 @@ export interface CreatorRetrieveProfilesResponse {
   profiles?: Array<SocialAccountLite | SocialAccountDetailed>;
 }
 
-export interface CreatorListParams {
+export interface CreatorRetrieveParams {
   /**
    * Comma-separated list of creator UUIDs
    */
@@ -368,7 +422,7 @@ export interface CreatorAutocompleteParams {
   scope?: 'creator_only' | 'matched_platforms' | 'all_platforms';
 }
 
-export interface CreatorRetrieveProfilesParams {
+export interface CreatorListProfilesParams {
   /**
    * Response detail level
    */
@@ -383,13 +437,14 @@ export interface CreatorRetrieveProfilesParams {
 export declare namespace Creators {
   export {
     type Creator as Creator,
+    type CreatorAutocomplete as CreatorAutocomplete,
     type SocialAccountDetailed as SocialAccountDetailed,
     type SocialAccountLite as SocialAccountLite,
-    type CreatorListResponse as CreatorListResponse,
+    type CreatorRetrieveResponse as CreatorRetrieveResponse,
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
-    type CreatorRetrieveProfilesResponse as CreatorRetrieveProfilesResponse,
-    type CreatorListParams as CreatorListParams,
+    type CreatorListProfilesResponse as CreatorListProfilesResponse,
+    type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
-    type CreatorRetrieveProfilesParams as CreatorRetrieveProfilesParams,
+    type CreatorListProfilesParams as CreatorListProfilesParams,
   };
 }

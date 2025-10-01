@@ -238,7 +238,7 @@ The following tools are available in this MCP server.
 
 ### Resource `creators`:
 
-- `list_creators` (`read`): Get creator-level information (person data) for one or multiple creators by their IDs.
+- `retrieve_creators` (`read`): Get creator-level information (person data) for one or multiple creators by their IDs.
 
   This endpoint returns basic creator profile data including name, bio, avatar, and status information.
   For platform-specific data (follower counts, engagement rates, etc.), use the `/v1/creators/{id}/profiles` endpoint.
@@ -267,7 +267,7 @@ The following tools are available in this MCP server.
 
   **Pricing**: 0.001 credits per request
 
-- `retrieve_profiles_creators` (`read`): **EXPLORATION ENDPOINT**: Get all social account data when you know a creator UUID.
+- `list_profiles_creators` (`read`): **EXPLORATION ENDPOINT**: Get all social account data when you know a creator UUID.
 
   **🎯 When to use this endpoint:**
 
@@ -306,7 +306,7 @@ The following tools are available in this MCP server.
 
 ### Resource `profiles`:
 
-- `create_profiles` (`write`): **DISCOVERY ENDPOINT**: Look up social account data when you know a username and platform.
+- `lookup_profiles` (`write`): **DISCOVERY ENDPOINT**: Look up social account data when you know a username and platform.
 
   **🎯 When to use this endpoint:**
 
@@ -385,7 +385,7 @@ The following tools are available in this MCP server.
 
 ### Resource `match`:
 
-- `create_match` (`write`): Evaluate how well creators align with campaign requirements using AI-powered analysis.
+- `analyze_match` (`write`): Evaluate how well creators align with campaign requirements using AI-powered analysis.
 
   Provide creator references and campaign description to receive match scores (0-100),
   AI decisions (good/neutral/avoid), explanations, and supporting evidence.

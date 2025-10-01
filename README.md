@@ -25,11 +25,17 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import InflushipAPI from 'influship-api';
 
-const client = new InflushipAPI();
+const client = new InflushipAPI({
+  apiKey: process.env['INFLUSHIP_API_API_KEY'], // This is the default and can be omitted
+});
 
-const response = await client.health.check();
+const response = await client.search.findCreators({
+  query: 'fitness influencers in Los Angeles',
+  limit: 10,
+  mode: 'detailed',
+});
 
-console.log(response.ok);
+console.log(response.filtered_total);
 ```
 
 ### Request & Response types
@@ -40,9 +46,15 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import InflushipAPI from 'influship-api';
 
-const client = new InflushipAPI();
+const client = new InflushipAPI({
+  apiKey: process.env['INFLUSHIP_API_API_KEY'], // This is the default and can be omitted
+});
 
-const response: InflushipAPI.HealthCheckResponse = await client.health.check();
+const params: InflushipAPI.SearchFindCreatorsParams = {
+  query: 'fitness influencers in Los Angeles',
+  limit: 10,
+};
+const response: InflushipAPI.SearchFindCreatorsResponse = await client.search.findCreators(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -55,15 +67,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.health.check().catch(async (err) => {
-  if (err instanceof InflushipAPI.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const response = await client.search
+  .findCreators({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .catch(async (err) => {
+    if (err instanceof InflushipAPI.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -95,7 +109,7 @@ const client = new InflushipAPI({
 });
 
 // Or, configure per-request:
-await client.health.check({
+await client.search.findCreators({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
   maxRetries: 5,
 });
 ```
@@ -112,7 +126,7 @@ const client = new InflushipAPI({
 });
 
 // Override per-request:
-await client.health.check({
+await client.search.findCreators({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
   timeout: 5 * 1000,
 });
 ```
@@ -135,13 +149,17 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new InflushipAPI();
 
-const response = await client.health.check().asResponse();
+const response = await client.search
+  .findCreators({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.health.check().withResponse();
+const { data: response, response: raw } = await client.search
+  .findCreators({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.ok);
+console.log(response.filtered_total);
 ```
 
 ### Logging
@@ -221,7 +239,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.health.check({
+client.search.findCreators({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

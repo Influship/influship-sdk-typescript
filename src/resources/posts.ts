@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as BrandSafetyAPI from './brand-safety';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -46,132 +47,42 @@ export class Posts extends APIResource {
 }
 
 /**
- * Brand safety analysis results
+ * AI-powered content analysis. Only present when `ai_analysis` feature is
+ * requested.
  */
-export interface BrandSafetyAnalysis {
+export interface AIAnalysis {
   /**
-   * Specific safety concerns detected. Empty array = no issues found.
-   */
-  flags: Array<BrandSafetyAnalysis.Flag>;
-
-  metadata: BrandSafetyAnalysis.Metadata;
-
-  /**
-   * Confidence score (0-1) for the rating. >0.8 = high confidence.
-   */
-  overall_confidence: number;
-
-  /**
-   * Brand safety rating. A = safe (no risks), B = moderate concerns, C = significant
-   * risks.
-   */
-  rating: 'A' | 'B' | 'C';
-
-  /**
-   * Detailed reasoning explaining the analysis result. Includes context about
-   * content analyzed and decision factors.
-   */
-  reasoning: string;
-
-  /**
-   * Human-readable summary of the assessment.
+   * AI-generated summary describing key themes, topics, and messaging.
    */
   summary: string;
+
+  /**
+   * Transcription of spoken words in video. null for photo posts or videos without
+   * speech.
+   */
+  transcript?: string | null;
 }
 
-export namespace BrandSafetyAnalysis {
+/**
+ * Cursor-based pagination metadata. Use this to navigate through paginated results
+ * efficiently.
+ */
+export interface CursorPagination {
   /**
-   * Individual brand safety flag with detailed information
+   * Indicates whether more results are available.
+   *
+   * - `true`: Additional pages exist, use the `cursor` to fetch them
+   * - `false`: This is the last page of results
    */
-  export interface Flag {
-    /**
-     * Confidence score for this specific flag (0-1). Higher values indicate greater
-     * certainty about this concern.
-     */
-    confidence: number;
+  has_more: boolean;
 
-    /**
-     * Human-readable description explaining the concern. Provides context about what
-     * was detected.
-     */
-    description: string;
-
-    /**
-     * Severity level of the concern:
-     *
-     * - `low`: Minor issue, may be acceptable for some brands
-     * - `medium`: Moderate concern, evaluate based on brand guidelines
-     * - `high`: Significant risk, likely unsuitable for most brands
-     */
-    severity: 'low' | 'medium' | 'high';
-
-    /**
-     * Category of brand safety concern detected:
-     *
-     * - `adult_sexual_content`: Sexually explicit or suggestive content
-     * - `profanity_strong_language`: Profanity or offensive language
-     * - `drugs_alcohol_tobacco`: Drug, alcohol, or tobacco-related content
-     * - `violence_weapons`: Violent content or weapon references
-     * - `hate_discrimination`: Hate speech or discriminatory content
-     * - `political_social_issues`: Politically divisive or controversial topics
-     * - `misinformation_conspiracy`: Misinformation or conspiracy theories
-     * - `misc`: Other brand safety concerns
-     */
-    type:
-      | 'adult_sexual_content'
-      | 'profanity_strong_language'
-      | 'drugs_alcohol_tobacco'
-      | 'violence_weapons'
-      | 'hate_discrimination'
-      | 'political_social_issues'
-      | 'misinformation_conspiracy'
-      | 'misc';
-
-    /**
-     * Specific examples or evidence that triggered this flag. May include post
-     * excerpts or contextual information.
-     */
-    evidence?: Array<string>;
-  }
-
-  export interface Metadata {
-    /**
-     * When the analysis was performed
-     */
-    analysis_date: string;
-
-    /**
-     * Information about the content that was analyzed
-     */
-    content_analyzed: Metadata.ContentAnalyzed;
-
-    /**
-     * Version of the AI model used for analysis
-     */
-    model_version: string;
-
-    /**
-     * Processing time in milliseconds
-     */
-    processing_time_ms: number;
-  }
-
-  export namespace Metadata {
-    /**
-     * Information about the content that was analyzed
-     */
-    export interface ContentAnalyzed {
-      /**
-       * Number of media items analyzed
-       */
-      media_count?: number;
-
-      /**
-       * Length of text content analyzed
-       */
-      text_length?: number;
-    }
-  }
+  /**
+   * Opaque base64-encoded cursor string for fetching the next page. Pass this value
+   * as the `cursor` query parameter in your next request. null when `has_more` is
+   * false (no more pages available). Do not attempt to decode or construct cursor
+   * values manually.
+   */
+  cursor?: string | null;
 }
 
 /**
@@ -226,12 +137,12 @@ export interface PostAnalysis {
    * AI-powered content analysis. Only present when `ai_analysis` feature is
    * requested.
    */
-  ai_analysis?: PostAnalysis.AIAnalysis;
+  ai_analysis?: AIAnalysis;
 
   /**
    * Brand safety analysis results
    */
-  brand_safety?: BrandSafetyAnalysis;
+  brand_safety?: BrandSafetyAPI.BrandSafetyAnalysis;
 
   /**
    * Post caption text written by the creator. null if no caption was provided.
@@ -303,23 +214,6 @@ export namespace PostAnalysis {
      */
     username: string;
   }
-
-  /**
-   * AI-powered content analysis. Only present when `ai_analysis` feature is
-   * requested.
-   */
-  export interface AIAnalysis {
-    /**
-     * AI-generated summary describing key themes, topics, and messaging.
-     */
-    summary: string;
-
-    /**
-     * Transcription of spoken words in video. null for photo posts or videos without
-     * speech.
-     */
-    transcript?: string | null;
-  }
 }
 
 /**
@@ -330,36 +224,12 @@ export interface PostListByCreatorResponse {
    * Cursor-based pagination metadata. Use this to navigate through paginated results
    * efficiently.
    */
-  pagination: PostListByCreatorResponse.Pagination;
+  pagination: CursorPagination;
 
   /**
    * Array of posts
    */
   posts: Array<PostAnalysis>;
-}
-
-export namespace PostListByCreatorResponse {
-  /**
-   * Cursor-based pagination metadata. Use this to navigate through paginated results
-   * efficiently.
-   */
-  export interface Pagination {
-    /**
-     * Indicates whether more results are available.
-     *
-     * - `true`: Additional pages exist, use the `cursor` to fetch them
-     * - `false`: This is the last page of results
-     */
-    has_more: boolean;
-
-    /**
-     * Opaque base64-encoded cursor string for fetching the next page. Pass this value
-     * as the `cursor` query parameter in your next request. null when `has_more` is
-     * false (no more pages available). Do not attempt to decode or construct cursor
-     * values manually.
-     */
-    cursor?: string | null;
-  }
 }
 
 export interface PostAnalyzeParams {
@@ -429,7 +299,8 @@ export interface PostListByCreatorParams {
 
 export declare namespace Posts {
   export {
-    type BrandSafetyAnalysis as BrandSafetyAnalysis,
+    type AIAnalysis as AIAnalysis,
+    type CursorPagination as CursorPagination,
     type PostAnalysis as PostAnalysis,
     type PostListByCreatorResponse as PostListByCreatorResponse,
     type PostAnalyzeParams as PostAnalyzeParams,
