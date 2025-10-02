@@ -19,7 +19,7 @@ cd influship-sdk-typescript
 
 ```sh
 # set env vars as needed
-export INFLUSHIP_API_API_KEY="My API Key"
+export INFLUSHIP_API_KEY="My API Key"
 node ./packages/mcp-server/dist/index.js
 ```
 
@@ -46,7 +46,7 @@ For clients with a configuration JSON, it might look something like this:
         "--tools=all"
       ],
       "env": {
-        "INFLUSHIP_API_API_KEY": "My API Key"
+        "INFLUSHIP_API_KEY": "My API Key"
       }
     }
   }
