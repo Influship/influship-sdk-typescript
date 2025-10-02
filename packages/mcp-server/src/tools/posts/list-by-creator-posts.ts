@@ -3,7 +3,7 @@
 import { Metadata, asTextContentResult } from 'influship-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 
 export const metadata: Metadata = {
   resource: 'posts',

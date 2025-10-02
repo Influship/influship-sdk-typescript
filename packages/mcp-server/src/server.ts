@@ -10,8 +10,8 @@ import {
   Implementation,
   Tool,
 } from '@modelcontextprotocol/sdk/types.js';
-import { ClientOptions } from 'influship-api';
-import InflushipAPI from 'influship-api';
+import { ClientOptions } from 'influship';
+import InflushipAPI from 'influship';
 import {
   applyCompatibilityTransformations,
   ClientCapabilities,
@@ -27,13 +27,13 @@ import { McpOptions } from './options';
 export { McpOptions } from './options';
 export { ClientType } from './compat';
 export { Filter } from './tools';
-export { ClientOptions } from 'influship-api';
+export { ClientOptions } from 'influship';
 export { endpoints } from './tools';
 
 export const newMcpServer = () =>
   new McpServer(
     {
-      name: 'influship_api_api',
+      name: 'influship_api',
       version: '0.1.0',
     },
     { capabilities: { tools: {}, logging: {} } },

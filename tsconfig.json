@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "influship-api/*": ["./src/*"],
-      "influship-api": ["./src/index.ts"]
+      "influship/*": ["./src/*"],
+      "influship": ["./src/index.ts"]
     },
     "noEmit": true,
 

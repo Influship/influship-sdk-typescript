@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "influship-api/*": ["./dist/src/*"],
-      "influship-api": ["./dist/src/index.ts"]
+      "influship/*": ["./dist/src/*"],
+      "influship": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

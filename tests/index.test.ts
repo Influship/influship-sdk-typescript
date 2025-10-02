@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'influship-api/core/api-promise';
+import { APIPromise } from 'influship/core/api-promise';
 
 import util from 'node:util';
-import InflushipAPI from 'influship-api';
-import { APIUserAbortError } from 'influship-api';
+import InflushipAPI from 'influship';
+import { APIUserAbortError } from 'influship';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

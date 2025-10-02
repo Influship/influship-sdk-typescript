@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'influship-api/internal/to-file';
-import { toFile } from 'influship-api/core/uploads';
+import type { ResponseLike } from 'influship/internal/to-file';
+import { toFile } from 'influship/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('influship-api/core/uploads');
+    const uploads = await import('influship/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

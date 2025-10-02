@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'influship-api/internal/qs';
-import { encode } from 'influship-api/internal/qs/utils';
-import { StringifyOptions } from 'influship-api/internal/qs/types';
+import { stringify } from 'influship/internal/qs';
+import { encode } from 'influship/internal/qs/utils';
+import { StringifyOptions } from 'influship/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 

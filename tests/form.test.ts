@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'influship-api/internal/uploads';
-import { toFile } from 'influship-api/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'influship/internal/uploads';
+import { toFile } from 'influship/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
