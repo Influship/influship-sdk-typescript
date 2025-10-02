@@ -24,28 +24,29 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/creators.ts">Creator</a></code>
+- <code><a href="./src/resources/creators.ts">CreatorAutocomplete</a></code>
 - <code><a href="./src/resources/creators.ts">SocialAccountDetailed</a></code>
 - <code><a href="./src/resources/creators.ts">SocialAccountLite</a></code>
-- <code><a href="./src/resources/creators.ts">CreatorListResponse</a></code>
+- <code><a href="./src/resources/creators.ts">CreatorRetrieveResponse</a></code>
 - <code><a href="./src/resources/creators.ts">CreatorAutocompleteResponse</a></code>
-- <code><a href="./src/resources/creators.ts">CreatorRetrieveProfilesResponse</a></code>
+- <code><a href="./src/resources/creators.ts">CreatorListProfilesResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/creators">client.creators.<a href="./src/resources/creators.ts">list</a>({ ...params }) -> CreatorListResponse</code>
+- <code title="get /v1/creators">client.creators.<a href="./src/resources/creators.ts">retrieve</a>({ ...params }) -> CreatorRetrieveResponse</code>
 - <code title="get /v1/creators/autocomplete">client.creators.<a href="./src/resources/creators.ts">autocomplete</a>({ ...params }) -> CreatorAutocompleteResponse</code>
-- <code title="get /v1/creators/{id}/profiles">client.creators.<a href="./src/resources/creators.ts">retrieveProfiles</a>(id, { ...params }) -> CreatorRetrieveProfilesResponse</code>
+- <code title="get /v1/creators/{id}/profiles">client.creators.<a href="./src/resources/creators.ts">listProfiles</a>(id, { ...params }) -> CreatorListProfilesResponse</code>
 
 # Profiles
 
 Types:
 
 - <code><a href="./src/resources/profiles.ts">CreatorReferenceByHandle</a></code>
-- <code><a href="./src/resources/profiles.ts">ProfileCreateResponse</a></code>
+- <code><a href="./src/resources/profiles.ts">ProfileLookupResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/profiles">client.profiles.<a href="./src/resources/profiles.ts">create</a>({ ...params }) -> ProfileCreateResponse</code>
+- <code title="post /v1/profiles">client.profiles.<a href="./src/resources/profiles.ts">lookup</a>({ ...params }) -> ProfileLookupResponse</code>
 
 # Lookalike
 
@@ -62,7 +63,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/posts.ts">BrandSafetyAnalysis</a></code>
+- <code><a href="./src/resources/posts.ts">AIAnalysis</a></code>
+- <code><a href="./src/resources/posts.ts">CursorPagination</a></code>
 - <code><a href="./src/resources/posts.ts">PostAnalysis</a></code>
 - <code><a href="./src/resources/posts.ts">PostListByCreatorResponse</a></code>
 
@@ -76,16 +78,19 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/match.ts">CreatorReferenceByID</a></code>
-- <code><a href="./src/resources/match.ts">MatchCreateResponse</a></code>
+- <code><a href="./src/resources/match.ts">MatchResult</a></code>
+- <code><a href="./src/resources/match.ts">MatchAnalyzeResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/match">client.match.<a href="./src/resources/match.ts">create</a>({ ...params }) -> MatchCreateResponse</code>
+- <code title="post /v1/match">client.match.<a href="./src/resources/match.ts">analyze</a>({ ...params }) -> MatchAnalyzeResponse</code>
 
 # BrandSafety
 
 Types:
 
+- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalysis</a></code>
+- <code><a href="./src/resources/brand-safety.ts">BrandSafetyFlag</a></code>
 - <code><a href="./src/resources/brand-safety.ts">BrandSafetyResult</a></code>
 - <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzeCreatorsResponse</a></code>
 - <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzePostsResponse</a></code>

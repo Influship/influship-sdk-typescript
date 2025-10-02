@@ -55,7 +55,7 @@ export class Profiles extends APIResource {
    *
    * @example
    * ```ts
-   * const profile = await client.profiles.create({
+   * const response = await client.profiles.lookup({
    *   profiles: [
    *     { platform: 'instagram', username: 'fitness_guru' },
    *     { platform: 'tiktok', username: 'fitness_guru' },
@@ -63,7 +63,7 @@ export class Profiles extends APIResource {
    * });
    * ```
    */
-  create(body: ProfileCreateParams, options?: RequestOptions): APIPromise<ProfileCreateResponse> {
+  lookup(body: ProfileLookupParams, options?: RequestOptions): APIPromise<ProfileLookupResponse> {
     return this._client.post('/v1/profiles', { body, ...options });
   }
 }
@@ -80,7 +80,7 @@ export interface CreatorReferenceByHandle {
   username: string;
 }
 
-export interface ProfileCreateResponse {
+export interface ProfileLookupResponse {
   /**
    * Array of social account objects. The structure depends on the `mode` parameter:
    *
@@ -91,7 +91,7 @@ export interface ProfileCreateResponse {
   profiles?: Array<CreatorsAPI.SocialAccountLite | CreatorsAPI.SocialAccountDetailed>;
 }
 
-export interface ProfileCreateParams {
+export interface ProfileLookupParams {
   profiles: Array<CreatorReferenceByHandle>;
 
   /**
@@ -108,7 +108,7 @@ export interface ProfileCreateParams {
 export declare namespace Profiles {
   export {
     type CreatorReferenceByHandle as CreatorReferenceByHandle,
-    type ProfileCreateResponse as ProfileCreateResponse,
-    type ProfileCreateParams as ProfileCreateParams,
+    type ProfileLookupResponse as ProfileLookupResponse,
+    type ProfileLookupParams as ProfileLookupParams,
   };
 }

@@ -9,8 +9,8 @@ const client = new InflushipAPI({
 
 describe('resource profiles', () => {
   // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.profiles.create({
+  test.skip('lookup: only required params', async () => {
+    const responsePromise = client.profiles.lookup({
       profiles: [
         { platform: 'instagram', username: 'fitness_guru' },
         { platform: 'tiktok', username: 'fitness_guru' },
@@ -26,8 +26,8 @@ describe('resource profiles', () => {
   });
 
   // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.profiles.create({
+  test.skip('lookup: required and optional params', async () => {
+    const response = await client.profiles.lookup({
       profiles: [
         { platform: 'instagram', username: 'fitness_guru' },
         { platform: 'tiktok', username: 'fitness_guru' },

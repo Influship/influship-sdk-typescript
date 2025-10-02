@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PostsAPI from './posts';
 import * as ProfilesAPI from './profiles';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -87,6 +86,135 @@ export class BrandSafety extends APIResource {
 }
 
 /**
+ * Brand safety analysis results
+ */
+export interface BrandSafetyAnalysis {
+  /**
+   * Specific safety concerns detected. Empty array = no issues found.
+   */
+  flags: Array<BrandSafetyFlag>;
+
+  metadata: BrandSafetyAnalysis.Metadata;
+
+  /**
+   * Confidence score (0-1) for the rating. >0.8 = high confidence.
+   */
+  overall_confidence: number;
+
+  /**
+   * Brand safety rating. A = safe (no risks), B = moderate concerns, C = significant
+   * risks.
+   */
+  rating: 'A' | 'B' | 'C';
+
+  /**
+   * Detailed reasoning explaining the analysis result. Includes context about
+   * content analyzed and decision factors.
+   */
+  reasoning: string;
+
+  /**
+   * Human-readable summary of the assessment.
+   */
+  summary: string;
+}
+
+export namespace BrandSafetyAnalysis {
+  export interface Metadata {
+    /**
+     * When the analysis was performed
+     */
+    analysis_date: string;
+
+    /**
+     * Information about the content that was analyzed
+     */
+    content_analyzed: Metadata.ContentAnalyzed;
+
+    /**
+     * Version of the AI model used for analysis
+     */
+    model_version: string;
+
+    /**
+     * Processing time in milliseconds
+     */
+    processing_time_ms: number;
+  }
+
+  export namespace Metadata {
+    /**
+     * Information about the content that was analyzed
+     */
+    export interface ContentAnalyzed {
+      /**
+       * Number of media items analyzed
+       */
+      media_count?: number;
+
+      /**
+       * Length of text content analyzed
+       */
+      text_length?: number;
+    }
+  }
+}
+
+/**
+ * Individual brand safety flag with detailed information
+ */
+export interface BrandSafetyFlag {
+  /**
+   * Confidence score for this specific flag (0-1). Higher values indicate greater
+   * certainty about this concern.
+   */
+  confidence: number;
+
+  /**
+   * Human-readable description explaining the concern. Provides context about what
+   * was detected.
+   */
+  description: string;
+
+  /**
+   * Severity level of the concern:
+   *
+   * - `low`: Minor issue, may be acceptable for some brands
+   * - `medium`: Moderate concern, evaluate based on brand guidelines
+   * - `high`: Significant risk, likely unsuitable for most brands
+   */
+  severity: 'low' | 'medium' | 'high';
+
+  /**
+   * Category of brand safety concern detected:
+   *
+   * - `adult_sexual_content`: Sexually explicit or suggestive content
+   * - `profanity_strong_language`: Profanity or offensive language
+   * - `drugs_alcohol_tobacco`: Drug, alcohol, or tobacco-related content
+   * - `violence_weapons`: Violent content or weapon references
+   * - `hate_discrimination`: Hate speech or discriminatory content
+   * - `political_social_issues`: Politically divisive or controversial topics
+   * - `misinformation_conspiracy`: Misinformation or conspiracy theories
+   * - `misc`: Other brand safety concerns
+   */
+  type:
+    | 'adult_sexual_content'
+    | 'profanity_strong_language'
+    | 'drugs_alcohol_tobacco'
+    | 'violence_weapons'
+    | 'hate_discrimination'
+    | 'political_social_issues'
+    | 'misinformation_conspiracy'
+    | 'misc';
+
+  /**
+   * Specific examples or evidence that triggered this flag. May include post
+   * excerpts or contextual information.
+   */
+  evidence?: Array<string>;
+}
+
+/**
  * Result of brand safety analysis
  */
 export interface BrandSafetyResult {
@@ -98,7 +226,7 @@ export interface BrandSafetyResult {
   /**
    * Brand safety analysis results
    */
-  analysis: PostsAPI.BrandSafetyAnalysis;
+  analysis: BrandSafetyAnalysis;
 }
 
 export interface BrandSafetyAnalyzeCreatorsResponse {
@@ -158,6 +286,8 @@ export interface BrandSafetyAnalyzeProfilesParams {
 
 export declare namespace BrandSafety {
   export {
+    type BrandSafetyAnalysis as BrandSafetyAnalysis,
+    type BrandSafetyFlag as BrandSafetyFlag,
     type BrandSafetyResult as BrandSafetyResult,
     type BrandSafetyAnalyzeCreatorsResponse as BrandSafetyAnalyzeCreatorsResponse,
     type BrandSafetyAnalyzePostsResponse as BrandSafetyAnalyzePostsResponse,

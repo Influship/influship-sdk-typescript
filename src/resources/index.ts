@@ -2,6 +2,8 @@
 
 export {
   BrandSafety,
+  type BrandSafetyAnalysis,
+  type BrandSafetyFlag,
   type BrandSafetyResult,
   type BrandSafetyAnalyzeCreatorsResponse,
   type BrandSafetyAnalyzePostsResponse,
@@ -13,14 +15,15 @@ export {
 export {
   Creators,
   type Creator,
+  type CreatorAutocomplete,
   type SocialAccountDetailed,
   type SocialAccountLite,
-  type CreatorListResponse,
+  type CreatorRetrieveResponse,
   type CreatorAutocompleteResponse,
-  type CreatorRetrieveProfilesResponse,
-  type CreatorListParams,
+  type CreatorListProfilesResponse,
+  type CreatorRetrieveParams,
   type CreatorAutocompleteParams,
-  type CreatorRetrieveProfilesParams,
+  type CreatorListProfilesParams,
 } from './creators';
 export { Health, type HealthCheckResponse } from './health';
 export {
@@ -29,10 +32,17 @@ export {
   type LookalikeFindSimilarCreatorsResponse,
   type LookalikeFindSimilarCreatorsParams,
 } from './lookalike';
-export { Match, type CreatorReferenceByID, type MatchCreateResponse, type MatchCreateParams } from './match';
+export {
+  Match,
+  type CreatorReferenceByID,
+  type MatchResult,
+  type MatchAnalyzeResponse,
+  type MatchAnalyzeParams,
+} from './match';
 export {
   Posts,
-  type BrandSafetyAnalysis,
+  type AIAnalysis,
+  type CursorPagination,
   type PostAnalysis,
   type PostListByCreatorResponse,
   type PostAnalyzeParams,
@@ -41,8 +51,8 @@ export {
 export {
   Profiles,
   type CreatorReferenceByHandle,
-  type ProfileCreateResponse,
-  type ProfileCreateParams,
+  type ProfileLookupResponse,
+  type ProfileLookupParams,
 } from './profiles';
 export {
   Search,
