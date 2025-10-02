@@ -19,6 +19,13 @@ export class Posts extends APIResource {
    * - AI Analysis feature: +0.5 credits (includes summary and transcript)
    * - Brand Safety feature: +0.5 credits (includes rating and risk flags)
    * - **Example**: 1 post with both features = 1.0 + 0.5 + 0.5 = 2.0 credits
+   *
+   * @example
+   * ```ts
+   * const postAnalysis = await client.posts.analyze({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   analyze(body: PostAnalyzeParams, options?: RequestOptions): APIPromise<PostAnalysis> {
     return this._client.post('/v1/posts/analyze', { body, ...options });
@@ -37,6 +44,11 @@ export class Posts extends APIResource {
    * - Use the `limit` parameter to control costs
    * - **Example**: 25 posts = 0.25 credits
    * - **Example**: 100 posts = 1.0 credit
+   *
+   * @example
+   * ```ts
+   * const response = await client.posts.listByCreator();
+   * ```
    */
   listByCreator(
     query: PostListByCreatorParams | null | undefined = {},
@@ -232,26 +244,52 @@ export interface PostListByCreatorResponse {
   posts: Array<PostAnalysis>;
 }
 
-export interface PostAnalyzeParams {
-  /**
-   * Analysis features to include
-   */
-  features?: Array<'ai_analysis' | 'brand_safety'>;
+export type PostAnalyzeParams = PostAnalyzeParams.Variant0 | PostAnalyzeParams.Variant1;
 
-  /**
-   * Social media platform (required when using post_id)
-   */
-  platform?: 'instagram' | 'tiktok';
+export declare namespace PostAnalyzeParams {
+  export interface Variant0 {
+    /**
+     * Public URL of the post to analyze
+     */
+    url: string;
 
-  /**
-   * Platform-specific post ID
-   */
-  post_id?: string;
+    /**
+     * Analysis features to include
+     */
+    features?: Array<'ai_analysis' | 'brand_safety'>;
 
-  /**
-   * Public URL of the post to analyze
-   */
-  url?: string;
+    /**
+     * Social media platform (required when using post_id)
+     */
+    platform?: 'instagram' | 'tiktok';
+
+    /**
+     * Platform-specific post ID
+     */
+    post_id?: string;
+  }
+
+  export interface Variant1 {
+    /**
+     * Social media platform
+     */
+    platform: 'instagram' | 'tiktok';
+
+    /**
+     * Platform-specific post ID
+     */
+    post_id: string;
+
+    /**
+     * Analysis features to include
+     */
+    features?: Array<'ai_analysis' | 'brand_safety'>;
+
+    /**
+     * Public URL of the post to analyze
+     */
+    url?: string;
+  }
 }
 
 export interface PostListByCreatorParams {
