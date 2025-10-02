@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^influship-api$': '<rootDir>/src/index.ts',
-    '^influship-api/(.*)$': '<rootDir>/src/$1',
+    '^influship$': '<rootDir>/src/index.ts',
+    '^influship/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

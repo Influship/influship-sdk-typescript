@@ -1,4 +1,4 @@
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 import { Endpoint, asTextContentResult, ToolCallResult } from './tools/types';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { z } from 'zod';
