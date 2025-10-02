@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2025-10-02)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** change env var used for api key ([6415c9b](https://github.com/Influship/influship-sdk-typescript/commit/6415c9be86ac1d3328cc3cf5c7e2475a38f833a3))
+
 ## 0.1.0 (2025-10-01)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.0.1...v0.1.0)
