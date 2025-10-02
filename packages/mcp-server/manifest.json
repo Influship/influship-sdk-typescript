@@ -20,12 +20,12 @@
       "command": "node",
       "args": ["${__dirname}/index.js"],
       "env": {
-        "INFLUSHIP_API_API_KEY": "${user_config.INFLUSHIP_API_API_KEY}"
+        "INFLUSHIP_API_KEY": "${user_config.INFLUSHIP_API_KEY}"
       }
     }
   },
   "user_config": {
-    "INFLUSHIP_API_API_KEY": {
+    "INFLUSHIP_API_KEY": {
       "title": "api_key",
       "description": "API key for authentication",
       "required": true,

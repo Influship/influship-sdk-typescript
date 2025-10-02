@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import InflushipAPI from 'influship-api';
 
 const client = new InflushipAPI({
-  apiKey: process.env['INFLUSHIP_API_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted
 });
 
 const response = await client.search.findCreators({
@@ -47,7 +47,7 @@ This library includes TypeScript definitions for all request params and response
 import InflushipAPI from 'influship-api';
 
 const client = new InflushipAPI({
-  apiKey: process.env['INFLUSHIP_API_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted
 });
 
 const params: InflushipAPI.SearchFindCreatorsParams = {
