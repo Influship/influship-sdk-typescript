@@ -97,6 +97,11 @@ export interface BrandSafetyAnalysis {
   metadata: BrandSafetyAnalysis.Metadata;
 
   /**
+   * Whether the analysis completed successfully
+   */
+  ok: boolean;
+
+  /**
    * Confidence score (0-1) for the rating. >0.8 = high confidence.
    */
   overall_confidence: number;
@@ -148,9 +153,9 @@ export namespace BrandSafetyAnalysis {
      */
     export interface ContentAnalyzed {
       /**
-       * Number of media items analyzed
+       * Number of posts analyzed (for profile/creator analysis)
        */
-      media_count?: number;
+      posts_count?: number;
 
       /**
        * Length of text content analyzed
