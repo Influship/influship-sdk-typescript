@@ -164,7 +164,7 @@ export interface PostAnalysis {
   /**
    * Total comments on post. null if unavailable.
    */
-  comment_count?: number | null;
+  comments_count?: number | null;
 
   /**
    * Total likes on post. null if platform hides like counts or data unavailable.
