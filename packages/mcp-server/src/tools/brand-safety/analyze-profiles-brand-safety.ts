@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'influship-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'influship-api-mcp/tools/types';
+import { isJqError, maybeFilter } from 'influship-api-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'influship-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import InflushipAPI from 'influship';
@@ -59,7 +59,14 @@ export const tool: Tool = {
 
 export const handler = async (client: InflushipAPI, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.brandSafety.analyzeProfiles(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.brandSafety.analyzeProfiles(body)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
