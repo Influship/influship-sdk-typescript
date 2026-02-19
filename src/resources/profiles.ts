@@ -1,114 +1,481 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as CreatorsAPI from './creators';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Profiles extends APIResource {
   /**
-   * **DISCOVERY ENDPOINT**: Look up social account data when you know a username and
-   * platform.
+   * Retrieve detailed profile data including metrics, growth statistics, and
+   * activity information from our database.
    *
-   * **🎯 When to use this endpoint:**
+   * **Response includes:**
    *
-   * - ✅ You have a username and platform (e.g., @fitness_guru on Instagram)
-   * - ✅ You want to discover who a social account belongs to
-   * - ✅ You need to look up specific social accounts by username
-   * - ✅ You want to get social account metrics for known usernames
+   * - Basic info (bio, avatar, verification status)
+   * - Performance metrics (followers, engagement rate, avg likes/comments)
+   * - Growth data (30-day follower growth, monthly rate)
+   * - Activity data (last post date, posting frequency)
    *
-   * **❌ When NOT to use this endpoint:**
+   * **Pricing**: Free (included in your plan)
    *
-   * - ❌ You already have a creator UUID (use `/v1/creators/{id}/profiles` instead)
-   * - ❌ You want to get all accounts for a creator (use
-   *   `/v1/creators/{id}/profiles` instead)
+   * @example
+   * ```ts
+   * const profile = await client.profiles.get(
+   *   'fitness_coach_jane',
+   *   { platform: 'instagram' },
+   * );
+   * ```
+   */
+  get(username: string, params: ProfileGetParams, options?: RequestOptions): APIPromise<ProfileGetResponse> {
+    const { platform } = params;
+    return this._client.get(path`/v1/profiles/${platform}/${username}`, options);
+  }
+
+  /**
+   * Look up multiple profiles in a single request. Efficiently retrieve data for up
+   * to 100 profiles at once.
    *
-   * **📊 Response Format:** Returns `SocialAccountLite` or `SocialAccountDetailed`
-   * objects with identical structure to `/v1/creators/{id}/profiles`. Both endpoints
-   * return the same data structure for consistency.
+   * **Response includes:**
    *
-   * **🔗 Data Relationships:**
+   * - `found`: Array of profiles that exist in our database
+   * - `not_found`: Array of profiles that weren't found (consider live scraping
+   *   these)
    *
-   * - Use the `creator_profile_id` field to fetch creator-level data via
-   *   `/v1/creators`
-   * - Use the `creator_profile_id` to get all social accounts via
-   *   `/v1/creators/{id}/profiles`
-   * - Creator-level data includes: name, bio, avatar, ai_one_line_bio
-   * - Social account data includes: follower_count, engagement_rate, verified,
-   *   platform-specific metrics
-   *
-   * **🔄 Typical Workflow:**
-   *
-   * 1. **Discovery**: Call `/v1/profiles` with username+platform → get social
-   *    account data + creator_profile_id
-   * 2. **Creator Data**: Call `/v1/creators` with creator_profile_id → get
-   *    creator-level data
-   * 3. **All Accounts**: Call `/v1/creators/{id}/profiles` with creator_profile_id →
-   *    get all social accounts for that creator
-   *
-   * **⚙️ Parameters:**
-   *
-   * - `mode`: `lite` (default) or `detailed` - controls response detail level
-   * - `platforms`: Array of platform names to filter results (e.g.,
-   *   `["instagram", "tiktok"]`) **Pricing**: 0.01-0.05 credits per profile
-   *   (lite/detailed mode)
+   * **Pricing**: Free (included in your plan)
    *
    * @example
    * ```ts
    * const response = await client.profiles.lookup({
    *   profiles: [
-   *     { platform: 'instagram', username: 'fitness_guru' },
-   *     { platform: 'tiktok', username: 'fitness_guru' },
+   *     {
+   *       platform: 'instagram',
+   *       username: 'fitness_coach_jane',
+   *     },
    *   ],
    * });
    * ```
    */
   lookup(body: ProfileLookupParams, options?: RequestOptions): APIPromise<ProfileLookupResponse> {
-    return this._client.post('/v1/profiles', { body, ...options });
+    return this._client.post('/v1/profiles/lookup', { body, ...options });
   }
 }
 
-export interface CreatorReferenceByHandle {
+export interface ProfileGetResponse {
   /**
-   * Social platform where the creator exists
+   * Full profile details
    */
-  platform: 'instagram' | 'tiktok';
+  data: ProfileGetResponse.Data;
+}
 
+export namespace ProfileGetResponse {
   /**
-   * Username on the platform
+   * Full profile details
    */
-  username: string;
+  export interface Data {
+    /**
+     * Profile unique identifier
+     */
+    id: string;
+
+    /**
+     * Profile activity information
+     */
+    activity: Data.Activity;
+
+    /**
+     * Avatar URL
+     */
+    avatar_url: string | null;
+
+    /**
+     * Profile bio
+     */
+    bio: string | null;
+
+    /**
+     * Account category
+     */
+    category: string | null;
+
+    /**
+     * Creator unique identifier
+     */
+    creator_id: string;
+
+    /**
+     * Last data refresh timestamp
+     */
+    data_updated_at: string | null;
+
+    /**
+     * Display name
+     */
+    display_name: string | null;
+
+    /**
+     * External website URL from bio
+     */
+    external_url: string | null;
+
+    /**
+     * Profile growth statistics
+     */
+    growth: Data.Growth;
+
+    /**
+     * Whether this is a business account
+     */
+    is_business: boolean;
+
+    /**
+     * Whether the account is private
+     */
+    is_private: boolean;
+
+    /**
+     * Whether the account is verified
+     */
+    is_verified: boolean;
+
+    /**
+     * Profile performance metrics
+     */
+    metrics: Data.Metrics;
+
+    /**
+     * Social media platform
+     */
+    platform: 'instagram';
+
+    /**
+     * Listed pronouns
+     */
+    pronouns: Array<string> | null;
+
+    /**
+     * Profile URL
+     */
+    url: string;
+
+    /**
+     * Profile username
+     */
+    username: string;
+  }
+
+  export namespace Data {
+    /**
+     * Profile activity information
+     */
+    export interface Activity {
+      /**
+       * Timestamp of last post
+       */
+      last_post_at: string | null;
+    }
+
+    /**
+     * Profile growth statistics
+     */
+    export interface Growth {
+      /**
+       * Follower growth percentage over 30 days
+       */
+      followers_30d_pct: number;
+
+      /**
+       * Monthly growth rate
+       */
+      monthly_rate: number;
+    }
+
+    /**
+     * Profile performance metrics
+     */
+    export interface Metrics {
+      /**
+       * Average comments on recent posts
+       */
+      avg_comments_recent: number;
+
+      /**
+       * Average likes on recent posts
+       */
+      avg_likes_recent: number;
+
+      /**
+       * Average views on recent posts (for video content)
+       */
+      avg_views_recent: number | null;
+
+      /**
+       * Engagement rate as percentage
+       */
+      engagement_rate: number;
+
+      /**
+       * Follower count
+       */
+      followers: number;
+
+      /**
+       * Following count
+       */
+      following: number;
+
+      /**
+       * Total post count
+       */
+      posts: number;
+
+      /**
+       * Posts in the last 30 days
+       */
+      posts_last_30d: number;
+
+      /**
+       * Average posts per week
+       */
+      posts_per_week: number;
+    }
+  }
 }
 
 export interface ProfileLookupResponse {
+  data: ProfileLookupResponse.Data;
+}
+
+export namespace ProfileLookupResponse {
+  export interface Data {
+    /**
+     * Profiles that were found
+     */
+    found: Array<Data.Found>;
+
+    /**
+     * Profiles that were not found
+     */
+    not_found: Array<Data.NotFound>;
+  }
+
+  export namespace Data {
+    /**
+     * Full profile details
+     */
+    export interface Found {
+      /**
+       * Profile unique identifier
+       */
+      id: string;
+
+      /**
+       * Profile activity information
+       */
+      activity: Found.Activity;
+
+      /**
+       * Avatar URL
+       */
+      avatar_url: string | null;
+
+      /**
+       * Profile bio
+       */
+      bio: string | null;
+
+      /**
+       * Account category
+       */
+      category: string | null;
+
+      /**
+       * Creator unique identifier
+       */
+      creator_id: string;
+
+      /**
+       * Last data refresh timestamp
+       */
+      data_updated_at: string | null;
+
+      /**
+       * Display name
+       */
+      display_name: string | null;
+
+      /**
+       * External website URL from bio
+       */
+      external_url: string | null;
+
+      /**
+       * Profile growth statistics
+       */
+      growth: Found.Growth;
+
+      /**
+       * Whether this is a business account
+       */
+      is_business: boolean;
+
+      /**
+       * Whether the account is private
+       */
+      is_private: boolean;
+
+      /**
+       * Whether the account is verified
+       */
+      is_verified: boolean;
+
+      /**
+       * Profile performance metrics
+       */
+      metrics: Found.Metrics;
+
+      /**
+       * Social media platform
+       */
+      platform: 'instagram';
+
+      /**
+       * Listed pronouns
+       */
+      pronouns: Array<string> | null;
+
+      /**
+       * Profile URL
+       */
+      url: string;
+
+      /**
+       * Profile username
+       */
+      username: string;
+    }
+
+    export namespace Found {
+      /**
+       * Profile activity information
+       */
+      export interface Activity {
+        /**
+         * Timestamp of last post
+         */
+        last_post_at: string | null;
+      }
+
+      /**
+       * Profile growth statistics
+       */
+      export interface Growth {
+        /**
+         * Follower growth percentage over 30 days
+         */
+        followers_30d_pct: number;
+
+        /**
+         * Monthly growth rate
+         */
+        monthly_rate: number;
+      }
+
+      /**
+       * Profile performance metrics
+       */
+      export interface Metrics {
+        /**
+         * Average comments on recent posts
+         */
+        avg_comments_recent: number;
+
+        /**
+         * Average likes on recent posts
+         */
+        avg_likes_recent: number;
+
+        /**
+         * Average views on recent posts (for video content)
+         */
+        avg_views_recent: number | null;
+
+        /**
+         * Engagement rate as percentage
+         */
+        engagement_rate: number;
+
+        /**
+         * Follower count
+         */
+        followers: number;
+
+        /**
+         * Following count
+         */
+        following: number;
+
+        /**
+         * Total post count
+         */
+        posts: number;
+
+        /**
+         * Posts in the last 30 days
+         */
+        posts_last_30d: number;
+
+        /**
+         * Average posts per week
+         */
+        posts_per_week: number;
+      }
+    }
+
+    export interface NotFound {
+      /**
+       * Social media platform
+       */
+      platform: 'instagram';
+
+      username: string;
+    }
+  }
+}
+
+export interface ProfileGetParams {
   /**
-   * Array of social account objects. The structure depends on the `mode` parameter:
-   *
-   * - If `mode: "lite"`: Returns SocialAccountLite objects
-   * - If `mode: "detailed"`: Returns SocialAccountDetailed objects with additional
-   *   fields
+   * Platform name
    */
-  profiles?: Array<CreatorsAPI.SocialAccountLite | CreatorsAPI.SocialAccountDetailed>;
+  platform: string;
 }
 
 export interface ProfileLookupParams {
-  profiles: Array<CreatorReferenceByHandle>;
-
   /**
-   * Response detail level - lite for basic fields, detailed for additional metrics
+   * Profiles to lookup
    */
-  mode?: 'lite' | 'detailed';
+  profiles: Array<ProfileLookupParams.Profile>;
+}
 
-  /**
-   * Filter results to only include these platforms
-   */
-  platforms?: Array<'instagram' | 'tiktok'>;
+export namespace ProfileLookupParams {
+  export interface Profile {
+    /**
+     * Social media platform
+     */
+    platform: 'instagram';
+
+    /**
+     * Username to lookup
+     */
+    username: string;
+  }
 }
 
 export declare namespace Profiles {
   export {
-    type CreatorReferenceByHandle as CreatorReferenceByHandle,
+    type ProfileGetResponse as ProfileGetResponse,
     type ProfileLookupResponse as ProfileLookupResponse,
+    type ProfileGetParams as ProfileGetParams,
     type ProfileLookupParams as ProfileLookupParams,
   };
 }

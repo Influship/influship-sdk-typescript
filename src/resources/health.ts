@@ -6,16 +6,25 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Health extends APIResource {
   /**
-   * Check the health status of the API
+   * Check API health status. No authentication required.
    */
   check(options?: RequestOptions): APIPromise<HealthCheckResponse> {
     return this._client.get('/health', options);
   }
 }
 
+/**
+ * Health check response
+ */
 export interface HealthCheckResponse {
+  /**
+   * Service health status
+   */
   ok: boolean;
 
+  /**
+   * Current server timestamp
+   */
   timestamp: string;
 }
 

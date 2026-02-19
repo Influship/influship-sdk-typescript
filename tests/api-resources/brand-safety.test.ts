@@ -1,18 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import InflushipAPI from 'influship';
+import Influship from 'influship';
 
-const client = new InflushipAPI({
+const client = new Influship({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource brandSafety', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzeCreators: only required params', async () => {
-    const responsePromise = client.brandSafety.analyzeCreators({
-      creator_ids: ['123e4567-e89b-12d3-a456-426614174000', '987fcdeb-51a2-43d1-9f12-345678901234'],
-    });
+    const responsePromise = client.brandSafety.analyzeCreators({ creators: [{}] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,21 +20,22 @@ describe('resource brandSafety', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzeCreators: required and optional params', async () => {
     const response = await client.brandSafety.analyzeCreators({
-      creator_ids: ['123e4567-e89b-12d3-a456-426614174000', '987fcdeb-51a2-43d1-9f12-345678901234'],
+      creators: [
+        {
+          creator_id: '123e4567-e89b-12d3-a456-426614174000',
+          platform: 'instagram',
+          username: 'fitness_coach_jane',
+        },
+      ],
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzePosts: only required params', async () => {
-    const responsePromise = client.brandSafety.analyzePosts({
-      posts: [
-        { platform: 'instagram', url: 'https://www.instagram.com/p/Cx123Sample/' },
-        { platform: 'instagram', post_id: '9876543210987654321' },
-      ],
-    });
+    const responsePromise = client.brandSafety.analyzePosts({ posts: [{}] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -46,20 +45,24 @@ describe('resource brandSafety', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzePosts: required and optional params', async () => {
     const response = await client.brandSafety.analyzePosts({
       posts: [
-        { platform: 'instagram', url: 'https://www.instagram.com/p/Cx123Sample/' },
-        { platform: 'instagram', post_id: '9876543210987654321' },
+        {
+          platform: 'instagram',
+          platform_id: 'CxYz123ABC',
+          post_id: '123e4567-e89b-12d3-a456-426614174000',
+          url: 'https://www.instagram.com/p/CxYz123ABC',
+        },
       ],
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzeProfiles: only required params', async () => {
     const responsePromise = client.brandSafety.analyzeProfiles({
-      profiles: [{ platform: 'instagram', username: 'wellnessdaily' }],
+      profiles: [{ platform: 'instagram', username: 'fitness_coach_jane' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -70,10 +73,10 @@ describe('resource brandSafety', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('analyzeProfiles: required and optional params', async () => {
     const response = await client.brandSafety.analyzeProfiles({
-      profiles: [{ platform: 'instagram', username: 'wellnessdaily' }],
+      profiles: [{ platform: 'instagram', username: 'fitness_coach_jane' }],
     });
   });
 });

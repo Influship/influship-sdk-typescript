@@ -1,26 +1,37 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as ProfilesAPI from './profiles';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 export class BrandSafety extends APIResource {
   /**
-   * Analyze creators for brand safety risks using AI-powered content analysis.
+   * Analyze creators for brand safety risks across all their content and profiles.
+   * Reviews recent posts, bio content, and historical patterns to identify potential
+   * issues.
    *
-   * This endpoint evaluates creators for potential brand safety issues including
-   * controversial content, inappropriate associations, and reputation risks.
+   * **Risk categories detected:**
    *
-   * **Pricing**: 2.0 credits per creator analyzed
+   * - Profanity and strong language
+   * - Adult/sexual content
+   * - Drugs, alcohol, and tobacco references
+   * - Violence and weapons
+   * - Hate speech and discrimination
+   * - Political and controversial topics
+   * - Misinformation and conspiracy content
+   *
+   * **Ratings:**
+   *
+   * - **A** - Brand safe, no significant concerns
+   * - **B** - Caution advised, minor or occasional issues
+   * - **C** - Avoid, significant brand safety risks
+   *
+   * **Pricing**: $0.10 per creator analyzed
    *
    * @example
    * ```ts
    * const response = await client.brandSafety.analyzeCreators({
-   *   creator_ids: [
-   *     '123e4567-e89b-12d3-a456-426614174000',
-   *     '987fcdeb-51a2-43d1-9f12-345678901234',
-   *   ],
+   *   creators: [{}],
    * });
    * ```
    */
@@ -32,25 +43,15 @@ export class BrandSafety extends APIResource {
   }
 
   /**
-   * Analyze individual posts for brand safety risks.
+   * Analyze specific posts for brand safety risks. Useful for vetting individual
+   * pieces of sponsored content before approval.
    *
-   * This endpoint evaluates specific posts for potential brand safety issues.
-   *
-   * **Pricing**: 0.5 credits per post analyzed
+   * **Pricing**: $0.02 per post analyzed
    *
    * @example
    * ```ts
    * const response = await client.brandSafety.analyzePosts({
-   *   posts: [
-   *     {
-   *       platform: 'instagram',
-   *       url: 'https://www.instagram.com/p/Cx123Sample/',
-   *     },
-   *     {
-   *       platform: 'instagram',
-   *       post_id: '9876543210987654321',
-   *     },
-   *   ],
+   *   posts: [{}],
    * });
    * ```
    */
@@ -62,17 +63,19 @@ export class BrandSafety extends APIResource {
   }
 
   /**
-   * Analyze social media profiles for brand safety risks.
+   * Analyze specific social media profiles for brand safety risks. Focuses on a
+   * single platform's content rather than cross-platform analysis.
    *
-   * This endpoint evaluates profiles by username for potential brand safety issues.
-   *
-   * **Pricing**: 2.0 credits per profile analyzed
+   * **Pricing**: $0.08 per profile analyzed
    *
    * @example
    * ```ts
    * const response = await client.brandSafety.analyzeProfiles({
    *   profiles: [
-   *     { platform: 'instagram', username: 'wellnessdaily' },
+   *     {
+   *       platform: 'instagram',
+   *       username: 'fitness_coach_jane',
+   *     },
    *   ],
    * });
    * ```
@@ -85,215 +88,439 @@ export class BrandSafety extends APIResource {
   }
 }
 
-/**
- * Brand safety analysis results
- */
-export interface BrandSafetyAnalysis {
-  /**
-   * Specific safety concerns detected. Empty array = no issues found.
-   */
-  flags: Array<BrandSafetyFlag>;
-
-  metadata: BrandSafetyAnalysis.Metadata;
-
-  /**
-   * Whether the analysis completed successfully
-   */
-  ok: boolean;
-
-  /**
-   * Confidence score (0-1) for the rating. >0.8 = high confidence.
-   */
-  overall_confidence: number;
-
-  /**
-   * Brand safety rating. A = safe (no risks), B = moderate concerns, C = significant
-   * risks.
-   */
-  rating: 'A' | 'B' | 'C';
-
-  /**
-   * Detailed reasoning explaining the analysis result. Includes context about
-   * content analyzed and decision factors.
-   */
-  reasoning: string;
-
-  /**
-   * Human-readable summary of the assessment.
-   */
-  summary: string;
+export interface BrandSafetyAnalyzeCreatorsResponse {
+  data: Array<BrandSafetyAnalyzeCreatorsResponse.Data>;
 }
 
-export namespace BrandSafetyAnalysis {
-  export interface Metadata {
+export namespace BrandSafetyAnalyzeCreatorsResponse {
+  export interface Data {
     /**
-     * When the analysis was performed
+     * Analysis timestamp
      */
-    analysis_date: string;
+    analyzed_at: string;
+
+    creator: Data.Creator;
+
+    input: Data.Input;
 
     /**
-     * Information about the content that was analyzed
+     * Brand safety analysis result
      */
-    content_analyzed: Metadata.ContentAnalyzed;
-
-    /**
-     * Version of the AI model used for analysis
-     */
-    model_version: string;
-
-    /**
-     * Processing time in milliseconds
-     */
-    processing_time_ms: number;
+    safety: Data.Safety;
   }
 
-  export namespace Metadata {
-    /**
-     * Information about the content that was analyzed
-     */
-    export interface ContentAnalyzed {
-      /**
-       * Number of posts analyzed (for profile/creator analysis)
-       */
-      posts_count?: number;
+  export namespace Data {
+    export interface Creator {
+      id: string;
+
+      name: string;
+    }
+
+    export interface Input {
+      creator_id?: string;
 
       /**
-       * Length of text content analyzed
+       * Social media platform
        */
-      text_length?: number;
+      platform?: 'instagram';
+
+      username?: string;
+    }
+
+    /**
+     * Brand safety analysis result
+     */
+    export interface Safety {
+      /**
+       * Confidence in the rating
+       */
+      confidence: number;
+
+      /**
+       * List of brand safety flags
+       */
+      flags: Array<Safety.Flag>;
+
+      /**
+       * Brand safety rating (A=safe, B=caution, C=avoid)
+       */
+      rating: 'A' | 'B' | 'C';
+
+      /**
+       * Human-readable summary
+       */
+      summary: string;
+    }
+
+    export namespace Safety {
+      /**
+       * Individual brand safety flag
+       */
+      export interface Flag {
+        /**
+         * Confidence score (0-1)
+         */
+        confidence: number;
+
+        /**
+         * Description of the flag
+         */
+        description: string;
+
+        /**
+         * Severity of the brand safety flag
+         */
+        severity: 'low' | 'medium' | 'high';
+
+        /**
+         * Type of brand safety flag
+         */
+        type:
+          | 'profanity'
+          | 'adult_content'
+          | 'drugs_alcohol'
+          | 'violence'
+          | 'hate_speech'
+          | 'political'
+          | 'misinformation'
+          | 'adult_sexual_content'
+          | 'profanity_strong_language'
+          | 'drugs_alcohol_tobacco'
+          | 'violence_weapons'
+          | 'hate_discrimination'
+          | 'political_social_issues'
+          | 'misinformation_conspiracy'
+          | 'misc';
+
+        /**
+         * Evidence supporting this flag
+         */
+        evidence?: Array<string>;
+
+        /**
+         * Example content that triggered this flag
+         */
+        examples?: Array<string>;
+      }
     }
   }
 }
 
-/**
- * Individual brand safety flag with detailed information
- */
-export interface BrandSafetyFlag {
-  /**
-   * Confidence score for this specific flag (0-1). Higher values indicate greater
-   * certainty about this concern.
-   */
-  confidence: number;
-
-  /**
-   * Human-readable description explaining the concern. Provides context about what
-   * was detected.
-   */
-  description: string;
-
-  /**
-   * Severity level of the concern:
-   *
-   * - `low`: Minor issue, may be acceptable for some brands
-   * - `medium`: Moderate concern, evaluate based on brand guidelines
-   * - `high`: Significant risk, likely unsuitable for most brands
-   */
-  severity: 'low' | 'medium' | 'high';
-
-  /**
-   * Category of brand safety concern detected:
-   *
-   * - `adult_sexual_content`: Sexually explicit or suggestive content
-   * - `profanity_strong_language`: Profanity or offensive language
-   * - `drugs_alcohol_tobacco`: Drug, alcohol, or tobacco-related content
-   * - `violence_weapons`: Violent content or weapon references
-   * - `hate_discrimination`: Hate speech or discriminatory content
-   * - `political_social_issues`: Politically divisive or controversial topics
-   * - `misinformation_conspiracy`: Misinformation or conspiracy theories
-   * - `misc`: Other brand safety concerns
-   */
-  type:
-    | 'adult_sexual_content'
-    | 'profanity_strong_language'
-    | 'drugs_alcohol_tobacco'
-    | 'violence_weapons'
-    | 'hate_discrimination'
-    | 'political_social_issues'
-    | 'misinformation_conspiracy'
-    | 'misc';
-
-  /**
-   * Specific examples or evidence that triggered this flag. May include post
-   * excerpts or contextual information.
-   */
-  evidence?: Array<string>;
-}
-
-/**
- * Result of brand safety analysis
- */
-export interface BrandSafetyResult {
-  /**
-   * Unique identifier for the analysis result
-   */
-  id: string;
-
-  /**
-   * Brand safety analysis results
-   */
-  analysis: BrandSafetyAnalysis;
-}
-
-export interface BrandSafetyAnalyzeCreatorsResponse {
-  results?: Array<BrandSafetyResult>;
-}
-
 export interface BrandSafetyAnalyzePostsResponse {
-  results?: Array<BrandSafetyResult>;
+  data: Array<BrandSafetyAnalyzePostsResponse.Data>;
+}
+
+export namespace BrandSafetyAnalyzePostsResponse {
+  export interface Data {
+    /**
+     * Analysis timestamp
+     */
+    analyzed_at: string;
+
+    input: Data.Input;
+
+    post: Data.Post;
+
+    /**
+     * Brand safety analysis result
+     */
+    safety: Data.Safety;
+  }
+
+  export namespace Data {
+    export interface Input {
+      /**
+       * Social media platform
+       */
+      platform?: 'instagram';
+
+      platform_id?: string;
+
+      post_id?: string;
+
+      url?: string;
+    }
+
+    export interface Post {
+      id: string;
+
+      /**
+       * Social media platform
+       */
+      platform: 'instagram';
+
+      url: string;
+    }
+
+    /**
+     * Brand safety analysis result
+     */
+    export interface Safety {
+      /**
+       * Confidence in the rating
+       */
+      confidence: number;
+
+      /**
+       * List of brand safety flags
+       */
+      flags: Array<Safety.Flag>;
+
+      /**
+       * Brand safety rating (A=safe, B=caution, C=avoid)
+       */
+      rating: 'A' | 'B' | 'C';
+
+      /**
+       * Human-readable summary
+       */
+      summary: string;
+    }
+
+    export namespace Safety {
+      /**
+       * Individual brand safety flag
+       */
+      export interface Flag {
+        /**
+         * Confidence score (0-1)
+         */
+        confidence: number;
+
+        /**
+         * Description of the flag
+         */
+        description: string;
+
+        /**
+         * Severity of the brand safety flag
+         */
+        severity: 'low' | 'medium' | 'high';
+
+        /**
+         * Type of brand safety flag
+         */
+        type:
+          | 'profanity'
+          | 'adult_content'
+          | 'drugs_alcohol'
+          | 'violence'
+          | 'hate_speech'
+          | 'political'
+          | 'misinformation'
+          | 'adult_sexual_content'
+          | 'profanity_strong_language'
+          | 'drugs_alcohol_tobacco'
+          | 'violence_weapons'
+          | 'hate_discrimination'
+          | 'political_social_issues'
+          | 'misinformation_conspiracy'
+          | 'misc';
+
+        /**
+         * Evidence supporting this flag
+         */
+        evidence?: Array<string>;
+
+        /**
+         * Example content that triggered this flag
+         */
+        examples?: Array<string>;
+      }
+    }
+  }
 }
 
 export interface BrandSafetyAnalyzeProfilesResponse {
-  results?: Array<BrandSafetyResult>;
+  data: Array<BrandSafetyAnalyzeProfilesResponse.Data>;
+}
+
+export namespace BrandSafetyAnalyzeProfilesResponse {
+  export interface Data {
+    /**
+     * Analysis timestamp
+     */
+    analyzed_at: string;
+
+    profile: Data.Profile;
+
+    /**
+     * Brand safety analysis result
+     */
+    safety: Data.Safety;
+  }
+
+  export namespace Data {
+    export interface Profile {
+      id: string;
+
+      /**
+       * Social media platform
+       */
+      platform: 'instagram';
+
+      username: string;
+    }
+
+    /**
+     * Brand safety analysis result
+     */
+    export interface Safety {
+      /**
+       * Confidence in the rating
+       */
+      confidence: number;
+
+      /**
+       * List of brand safety flags
+       */
+      flags: Array<Safety.Flag>;
+
+      /**
+       * Brand safety rating (A=safe, B=caution, C=avoid)
+       */
+      rating: 'A' | 'B' | 'C';
+
+      /**
+       * Human-readable summary
+       */
+      summary: string;
+    }
+
+    export namespace Safety {
+      /**
+       * Individual brand safety flag
+       */
+      export interface Flag {
+        /**
+         * Confidence score (0-1)
+         */
+        confidence: number;
+
+        /**
+         * Description of the flag
+         */
+        description: string;
+
+        /**
+         * Severity of the brand safety flag
+         */
+        severity: 'low' | 'medium' | 'high';
+
+        /**
+         * Type of brand safety flag
+         */
+        type:
+          | 'profanity'
+          | 'adult_content'
+          | 'drugs_alcohol'
+          | 'violence'
+          | 'hate_speech'
+          | 'political'
+          | 'misinformation'
+          | 'adult_sexual_content'
+          | 'profanity_strong_language'
+          | 'drugs_alcohol_tobacco'
+          | 'violence_weapons'
+          | 'hate_discrimination'
+          | 'political_social_issues'
+          | 'misinformation_conspiracy'
+          | 'misc';
+
+        /**
+         * Evidence supporting this flag
+         */
+        evidence?: Array<string>;
+
+        /**
+         * Example content that triggered this flag
+         */
+        examples?: Array<string>;
+      }
+    }
+  }
 }
 
 export interface BrandSafetyAnalyzeCreatorsParams {
   /**
-   * Creator IDs to analyze
+   * Creators to analyze
    */
-  creator_ids: Array<string>;
+  creators: Array<BrandSafetyAnalyzeCreatorsParams.Creator>;
+}
+
+export namespace BrandSafetyAnalyzeCreatorsParams {
+  export interface Creator {
+    /**
+     * Creator ID (use this OR platform+username)
+     */
+    creator_id?: string;
+
+    /**
+     * Platform (required with username)
+     */
+    platform?: 'instagram';
+
+    /**
+     * Username (required with platform)
+     */
+    username?: string;
+  }
 }
 
 export interface BrandSafetyAnalyzePostsParams {
-  posts: Array<
-    BrandSafetyAnalyzePostsParams.BrandSafetyPostByURL | BrandSafetyAnalyzePostsParams.BrandSafetyPostByID
-  >;
+  /**
+   * Posts to analyze
+   */
+  posts: Array<BrandSafetyAnalyzePostsParams.Post>;
 }
 
 export namespace BrandSafetyAnalyzePostsParams {
-  export interface BrandSafetyPostByURL {
+  export interface Post {
     /**
-     * Social media platform hosting the post
+     * Platform (required with platform_id)
      */
-    platform: 'instagram';
+    platform?: 'instagram';
 
     /**
-     * URL of the post to scan
+     * Platform-specific post ID
      */
-    url: string;
-  }
-
-  export interface BrandSafetyPostByID {
-    /**
-     * Social media platform hosting the post
-     */
-    platform: 'instagram';
+    platform_id?: string;
 
     /**
-     * Platform-specific post identifier
+     * Internal post ID
      */
-    post_id: string;
+    post_id?: string;
+
+    /**
+     * Post URL
+     */
+    url?: string;
   }
 }
 
 export interface BrandSafetyAnalyzeProfilesParams {
-  profiles: Array<ProfilesAPI.CreatorReferenceByHandle>;
+  /**
+   * Profiles to analyze
+   */
+  profiles: Array<BrandSafetyAnalyzeProfilesParams.Profile>;
+}
+
+export namespace BrandSafetyAnalyzeProfilesParams {
+  export interface Profile {
+    /**
+     * Social media platform
+     */
+    platform: 'instagram';
+
+    /**
+     * Username
+     */
+    username: string;
+  }
 }
 
 export declare namespace BrandSafety {
   export {
-    type BrandSafetyAnalysis as BrandSafetyAnalysis,
-    type BrandSafetyFlag as BrandSafetyFlag,
-    type BrandSafetyResult as BrandSafetyResult,
     type BrandSafetyAnalyzeCreatorsResponse as BrandSafetyAnalyzeCreatorsResponse,
     type BrandSafetyAnalyzePostsResponse as BrandSafetyAnalyzePostsResponse,
     type BrandSafetyAnalyzeProfilesResponse as BrandSafetyAnalyzeProfilesResponse,
