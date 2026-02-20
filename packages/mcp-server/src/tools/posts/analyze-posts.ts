@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Metadata, asTextContentResult } from 'influship-api-mcp/tools/types';
+import { Metadata, asErrorResult, asTextContentResult } from 'influship-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 
 export const metadata: Metadata = {
   resource: 'posts',
@@ -20,37 +20,76 @@ export const tool: Tool = {
     'Analyze a social media post for engagement metrics, content insights, and brand safety.\n\nProvide post via URL or post_id+platform. Optionally include AI analysis and/or brand safety features.\n\n**Pricing**:\n- Base: 1.0 credit per post\n- AI Analysis feature: +0.5 credits (includes summary and transcript)\n- Brand Safety feature: +0.5 credits (includes rating and risk flags)\n- **Example**: 1 post with both features = 1.0 + 0.5 + 0.5 = 2.0 credits\n',
   inputSchema: {
     type: 'object',
-    properties: {
-      features: {
-        type: 'array',
-        description: 'Analysis features to include',
-        items: {
-          type: 'string',
-          enum: ['ai_analysis', 'brand_safety'],
+    anyOf: [
+      {
+        type: 'object',
+        properties: {
+          url: {
+            type: 'string',
+            description: 'Public URL of the post to analyze',
+          },
+          features: {
+            type: 'array',
+            description: 'Analysis features to include',
+            items: {
+              type: 'string',
+              enum: ['ai_analysis', 'brand_safety'],
+            },
+          },
+          platform: {
+            type: 'string',
+            description: 'Social media platform (required when using post_id)',
+            enum: ['instagram', 'tiktok'],
+          },
+          post_id: {
+            type: 'string',
+            description: 'Platform-specific post ID',
+          },
         },
+        required: ['url'],
       },
-      platform: {
-        type: 'string',
-        description: 'Social media platform (required when using post_id)',
-        enum: ['instagram', 'tiktok'],
+      {
+        type: 'object',
+        properties: {
+          platform: {
+            type: 'string',
+            description: 'Social media platform',
+            enum: ['instagram', 'tiktok'],
+          },
+          post_id: {
+            type: 'string',
+            description: 'Platform-specific post ID',
+          },
+          features: {
+            type: 'array',
+            description: 'Analysis features to include',
+            items: {
+              type: 'string',
+              enum: ['ai_analysis', 'brand_safety'],
+            },
+          },
+          url: {
+            type: 'string',
+            description: 'Public URL of the post to analyze',
+          },
+        },
+        required: ['platform', 'post_id'],
       },
-      post_id: {
-        type: 'string',
-        description: 'Platform-specific post ID',
-      },
-      url: {
-        type: 'string',
-        description: 'Public URL of the post to analyze',
-      },
-    },
-    required: [],
+    ],
   },
   annotations: {},
 };
 
 export const handler = async (client: InflushipAPI, args: Record<string, unknown> | undefined) => {
   const body = args as any;
-  return asTextContentResult(await client.posts.analyze(body));
+  try {
+    return asTextContentResult(await client.posts.analyze(body));
+  } catch (error) {
+    if (error instanceof InflushipAPI.APIError) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };

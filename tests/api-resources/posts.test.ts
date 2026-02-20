@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 
 const client = new InflushipAPI({
   apiKey: 'My API Key',
@@ -9,8 +9,8 @@ const client = new InflushipAPI({
 
 describe('resource posts', () => {
   // Prism tests are disabled
-  test.skip('analyze', async () => {
-    const responsePromise = client.posts.analyze({});
+  test.skip('analyze: only required params', async () => {
+    const responsePromise = client.posts.analyze({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,6 +18,16 @@ describe('resource posts', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('analyze: required and optional params', async () => {
+    const response = await client.posts.analyze({
+      url: 'https://example.com',
+      features: ['ai_analysis'],
+      platform: 'instagram',
+      post_id: 'post_id',
+    });
   });
 
   // Prism tests are disabled

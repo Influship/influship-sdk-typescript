@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 type TextContentBlock = {
@@ -85,6 +85,18 @@ export async function asBinaryContentResult(response: Response): Promise<ToolCal
       ],
     };
   }
+}
+
+export function asErrorResult(message: string): ToolCallResult {
+  return {
+    content: [
+      {
+        type: 'text',
+        text: message,
+      },
+    ],
+    isError: true,
+  };
 }
 
 export type Metadata = {

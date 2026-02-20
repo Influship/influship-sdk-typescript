@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { ClientOptions } from 'influship-api';
+import { ClientOptions } from 'influship';
 
 export type WorkerInput = {
   opts: ClientOptions;
@@ -11,4 +11,8 @@ export type WorkerSuccess = {
   logLines: string[];
   errLines: string[];
 };
-export type WorkerError = { message: string | undefined };
+export type WorkerError = {
+  message: string | undefined;
+  logLines: string[];
+  errLines: string[];
+};

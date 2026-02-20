@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'influship-api/core/api-promise';
+import { APIPromise } from 'influship/core/api-promise';
 
 import util from 'node:util';
-import InflushipAPI from 'influship-api';
-import { APIUserAbortError } from 'influship-api';
+import InflushipAPI from 'influship';
+import { APIUserAbortError } from 'influship';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -428,14 +428,14 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['INFLUSHIP_API_API_KEY'] = 'My API Key';
+    process.env['INFLUSHIP_API_KEY'] = 'My API Key';
     const client = new InflushipAPI();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['INFLUSHIP_API_API_KEY'] = 'another My API Key';
+    process.env['INFLUSHIP_API_KEY'] = 'another My API Key';
     const client = new InflushipAPI({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });

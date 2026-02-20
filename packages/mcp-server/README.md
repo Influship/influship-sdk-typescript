@@ -4,31 +4,16 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
-### Building
+### Direct invocation
 
-Because it's not published yet, clone the repo and build it:
-
-```sh
-git clone git@github.com:Influship/influship-sdk-typescript.git
-cd influship-sdk-typescript
-./scripts/bootstrap
-./scripts/build
-```
-
-### Running
+You can run the MCP Server directly via `npx`:
 
 ```sh
-# set env vars as needed
-export INFLUSHIP_API_API_KEY="My API Key"
-node ./packages/mcp-server/dist/index.js
+export INFLUSHIP_API_KEY="My API Key"
+npx -y influship-api-mcp@latest
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npx -y influship-api-mcp`
 
 ### Via MCP Client
-
-[Build the project](#building) as mentioned above.
 
 There is a partial list of existing clients at [modelcontextprotocol.io](https://modelcontextprotocol.io/clients). If you already
 have a client, consult their documentation to install the MCP server.
@@ -38,27 +23,47 @@ For clients with a configuration JSON, it might look something like this:
 ```json
 {
   "mcpServers": {
-    "influship_api_api": {
-      "command": "node",
-      "args": [
-        "/path/to/local/influship-sdk-typescript/packages/mcp-server",
-        "--client=claude",
-        "--tools=all"
-      ],
+    "influship_api": {
+      "command": "npx",
+      "args": ["-y", "influship-api-mcp", "--client=claude", "--tools=all"],
       "env": {
-        "INFLUSHIP_API_API_KEY": "My API Key"
+        "INFLUSHIP_API_KEY": "My API Key"
       }
     }
   }
 }
 ```
 
+### Cursor
+
+If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
+in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
+
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=influship-api-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImluZmx1c2hpcC1hcGktbWNwIl0sImVudiI6eyJJTkZMVVNISVBfQVBJX0tFWSI6IlNldCB5b3VyIElORkxVU0hJUF9BUElfS0VZIGhlcmUuIn19)
+
+### VS Code
+
+If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
+in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
+
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22influship-api-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22influship-api-mcp%22%5D%2C%22env%22%3A%7B%22INFLUSHIP_API_KEY%22%3A%22Set%20your%20INFLUSHIP_API_KEY%20here.%22%7D%7D)
+
+### Claude Code
+
+If you use Claude Code, you can install the MCP server by running the command below in your terminal. You will need to set your
+environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
+
+```
+claude mcp add --transport stdio influship_api --env INFLUSHIP_API_KEY="Your INFLUSHIP_API_KEY here." -- npx -y influship-api-mcp
+```
+
 ## Exposing endpoints to your MCP Client
 
-There are two ways to expose endpoints as tools in the MCP server:
+There are three ways to expose endpoints as tools in the MCP server:
 
 1. Exposing one tool per endpoint, and filtering as necessary
 2. Exposing a set of tools to dynamically discover and invoke endpoints from the API
+3. Exposing a docs search tool and a code execution tool, allowing the client to write code to be executed against the TypeScript client
 
 ### Filtering endpoints and tools
 
@@ -92,6 +97,18 @@ See more information with `--help`.
 All of these command-line options can be repeated, combined together, and have corresponding exclusion versions (e.g. `--no-tool`).
 
 Use `--list` to see the list of available tools, or see below.
+
+### Code execution
+
+If you specify `--tools=code` to the MCP server, it will expose just two tools:
+
+- `search_docs` - Searches the API documentation and returns a list of markdown results
+- `execute` - Runs code against the TypeScript client
+
+This allows the LLM to implement more complex logic by chaining together many API calls without loading
+intermediary results into its context window.
+
+The code execution itself happens in a Deno sandbox that has network access only to the base URL for the API.
 
 ### Specifying the MCP Client
 
@@ -159,7 +176,7 @@ A configuration JSON for this server might look like this, assuming the server i
 ```json
 {
   "mcpServers": {
-    "influship_api_api": {
+    "influship_api": {
       "url": "http://localhost:3000",
       "headers": {
         "X-API-Key": "My API Key"

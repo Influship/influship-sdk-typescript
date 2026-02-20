@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'influship-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'influship-api-mcp/tools/types';
+import { isJqError, maybeFilter } from 'influship-api-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'influship-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import InflushipAPI from 'influship-api';
+import InflushipAPI from 'influship';
 
 export const metadata: Metadata = {
   resource: 'health',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'check_health',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nCheck the health status of the API\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    ok: {\n      type: 'boolean'\n    },\n    timestamp: {\n      type: 'string',\n      format: 'date-time'\n    }\n  },\n  required: [    'ok',\n    'timestamp'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nCheck the health status of the API\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/health_check_response',\n  $defs: {\n    health_check_response: {\n      type: 'object',\n      properties: {\n        ok: {\n          type: 'boolean'\n        },\n        timestamp: {\n          type: 'string',\n          format: 'date-time'\n        }\n      },\n      required: [        'ok',\n        'timestamp'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -38,7 +38,14 @@ export const tool: Tool = {
 
 export const handler = async (client: InflushipAPI, args: Record<string, unknown> | undefined) => {
   const { jq_filter } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.health.check()));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.health.check()));
+  } catch (error) {
+    if (error instanceof InflushipAPI.APIError || isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };

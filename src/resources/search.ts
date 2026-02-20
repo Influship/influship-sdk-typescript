@@ -90,6 +90,48 @@ export namespace SearchItem {
      * indicate strong relevance.
      */
     score: number;
+
+    /**
+     * Fact-level evidence from hybrid search explaining why this creator matched. Each
+     * fact represents specific, verifiable information about the creator.
+     */
+    evidence?: Array<AIRecommendation.Evidence>;
+  }
+
+  export namespace AIRecommendation {
+    /**
+     * Individual fact from hybrid search providing evidence for why a creator matched.
+     * Facts are specific, verifiable pieces of information extracted from creator
+     * data.
+     */
+    export interface Evidence {
+      /**
+       * The actual fact text describing specific information about the creator
+       */
+      fact: string;
+
+      /**
+       * Unique identifier for this fact
+       */
+      factId: string;
+
+      /**
+       * Combined relevance score (similarity × confidence × temporal decay). Higher
+       * scores indicate stronger evidence for the match.
+       */
+      score: number;
+
+      /**
+       * When this fact was created or observed (ISO 8601 format)
+       */
+      created_at?: string;
+
+      /**
+       * Array of source post IDs where this fact originated. A single fact may come from
+       * multiple posts.
+       */
+      source_post_id?: Array<string>;
+    }
   }
 }
 
