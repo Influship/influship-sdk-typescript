@@ -66,6 +66,12 @@ export interface ProfileGetResponse {
    * Full profile details
    */
   data: ProfileGetResponse.Data;
+
+  /**
+   * Present when partial results were returned because profile metrics/data were
+   * skipped due to integrity issues.
+   */
+  warning?: string;
 }
 
 export namespace ProfileGetResponse {

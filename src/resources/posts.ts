@@ -35,9 +35,19 @@ export interface PostListResponse {
   data: Array<PostListResponse.Data>;
 
   /**
-   * Cursor-based pagination metadata
+   * Whether more results are available
    */
-  pagination: PostListResponse.Pagination;
+  has_more: boolean;
+
+  /**
+   * Cursor for the next page of results
+   */
+  next_cursor: string | null;
+
+  /**
+   * Total number of results (if available)
+   */
+  total?: number;
 }
 
 export namespace PostListResponse {
@@ -176,26 +186,6 @@ export namespace PostListResponse {
        */
       views: number | null;
     }
-  }
-
-  /**
-   * Cursor-based pagination metadata
-   */
-  export interface Pagination {
-    /**
-     * Whether more results are available
-     */
-    has_more: boolean;
-
-    /**
-     * Cursor for the next page of results
-     */
-    next_cursor?: string;
-
-    /**
-     * Total number of results (if available)
-     */
-    total?: number;
   }
 }
 

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -35,7 +36,20 @@ export class Search extends APIResource {
 export interface SearchQueryResponse {
   data: Array<SearchQueryResponse.Data>;
 
-  pagination: SearchQueryResponse.Pagination;
+  /**
+   * Whether more results are available
+   */
+  has_more: boolean;
+
+  /**
+   * Cursor for the next page
+   */
+  next_cursor: string | null;
+
+  /**
+   * Total number of results
+   */
+  total?: number;
 }
 
 export namespace SearchQueryResponse {
@@ -53,12 +67,12 @@ export namespace SearchQueryResponse {
     /**
      * Primary profile (largest audience)
      */
-    primary_profile: Data.PrimaryProfile;
+    primary_profile: Shared.ProfileSummary;
 
     /**
      * Most relevant profile based on search query
      */
-    relevant_profile: Data.RelevantProfile;
+    relevant_profile: Shared.ProfileSummary;
   }
 
   export namespace Data {
@@ -101,103 +115,6 @@ export namespace SearchQueryResponse {
        */
       score: number;
     }
-
-    /**
-     * Primary profile (largest audience)
-     */
-    export interface PrimaryProfile {
-      /**
-       * Profile unique identifier
-       */
-      id: string;
-
-      /**
-       * Engagement rate as percentage
-       */
-      engagement_rate: number;
-
-      /**
-       * Follower count
-       */
-      followers: number;
-
-      /**
-       * Whether the account is verified
-       */
-      is_verified: boolean;
-
-      /**
-       * Social media platform
-       */
-      platform: 'instagram';
-
-      /**
-       * Profile URL
-       */
-      url: string;
-
-      /**
-       * Profile username
-       */
-      username: string;
-    }
-
-    /**
-     * Most relevant profile based on search query
-     */
-    export interface RelevantProfile {
-      /**
-       * Profile unique identifier
-       */
-      id: string;
-
-      /**
-       * Engagement rate as percentage
-       */
-      engagement_rate: number;
-
-      /**
-       * Follower count
-       */
-      followers: number;
-
-      /**
-       * Whether the account is verified
-       */
-      is_verified: boolean;
-
-      /**
-       * Social media platform
-       */
-      platform: 'instagram';
-
-      /**
-       * Profile URL
-       */
-      url: string;
-
-      /**
-       * Profile username
-       */
-      username: string;
-    }
-  }
-
-  export interface Pagination {
-    /**
-     * Whether more results are available
-     */
-    has_more: boolean;
-
-    /**
-     * Cursor for the next page
-     */
-    next_cursor?: string;
-
-    /**
-     * Total number of results
-     */
-    total?: number;
   }
 }
 

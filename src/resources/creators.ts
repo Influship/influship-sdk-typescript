@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -137,6 +138,12 @@ export interface CreatorRetrieveResponse {
    * Full creator details
    */
   data: CreatorRetrieveResponse.Data;
+
+  /**
+   * Present when partial results were returned because one or more linked profiles
+   * were skipped for data integrity reasons.
+   */
+  warning?: string;
 }
 
 export namespace CreatorRetrieveResponse {
@@ -177,49 +184,7 @@ export namespace CreatorRetrieveResponse {
     /**
      * Social profiles (only included when include=profiles)
      */
-    profiles?: Array<Data.Profile>;
-  }
-
-  export namespace Data {
-    /**
-     * Abbreviated profile information
-     */
-    export interface Profile {
-      /**
-       * Profile unique identifier
-       */
-      id: string;
-
-      /**
-       * Engagement rate as percentage
-       */
-      engagement_rate: number;
-
-      /**
-       * Follower count
-       */
-      followers: number;
-
-      /**
-       * Whether the account is verified
-       */
-      is_verified: boolean;
-
-      /**
-       * Social media platform
-       */
-      platform: 'instagram';
-
-      /**
-       * Profile URL
-       */
-      url: string;
-
-      /**
-       * Profile username
-       */
-      username: string;
-    }
+    profiles?: Array<Shared.ProfileSummary>;
   }
 }
 
@@ -290,7 +255,20 @@ export namespace CreatorAutocompleteResponse {
 export interface CreatorLookalikeResponse {
   data: Array<CreatorLookalikeResponse.Data>;
 
-  pagination: CreatorLookalikeResponse.Pagination;
+  /**
+   * Whether more results are available
+   */
+  has_more: boolean;
+
+  /**
+   * Cursor for the next page
+   */
+  next_cursor: string | null;
+
+  /**
+   * Total number of results
+   */
+  total?: number;
 }
 
 export namespace CreatorLookalikeResponse {
@@ -303,7 +281,7 @@ export namespace CreatorLookalikeResponse {
     /**
      * Abbreviated profile information
      */
-    primary_profile: Data.PrimaryProfile;
+    primary_profile: Shared.ProfileSummary;
 
     /**
      * Similarity information for lookalike match
@@ -338,46 +316,6 @@ export namespace CreatorLookalikeResponse {
     }
 
     /**
-     * Abbreviated profile information
-     */
-    export interface PrimaryProfile {
-      /**
-       * Profile unique identifier
-       */
-      id: string;
-
-      /**
-       * Engagement rate as percentage
-       */
-      engagement_rate: number;
-
-      /**
-       * Follower count
-       */
-      followers: number;
-
-      /**
-       * Whether the account is verified
-       */
-      is_verified: boolean;
-
-      /**
-       * Social media platform
-       */
-      platform: 'instagram';
-
-      /**
-       * Profile URL
-       */
-      url: string;
-
-      /**
-       * Profile username
-       */
-      username: string;
-    }
-
-    /**
      * Similarity information for lookalike match
      */
     export interface Similarity {
@@ -391,23 +329,6 @@ export namespace CreatorLookalikeResponse {
        */
       shared_traits: Array<string>;
     }
-  }
-
-  export interface Pagination {
-    /**
-     * Whether more results are available
-     */
-    has_more: boolean;
-
-    /**
-     * Cursor for the next page
-     */
-    next_cursor?: string;
-
-    /**
-     * Total number of results
-     */
-    total?: number;
   }
 }
 

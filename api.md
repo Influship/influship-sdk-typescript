@@ -1,3 +1,9 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ProfileSummary</a></code>
+
 # Health
 
 Types:
@@ -56,18 +62,6 @@ Methods:
 
 - <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponse</code>
 
-# BrandSafety
-
-Types:
-
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzeCreatorsResponse</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzePostsResponse</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzeProfilesResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/brand-safety/creators">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzeCreators</a>({ ...params }) -> BrandSafetyAnalyzeCreatorsResponse</code>
-- <code title="post /v1/brand-safety/posts">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzePosts</a>({ ...params }) -> BrandSafetyAnalyzePostsResponse</code>
-- <code title="post /v1/brand-safety/profiles">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzeProfiles</a>({ ...params }) -> BrandSafetyAnalyzeProfilesResponse</code>
-
 # Live
+
+# Raw

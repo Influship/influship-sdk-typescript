@@ -13,18 +13,11 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  BrandSafety,
-  BrandSafetyAnalyzeCreatorsParams,
-  BrandSafetyAnalyzeCreatorsResponse,
-  BrandSafetyAnalyzePostsParams,
-  BrandSafetyAnalyzePostsResponse,
-  BrandSafetyAnalyzeProfilesParams,
-  BrandSafetyAnalyzeProfilesResponse,
-} from './resources/brand-safety';
 import {
   CreatorAutocompleteParams,
   CreatorAutocompleteResponse,
@@ -46,6 +39,7 @@ import {
   ProfileLookupResponse,
   Profiles,
 } from './resources/profiles';
+import { Raw } from './resources/raw';
 import { Search, SearchQueryParams, SearchQueryResponse } from './resources/search';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -512,6 +506,30 @@ export class Influship {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Influship, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -764,8 +782,8 @@ export class Influship {
   search: API.Search = new API.Search(this);
   profiles: API.Profiles = new API.Profiles(this);
   posts: API.Posts = new API.Posts(this);
-  brandSafety: API.BrandSafety = new API.BrandSafety(this);
   live: API.Live = new API.Live(this);
+  raw: API.Raw = new API.Raw(this);
 }
 
 Influship.Health = Health;
@@ -773,11 +791,14 @@ Influship.Creators = Creators;
 Influship.Search = Search;
 Influship.Profiles = Profiles;
 Influship.Posts = Posts;
-Influship.BrandSafety = BrandSafety;
 Influship.Live = Live;
+Influship.Raw = Raw;
 
 export declare namespace Influship {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import Cursor = Pagination.Cursor;
+  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -809,15 +830,9 @@ export declare namespace Influship {
 
   export { Posts as Posts, type PostListResponse as PostListResponse, type PostListParams as PostListParams };
 
-  export {
-    BrandSafety as BrandSafety,
-    type BrandSafetyAnalyzeCreatorsResponse as BrandSafetyAnalyzeCreatorsResponse,
-    type BrandSafetyAnalyzePostsResponse as BrandSafetyAnalyzePostsResponse,
-    type BrandSafetyAnalyzeProfilesResponse as BrandSafetyAnalyzeProfilesResponse,
-    type BrandSafetyAnalyzeCreatorsParams as BrandSafetyAnalyzeCreatorsParams,
-    type BrandSafetyAnalyzePostsParams as BrandSafetyAnalyzePostsParams,
-    type BrandSafetyAnalyzeProfilesParams as BrandSafetyAnalyzeProfilesParams,
-  };
-
   export { Live as Live };
+
+  export { Raw as Raw };
+
+  export type ProfileSummary = API.ProfileSummary;
 }

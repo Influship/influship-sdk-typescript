@@ -64,24 +64,6 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/v1/posts',
   },
-  {
-    clientCallName: 'client.brandSafety.analyzeCreators',
-    fullyQualifiedName: 'brandSafety.analyzeCreators',
-    httpMethod: 'post',
-    httpPath: '/v1/brand-safety/creators',
-  },
-  {
-    clientCallName: 'client.brandSafety.analyzePosts',
-    fullyQualifiedName: 'brandSafety.analyzePosts',
-    httpMethod: 'post',
-    httpPath: '/v1/brand-safety/posts',
-  },
-  {
-    clientCallName: 'client.brandSafety.analyzeProfiles',
-    fullyQualifiedName: 'brandSafety.analyzeProfiles',
-    httpMethod: 'post',
-    httpPath: '/v1/brand-safety/profiles',
-  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
