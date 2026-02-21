@@ -372,19 +372,33 @@ export namespace CreatorMatchResponse {
       decision: 'good' | 'neutral' | 'avoid';
 
       /**
-       * Evidence supporting the decision
+       * Structured reasons supporting the decision
        */
-      evidence: Array<string>;
-
-      /**
-       * Human-readable explanation
-       */
-      explanation: string;
+      reasons: Array<Match.Reason>;
 
       /**
        * Match score (0-1)
        */
       score: number;
+    }
+
+    export namespace Match {
+      export interface Reason {
+        /**
+         * Human-readable reason for the match
+         */
+        text: string;
+
+        /**
+         * ID of the supporting fact, if applicable
+         */
+        factId?: string;
+
+        /**
+         * ID of the source post, if applicable
+         */
+        sourcePostId?: string;
+      }
     }
   }
 }
