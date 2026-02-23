@@ -1,12 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { InflushipAPI as default } from './client';
+export { Influship as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { InflushipAPI, type ClientOptions } from './client';
+export { Influship, type ClientOptions } from './client';
+export { PagePromise } from './core/pagination';
 export {
-  InflushipAPIError,
+  InflushipError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

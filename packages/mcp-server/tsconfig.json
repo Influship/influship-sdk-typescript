@@ -2,14 +2,14 @@
   "include": ["src", "tests", "examples"],
   "exclude": [],
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["es2020"],
+    "target": "es2022",
+    "lib": ["es2022"],
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "influship-api-mcp/*": ["./src/*"],
-      "influship-api-mcp": ["./src/index.ts"]
+      "influship-mcp/*": ["./src/*"],
+      "influship-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 

@@ -1,18 +1,18 @@
 {
   "dxt_version": "0.2",
-  "name": "influship-api-mcp",
+  "name": "influship-mcp",
   "version": "0.1.0",
-  "description": "The official MCP Server for the Influship API API",
+  "description": "The official MCP Server for the Influship API",
   "author": {
-    "name": "Influship API",
+    "name": "Influship",
     "email": "support@influship.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Influship/influship-sdk-typescript.git"
+    "url": "git+https://github.com/inf-labs/influship-sdk-typescript.git"
   },
-  "homepage": "https://github.com/Influship/influship-sdk-typescript/tree/main/packages/mcp-server#readme",
-  "documentation": "https://docs.influship.com",
+  "homepage": "https://github.com/inf-labs/influship-sdk-typescript/tree/main/packages/mcp-server#readme",
+  "documentation": "https://influship.mintlify.app",
   "server": {
     "type": "node",
     "entry_point": "index.js",
@@ -27,7 +27,7 @@
   "user_config": {
     "INFLUSHIP_API_KEY": {
       "title": "api_key",
-      "description": "API key for authentication",
+      "description": "",
       "required": true,
       "type": "string"
     }
