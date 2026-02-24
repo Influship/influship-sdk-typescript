@@ -60,7 +60,7 @@ $ yarn link influship
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global influship
+$ pnpm link --global influship
 ```
 
 ## Running tests
