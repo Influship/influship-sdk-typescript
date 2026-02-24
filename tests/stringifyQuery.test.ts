@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { InflushipAPI } from 'influship';
+import { Influship } from 'influship';
 
-const { stringifyQuery } = InflushipAPI.prototype as any;
+const { stringifyQuery } = Influship.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

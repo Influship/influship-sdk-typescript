@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import InflushipAPI from 'influship';
+import Influship from 'influship';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 type TextContentBlock = {
@@ -42,10 +42,18 @@ export type ToolCallResult = {
   isError?: boolean;
 };
 
-export type HandlerFunction = (
-  client: InflushipAPI,
-  args: Record<string, unknown> | undefined,
-) => Promise<ToolCallResult>;
+export type McpRequestContext = {
+  client: Influship;
+  stainlessApiKey?: string | undefined;
+};
+
+export type HandlerFunction = ({
+  reqContext,
+  args,
+}: {
+  reqContext: McpRequestContext;
+  args: Record<string, unknown> | undefined;
+}) => Promise<ToolCallResult>;
 
 export function asTextContentResult(result: unknown): ToolCallResult {
   return {
@@ -108,7 +116,7 @@ export type Metadata = {
   operationId?: string;
 };
 
-export type Endpoint = {
+export type McpTool = {
   metadata: Metadata;
   tool: Tool;
   handler: HandlerFunction;

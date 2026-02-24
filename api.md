@@ -1,3 +1,9 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">ProfileSummary</a></code>
+
 # Health
 
 Types:
@@ -8,96 +14,78 @@ Methods:
 
 - <code title="get /health">client.health.<a href="./src/resources/health.ts">check</a>() -> HealthCheckResponse</code>
 
-# Search
-
-Types:
-
-- <code><a href="./src/resources/search.ts">SearchItem</a></code>
-- <code><a href="./src/resources/search.ts">SearchFindCreatorsResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">findCreators</a>({ ...params }) -> SearchFindCreatorsResponse</code>
-
 # Creators
 
 Types:
 
-- <code><a href="./src/resources/creators.ts">Creator</a></code>
-- <code><a href="./src/resources/creators.ts">CreatorAutocomplete</a></code>
-- <code><a href="./src/resources/creators.ts">SocialAccountDetailed</a></code>
-- <code><a href="./src/resources/creators.ts">SocialAccountLite</a></code>
 - <code><a href="./src/resources/creators.ts">CreatorRetrieveResponse</a></code>
 - <code><a href="./src/resources/creators.ts">CreatorAutocompleteResponse</a></code>
-- <code><a href="./src/resources/creators.ts">CreatorListProfilesResponse</a></code>
+- <code><a href="./src/resources/creators.ts">CreatorLookalikeResponse</a></code>
+- <code><a href="./src/resources/creators.ts">CreatorMatchResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/creators">client.creators.<a href="./src/resources/creators.ts">retrieve</a>({ ...params }) -> CreatorRetrieveResponse</code>
+- <code title="get /v1/creators/{id}">client.creators.<a href="./src/resources/creators.ts">retrieve</a>(id, { ...params }) -> CreatorRetrieveResponse</code>
 - <code title="get /v1/creators/autocomplete">client.creators.<a href="./src/resources/creators.ts">autocomplete</a>({ ...params }) -> CreatorAutocompleteResponse</code>
-- <code title="get /v1/creators/{id}/profiles">client.creators.<a href="./src/resources/creators.ts">listProfiles</a>(id, { ...params }) -> CreatorListProfilesResponse</code>
+- <code title="post /v1/creators/lookalike">client.creators.<a href="./src/resources/creators.ts">lookalike</a>({ ...params }) -> CreatorLookalikeResponse</code>
+- <code title="post /v1/creators/match">client.creators.<a href="./src/resources/creators.ts">match</a>({ ...params }) -> CreatorMatchResponse</code>
+
+# Search
+
+Types:
+
+- <code><a href="./src/resources/search.ts">SearchCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">create</a>({ ...params }) -> SearchCreateResponse</code>
 
 # Profiles
 
 Types:
 
-- <code><a href="./src/resources/profiles.ts">CreatorReferenceByHandle</a></code>
+- <code><a href="./src/resources/profiles.ts">ProfileGetResponse</a></code>
 - <code><a href="./src/resources/profiles.ts">ProfileLookupResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/profiles">client.profiles.<a href="./src/resources/profiles.ts">lookup</a>({ ...params }) -> ProfileLookupResponse</code>
-
-# Lookalike
-
-Types:
-
-- <code><a href="./src/resources/lookalike.ts">LookalikeSeedBase</a></code>
-- <code><a href="./src/resources/lookalike.ts">LookalikeFindSimilarCreatorsResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/lookalike">client.lookalike.<a href="./src/resources/lookalike.ts">findSimilarCreators</a>({ ...params }) -> LookalikeFindSimilarCreatorsResponse</code>
+- <code title="get /v1/profiles/{platform}/{username}">client.profiles.<a href="./src/resources/profiles.ts">get</a>(username, { ...params }) -> ProfileGetResponse</code>
+- <code title="post /v1/profiles/lookup">client.profiles.<a href="./src/resources/profiles.ts">lookup</a>({ ...params }) -> ProfileLookupResponse</code>
 
 # Posts
 
 Types:
 
-- <code><a href="./src/resources/posts.ts">AIAnalysis</a></code>
-- <code><a href="./src/resources/posts.ts">CursorPagination</a></code>
-- <code><a href="./src/resources/posts.ts">PostAnalysis</a></code>
-- <code><a href="./src/resources/posts.ts">PostListByCreatorResponse</a></code>
+- <code><a href="./src/resources/posts.ts">PostListResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/posts/analyze">client.posts.<a href="./src/resources/posts.ts">analyze</a>({ ...params }) -> PostAnalysis</code>
-- <code title="get /v1/posts/by-creator">client.posts.<a href="./src/resources/posts.ts">listByCreator</a>({ ...params }) -> PostListByCreatorResponse</code>
+- <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponsesCursor</code>
 
-# Match
+# Raw
+
+## Instagram
 
 Types:
 
-- <code><a href="./src/resources/match.ts">CreatorReferenceByID</a></code>
-- <code><a href="./src/resources/match.ts">MatchResult</a></code>
-- <code><a href="./src/resources/match.ts">MatchAnalyzeResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetProfileResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/match">client.match.<a href="./src/resources/match.ts">analyze</a>({ ...params }) -> MatchAnalyzeResponse</code>
+- <code title="get /v1/raw/instagram/profile/{username}">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getProfile</a>(username, { ...params }) -> InstagramGetProfileResponse</code>
 
-# BrandSafety
+## Youtube
 
 Types:
 
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalysis</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyFlag</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyResult</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzeCreatorsResponse</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzePostsResponse</a></code>
-- <code><a href="./src/resources/brand-safety.ts">BrandSafetyAnalyzeProfilesResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelTranscriptsResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeSearchResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/brand-safety/creators">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzeCreators</a>({ ...params }) -> BrandSafetyAnalyzeCreatorsResponse</code>
-- <code title="post /v1/brand-safety/posts">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzePosts</a>({ ...params }) -> BrandSafetyAnalyzePostsResponse</code>
-- <code title="post /v1/brand-safety/profiles">client.brandSafety.<a href="./src/resources/brand-safety.ts">analyzeProfiles</a>({ ...params }) -> BrandSafetyAnalyzeProfilesResponse</code>
+- <code title="get /v1/raw/youtube/channel/{handle}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getChannel</a>(handle, { ...params }) -> YoutubeGetChannelResponse</code>
+- <code title="get /v1/raw/youtube/channel-transcripts/{handle}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getChannelTranscripts</a>(handle, { ...params }) -> YoutubeGetChannelTranscriptsResponse</code>
+- <code title="get /v1/raw/youtube/transcript/{video_id}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getTranscript</a>(videoID, { ...params }) -> YoutubeGetTranscriptResponse</code>
+- <code title="get /v1/raw/youtube/search">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">search</a>({ ...params }) -> YoutubeSearchResponse</code>
