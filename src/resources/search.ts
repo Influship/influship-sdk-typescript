@@ -22,19 +22,19 @@ export class Search extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.search.query({
+   * const search = await client.search.create({
    *   query:
    *     'fitness influencers with 100k+ followers who post workout videos',
    * });
    * ```
    */
-  query(body: SearchQueryParams, options?: RequestOptions): APIPromise<SearchQueryResponse> {
+  create(body: SearchCreateParams, options?: RequestOptions): APIPromise<SearchCreateResponse> {
     return this._client.post('/v1/search', { body, ...options });
   }
 }
 
-export interface SearchQueryResponse {
-  data: Array<SearchQueryResponse.Data>;
+export interface SearchCreateResponse {
+  data: Array<SearchCreateResponse.Data>;
 
   /**
    * Whether more results are available
@@ -45,14 +45,9 @@ export interface SearchQueryResponse {
    * Cursor for the next page
    */
   next_cursor: string | null;
-
-  /**
-   * Total number of results
-   */
-  total?: number;
 }
 
-export namespace SearchQueryResponse {
+export namespace SearchCreateResponse {
   export interface Data {
     /**
      * Basic creator information
@@ -65,14 +60,14 @@ export namespace SearchQueryResponse {
     match: Data.Match;
 
     /**
-     * Primary profile (largest audience)
+     * Abbreviated profile information
      */
-    primary_profile: Shared.ProfileSummary;
+    primary_profile: Shared.ProfileSummary | null;
 
     /**
-     * Most relevant profile based on search query
+     * Abbreviated profile information
      */
-    relevant_profile: Shared.ProfileSummary;
+    relevant_profile: Shared.ProfileSummary | null;
   }
 
   export namespace Data {
@@ -118,7 +113,7 @@ export namespace SearchQueryResponse {
   }
 }
 
-export interface SearchQueryParams {
+export interface SearchCreateParams {
   /**
    * Natural language search query
    */
@@ -132,7 +127,7 @@ export interface SearchQueryParams {
   /**
    * Additional filters
    */
-  filters?: SearchQueryParams.Filters;
+  filters?: SearchCreateParams.Filters;
 
   /**
    * Maximum results to return
@@ -145,7 +140,7 @@ export interface SearchQueryParams {
   platforms?: Array<'instagram'>;
 }
 
-export namespace SearchQueryParams {
+export namespace SearchCreateParams {
   /**
    * Additional filters
    */
@@ -200,5 +195,5 @@ export namespace SearchQueryParams {
 }
 
 export declare namespace Search {
-  export { type SearchQueryResponse as SearchQueryResponse, type SearchQueryParams as SearchQueryParams };
+  export { type SearchCreateResponse as SearchCreateResponse, type SearchCreateParams as SearchCreateParams };
 }

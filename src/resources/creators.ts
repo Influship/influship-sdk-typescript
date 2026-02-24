@@ -25,12 +25,13 @@ export class Creators extends APIResource {
    * ```ts
    * const creator = await client.creators.retrieve(
    *   '123e4567-e89b-12d3-a456-426614174000',
+   *   { include: ['profiles'] },
    * );
    * ```
    */
   retrieve(
     id: string,
-    query: CreatorRetrieveParams | null | undefined = {},
+    query: CreatorRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<CreatorRetrieveResponse> {
     return this._client.get(path`/v1/creators/${id}`, { query, ...options });
@@ -189,65 +190,55 @@ export namespace CreatorRetrieveResponse {
 }
 
 export interface CreatorAutocompleteResponse {
-  data: CreatorAutocompleteResponse.Data;
+  /**
+   * Autocomplete results
+   */
+  data: Array<CreatorAutocompleteResponse.Data>;
 }
 
 export namespace CreatorAutocompleteResponse {
   export interface Data {
     /**
-     * Number of results
+     * Creator ID
      */
-    count: number;
+    id: string;
 
-    ok: boolean;
+    /**
+     * Avatar URL
+     */
+    avatar: string | null;
 
-    results: Array<Data.Result>;
+    /**
+     * Creator name
+     */
+    name: string;
+
+    /**
+     * Matching platforms
+     */
+    platforms: Array<Data.Platform>;
   }
 
   export namespace Data {
-    export interface Result {
-      /**
-       * Creator ID
-       */
-      id: string;
+    export interface Platform {
+      display_name: string | null;
 
       /**
-       * Avatar URL
+       * The field value that matched
        */
-      avatar: string | null;
+      match_field: string;
 
       /**
-       * Creator name
+       * How the query matched this profile
        */
-      name: string;
+      match_type: 'name' | 'username' | 'display_name';
 
       /**
-       * Matching platforms
+       * Social media platform
        */
-      platforms: Array<Result.Platform>;
-    }
+      platform: 'instagram';
 
-    export namespace Result {
-      export interface Platform {
-        display_name: string | null;
-
-        /**
-         * The field value that matched
-         */
-        match_field: string;
-
-        /**
-         * How the query matched this profile
-         */
-        match_type: 'name' | 'username' | 'display_name';
-
-        /**
-         * Social media platform
-         */
-        platform: 'instagram';
-
-        username: string;
-      }
+      username: string;
     }
   }
 }
@@ -264,11 +255,6 @@ export interface CreatorLookalikeResponse {
    * Cursor for the next page
    */
   next_cursor: string | null;
-
-  /**
-   * Total number of results
-   */
-  total?: number;
 }
 
 export namespace CreatorLookalikeResponse {
@@ -281,7 +267,7 @@ export namespace CreatorLookalikeResponse {
     /**
      * Abbreviated profile information
      */
-    primary_profile: Shared.ProfileSummary;
+    primary_profile: Shared.ProfileSummary | null;
 
     /**
      * Similarity information for lookalike match
@@ -392,12 +378,12 @@ export namespace CreatorMatchResponse {
         /**
          * ID of the supporting fact, if applicable
          */
-        factId?: string;
+        fact_id?: string;
 
         /**
          * ID of the source post, if applicable
          */
-        sourcePostId?: string;
+        source_post_id?: string;
       }
     }
   }
@@ -405,9 +391,9 @@ export namespace CreatorMatchResponse {
 
 export interface CreatorRetrieveParams {
   /**
-   * Comma-separated list of additional data to include (e.g., "profiles")
+   * Additional data to include in response
    */
-  include?: string;
+  include: Array<'profiles'>;
 }
 
 export interface CreatorAutocompleteParams {
@@ -419,7 +405,7 @@ export interface CreatorAutocompleteParams {
   /**
    * Maximum results to return
    */
-  limit?: string;
+  limit?: number;
 
   /**
    * Filter by platform

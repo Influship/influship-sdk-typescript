@@ -11,6 +11,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
@@ -30,8 +31,7 @@ import {
   Creators,
 } from './resources/creators';
 import { Health, HealthCheckResponse } from './resources/health';
-import { Live } from './resources/live';
-import { PostListParams, PostListResponse, Posts } from './resources/posts';
+import { PostListParams, PostListResponse, PostListResponsesCursor, Posts } from './resources/posts';
 import {
   ProfileGetParams,
   ProfileGetResponse,
@@ -39,8 +39,8 @@ import {
   ProfileLookupResponse,
   Profiles,
 } from './resources/profiles';
-import { Raw } from './resources/raw';
-import { Search, SearchQueryParams, SearchQueryResponse } from './resources/search';
+import { Search, SearchCreateParams, SearchCreateResponse } from './resources/search';
+import { Raw } from './resources/raw/raw';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -234,24 +234,8 @@ export class Influship {
     return buildHeaders([{ 'X-API-Key': this.apiKey }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.InflushipError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   private getUserAgent(): string {
@@ -782,7 +766,6 @@ export class Influship {
   search: API.Search = new API.Search(this);
   profiles: API.Profiles = new API.Profiles(this);
   posts: API.Posts = new API.Posts(this);
-  live: API.Live = new API.Live(this);
   raw: API.Raw = new API.Raw(this);
 }
 
@@ -791,7 +774,6 @@ Influship.Creators = Creators;
 Influship.Search = Search;
 Influship.Profiles = Profiles;
 Influship.Posts = Posts;
-Influship.Live = Live;
 Influship.Raw = Raw;
 
 export declare namespace Influship {
@@ -816,8 +798,8 @@ export declare namespace Influship {
 
   export {
     Search as Search,
-    type SearchQueryResponse as SearchQueryResponse,
-    type SearchQueryParams as SearchQueryParams,
+    type SearchCreateResponse as SearchCreateResponse,
+    type SearchCreateParams as SearchCreateParams,
   };
 
   export {
@@ -828,9 +810,12 @@ export declare namespace Influship {
     type ProfileLookupParams as ProfileLookupParams,
   };
 
-  export { Posts as Posts, type PostListResponse as PostListResponse, type PostListParams as PostListParams };
-
-  export { Live as Live };
+  export {
+    Posts as Posts,
+    type PostListResponse as PostListResponse,
+    type PostListResponsesCursor as PostListResponsesCursor,
+    type PostListParams as PostListParams,
+  };
 
   export { Raw as Raw };
 

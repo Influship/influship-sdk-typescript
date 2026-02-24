@@ -186,14 +186,9 @@ export namespace ProfileGetResponse {
      */
     export interface Growth {
       /**
-       * Follower growth percentage over 30 days
+       * Follower growth percentage over 30 days (e.g. 2.5 means +2.5%)
        */
       followers_30d_pct: number;
-
-      /**
-       * Monthly growth rate
-       */
-      monthly_rate: number;
     }
 
     /**
@@ -216,7 +211,7 @@ export namespace ProfileGetResponse {
       avg_views_recent: number | null;
 
       /**
-       * Engagement rate as percentage
+       * Engagement rate as a percentage (e.g. 3.5 means 3.5%)
        */
       engagement_rate: number;
 
@@ -249,203 +244,192 @@ export namespace ProfileGetResponse {
 }
 
 export interface ProfileLookupResponse {
-  data: ProfileLookupResponse.Data;
+  /**
+   * Profiles that were found
+   */
+  data: Array<ProfileLookupResponse.Data>;
+
+  /**
+   * Profiles that were not found
+   */
+  not_found: Array<ProfileLookupResponse.NotFound>;
 }
 
 export namespace ProfileLookupResponse {
+  /**
+   * Full profile details
+   */
   export interface Data {
     /**
-     * Profiles that were found
+     * Profile unique identifier
      */
-    found: Array<Data.Found>;
+    id: string;
 
     /**
-     * Profiles that were not found
+     * Profile activity information
      */
-    not_found: Array<Data.NotFound>;
+    activity: Data.Activity;
+
+    /**
+     * Avatar URL
+     */
+    avatar_url: string | null;
+
+    /**
+     * Profile bio
+     */
+    bio: string | null;
+
+    /**
+     * Account category
+     */
+    category: string | null;
+
+    /**
+     * Creator unique identifier
+     */
+    creator_id: string;
+
+    /**
+     * Last data refresh timestamp
+     */
+    data_updated_at: string | null;
+
+    /**
+     * Display name
+     */
+    display_name: string | null;
+
+    /**
+     * External website URL from bio
+     */
+    external_url: string | null;
+
+    /**
+     * Profile growth statistics
+     */
+    growth: Data.Growth;
+
+    /**
+     * Whether this is a business account
+     */
+    is_business: boolean;
+
+    /**
+     * Whether the account is private
+     */
+    is_private: boolean;
+
+    /**
+     * Whether the account is verified
+     */
+    is_verified: boolean;
+
+    /**
+     * Profile performance metrics
+     */
+    metrics: Data.Metrics;
+
+    /**
+     * Social media platform
+     */
+    platform: 'instagram';
+
+    /**
+     * Listed pronouns
+     */
+    pronouns: Array<string> | null;
+
+    /**
+     * Profile URL
+     */
+    url: string;
+
+    /**
+     * Profile username
+     */
+    username: string;
   }
 
   export namespace Data {
     /**
-     * Full profile details
+     * Profile activity information
      */
-    export interface Found {
+    export interface Activity {
       /**
-       * Profile unique identifier
+       * Timestamp of last post
        */
-      id: string;
-
-      /**
-       * Profile activity information
-       */
-      activity: Found.Activity;
-
-      /**
-       * Avatar URL
-       */
-      avatar_url: string | null;
-
-      /**
-       * Profile bio
-       */
-      bio: string | null;
-
-      /**
-       * Account category
-       */
-      category: string | null;
-
-      /**
-       * Creator unique identifier
-       */
-      creator_id: string;
-
-      /**
-       * Last data refresh timestamp
-       */
-      data_updated_at: string | null;
-
-      /**
-       * Display name
-       */
-      display_name: string | null;
-
-      /**
-       * External website URL from bio
-       */
-      external_url: string | null;
-
-      /**
-       * Profile growth statistics
-       */
-      growth: Found.Growth;
-
-      /**
-       * Whether this is a business account
-       */
-      is_business: boolean;
-
-      /**
-       * Whether the account is private
-       */
-      is_private: boolean;
-
-      /**
-       * Whether the account is verified
-       */
-      is_verified: boolean;
-
-      /**
-       * Profile performance metrics
-       */
-      metrics: Found.Metrics;
-
-      /**
-       * Social media platform
-       */
-      platform: 'instagram';
-
-      /**
-       * Listed pronouns
-       */
-      pronouns: Array<string> | null;
-
-      /**
-       * Profile URL
-       */
-      url: string;
-
-      /**
-       * Profile username
-       */
-      username: string;
+      last_post_at: string | null;
     }
 
-    export namespace Found {
+    /**
+     * Profile growth statistics
+     */
+    export interface Growth {
       /**
-       * Profile activity information
+       * Follower growth percentage over 30 days (e.g. 2.5 means +2.5%)
        */
-      export interface Activity {
-        /**
-         * Timestamp of last post
-         */
-        last_post_at: string | null;
-      }
-
-      /**
-       * Profile growth statistics
-       */
-      export interface Growth {
-        /**
-         * Follower growth percentage over 30 days
-         */
-        followers_30d_pct: number;
-
-        /**
-         * Monthly growth rate
-         */
-        monthly_rate: number;
-      }
-
-      /**
-       * Profile performance metrics
-       */
-      export interface Metrics {
-        /**
-         * Average comments on recent posts
-         */
-        avg_comments_recent: number;
-
-        /**
-         * Average likes on recent posts
-         */
-        avg_likes_recent: number;
-
-        /**
-         * Average views on recent posts (for video content)
-         */
-        avg_views_recent: number | null;
-
-        /**
-         * Engagement rate as percentage
-         */
-        engagement_rate: number;
-
-        /**
-         * Follower count
-         */
-        followers: number;
-
-        /**
-         * Following count
-         */
-        following: number;
-
-        /**
-         * Total post count
-         */
-        posts: number;
-
-        /**
-         * Posts in the last 30 days
-         */
-        posts_last_30d: number;
-
-        /**
-         * Average posts per week
-         */
-        posts_per_week: number;
-      }
+      followers_30d_pct: number;
     }
 
-    export interface NotFound {
+    /**
+     * Profile performance metrics
+     */
+    export interface Metrics {
       /**
-       * Social media platform
+       * Average comments on recent posts
        */
-      platform: 'instagram';
+      avg_comments_recent: number;
 
-      username: string;
+      /**
+       * Average likes on recent posts
+       */
+      avg_likes_recent: number;
+
+      /**
+       * Average views on recent posts (for video content)
+       */
+      avg_views_recent: number | null;
+
+      /**
+       * Engagement rate as a percentage (e.g. 3.5 means 3.5%)
+       */
+      engagement_rate: number;
+
+      /**
+       * Follower count
+       */
+      followers: number;
+
+      /**
+       * Following count
+       */
+      following: number;
+
+      /**
+       * Total post count
+       */
+      posts: number;
+
+      /**
+       * Posts in the last 30 days
+       */
+      posts_last_30d: number;
+
+      /**
+       * Average posts per week
+       */
+      posts_per_week: number;
     }
+  }
+
+  export interface NotFound {
+    /**
+     * Social media platform
+     */
+    platform: 'instagram';
+
+    username: string;
   }
 }
 

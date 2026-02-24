@@ -9,8 +9,10 @@ const client = new Influship({
 
 describe('resource creators', () => {
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000');
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000', {
+      include: ['profiles'],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,15 +23,10 @@ describe('resource creators', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.creators.retrieve(
-        '123e4567-e89b-12d3-a456-426614174000',
-        { include: 'profiles' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Influship.NotFoundError);
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000', {
+      include: ['profiles'],
+    });
   });
 
   // Mock server tests are disabled
@@ -48,7 +45,7 @@ describe('resource creators', () => {
   test.skip('autocomplete: required and optional params', async () => {
     const response = await client.creators.autocomplete({
       q: 'fitness',
-      limit: '5',
+      limit: 5,
       platform: 'instagram',
       scope: 'all_platforms',
     });
