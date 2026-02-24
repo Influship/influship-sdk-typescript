@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "influship-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The official MCP Server for the Influship API",
   "author": {
     "name": "Influship",
@@ -18,7 +18,9 @@
     "entry_point": "index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/index.js"],
+      "args": [
+        "${__dirname}/index.js"
+      ],
       "env": {
         "INFLUSHIP_API_KEY": "${user_config.INFLUSHIP_API_KEY}"
       }
@@ -39,5 +41,7 @@
       "node": ">=18.0.0"
     }
   },
-  "keywords": ["api"]
+  "keywords": [
+    "api"
+  ]
 }
