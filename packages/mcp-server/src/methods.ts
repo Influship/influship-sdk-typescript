@@ -41,8 +41,8 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/creators/match',
   },
   {
-    clientCallName: 'client.search.query',
-    fullyQualifiedName: 'search.query',
+    clientCallName: 'client.search.create',
+    fullyQualifiedName: 'search.create',
     httpMethod: 'post',
     httpPath: '/v1/search',
   },
@@ -63,6 +63,36 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'posts.list',
     httpMethod: 'get',
     httpPath: '/v1/posts',
+  },
+  {
+    clientCallName: 'client.raw.instagram.getProfile',
+    fullyQualifiedName: 'raw.instagram.getProfile',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/instagram/profile/{username}',
+  },
+  {
+    clientCallName: 'client.raw.youtube.getChannel',
+    fullyQualifiedName: 'raw.youtube.getChannel',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/channel/{handle}',
+  },
+  {
+    clientCallName: 'client.raw.youtube.getChannelTranscripts',
+    fullyQualifiedName: 'raw.youtube.getChannelTranscripts',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/channel-transcripts/{handle}',
+  },
+  {
+    clientCallName: 'client.raw.youtube.getTranscript',
+    fullyQualifiedName: 'raw.youtube.getTranscript',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/transcript/{video_id}',
+  },
+  {
+    clientCallName: 'client.raw.youtube.search',
+    fullyQualifiedName: 'raw.youtube.search',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/search',
   },
 ];
 

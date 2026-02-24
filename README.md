@@ -35,12 +35,12 @@ const client = new Influship({
   apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.search.query({
+const search = await client.search.create({
   query: 'sustainable fashion creators with engaged audiences',
   limit: 25,
 });
 
-console.log(response.data);
+console.log(search.data);
 ```
 
 ### Request & Response types
@@ -55,11 +55,11 @@ const client = new Influship({
   apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Influship.SearchQueryParams = {
+const params: Influship.SearchCreateParams = {
   query: 'fitness influencers in Los Angeles',
   limit: 10,
 };
-const response: Influship.SearchQueryResponse = await client.search.query(params);
+const search: Influship.SearchCreateResponse = await client.search.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -72,8 +72,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.search
-  .query({ query: 'fitness influencers in Los Angeles', limit: 10 })
+const search = await client.search
+  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
   .catch(async (err) => {
     if (err instanceof Influship.APIError) {
       console.log(err.status); // 400
@@ -114,7 +114,7 @@ const client = new Influship({
 });
 
 // Or, configure per-request:
-await client.search.query({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
+await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
   maxRetries: 5,
 });
 ```
@@ -131,7 +131,7 @@ const client = new Influship({
 });
 
 // Override per-request:
-await client.search.query({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
+await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,6 +139,37 @@ await client.search.query({ query: 'fitness influencers in Los Angeles', limit: 
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the Influship API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllPostListResponses(params) {
+  const allPostListResponses = [];
+  // Automatically fetches more pages as needed.
+  for await (const postListResponse of client.posts.list()) {
+    allPostListResponses.push(postListResponse);
+  }
+  return allPostListResponses;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.posts.list();
+for (const postListResponse of page.data) {
+  console.log(postListResponse);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
@@ -155,16 +186,16 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Influship();
 
 const response = await client.search
-  .query({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.search
-  .query({ query: 'fitness influencers in Los Angeles', limit: 10 })
+const { data: search, response: raw } = await client.search
+  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.data);
+console.log(search.data);
 ```
 
 ### Logging
@@ -244,7 +275,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.search.query({
+client.search.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

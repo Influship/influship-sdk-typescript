@@ -9,8 +9,8 @@ const client = new Influship({
 
 describe('resource search', () => {
   // Mock server tests are disabled
-  test.skip('query: only required params', async () => {
-    const responsePromise = client.search.query({
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.search.create({
       query: 'fitness influencers with 100k+ followers who post workout videos',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -23,8 +23,8 @@ describe('resource search', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('query: required and optional params', async () => {
-    const response = await client.search.query({
+  test.skip('create: required and optional params', async () => {
+    const response = await client.search.create({
       query: 'fitness influencers with 100k+ followers who post workout videos',
       cursor: 'cursor',
       filters: {

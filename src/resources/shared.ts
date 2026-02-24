@@ -10,14 +10,14 @@ export interface ProfileSummary {
   id: string;
 
   /**
-   * Engagement rate as percentage
+   * Engagement rate as a percentage, null if unknown (e.g. 3.5 means 3.5%)
    */
-  engagement_rate: number;
+  engagement_rate: number | null;
 
   /**
-   * Follower count
+   * Follower count (null if unknown)
    */
-  followers: number;
+  followers: number | null;
 
   /**
    * Whether the account is verified

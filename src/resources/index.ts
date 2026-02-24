@@ -13,8 +13,7 @@ export {
   type CreatorMatchParams,
 } from './creators';
 export { Health, type HealthCheckResponse } from './health';
-export { Live } from './live';
-export { Posts, type PostListResponse, type PostListParams } from './posts';
+export { Posts, type PostListResponse, type PostListParams, type PostListResponsesCursor } from './posts';
 export {
   Profiles,
   type ProfileGetResponse,
@@ -22,5 +21,5 @@ export {
   type ProfileGetParams,
   type ProfileLookupParams,
 } from './profiles';
-export { Raw } from './raw';
-export { Search, type SearchQueryResponse, type SearchQueryParams } from './search';
+export { Raw } from './raw/raw';
+export { Search, type SearchCreateResponse, type SearchCreateParams } from './search';

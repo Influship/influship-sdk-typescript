@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import { APIPromise } from '../core/api-promise';
+import { Cursor, type CursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Posts extends APIResource {
@@ -26,184 +26,155 @@ export class Posts extends APIResource {
   list(
     query: PostListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PostListResponse> {
-    return this._client.get('/v1/posts', { query, ...options });
+  ): PagePromise<PostListResponsesCursor, PostListResponse> {
+    return this._client.getAPIList('/v1/posts', Cursor<PostListResponse>, { query, ...options });
   }
 }
 
+export type PostListResponsesCursor = Cursor<PostListResponse>;
+
+/**
+ * Full post details
+ */
 export interface PostListResponse {
-  data: Array<PostListResponse.Data>;
+  /**
+   * Post unique identifier
+   */
+  id: string;
 
   /**
-   * Whether more results are available
+   * Post caption
    */
-  has_more: boolean;
+  caption: string | null;
 
   /**
-   * Cursor for the next page of results
+   * Hashtags used in the post
    */
-  next_cursor: string | null;
+  hashtags: Array<string>;
 
   /**
-   * Total number of results (if available)
+   * Post location information
    */
-  total?: number;
+  location: PostListResponse.Location | null;
+
+  /**
+   * Post media information
+   */
+  media: PostListResponse.Media;
+
+  /**
+   * Usernames mentioned in the post
+   */
+  mentions: Array<string>;
+
+  /**
+   * Post engagement metrics
+   */
+  metrics: PostListResponse.Metrics;
+
+  /**
+   * Social media platform
+   */
+  platform: 'instagram';
+
+  /**
+   * Platform-specific post ID
+   */
+  platform_id: string;
+
+  /**
+   * Post timestamp
+   */
+  posted_at: string;
+
+  /**
+   * Profile unique identifier
+   */
+  profile_id: string;
+
+  /**
+   * Type of post
+   */
+  type: 'image' | 'video' | 'carousel' | 'reel' | 'story';
+
+  /**
+   * Post URL
+   */
+  url: string;
 }
 
 export namespace PostListResponse {
   /**
-   * Full post details
+   * Post location information
    */
-  export interface Data {
+  export interface Location {
     /**
-     * Post unique identifier
+     * Location name
      */
-    id: string;
-
-    /**
-     * Post caption
-     */
-    caption: string | null;
-
-    /**
-     * Hashtags used in the post
-     */
-    hashtags: Array<string>;
-
-    /**
-     * Post location information
-     */
-    location: Data.Location | null;
-
-    /**
-     * Post media information
-     */
-    media: Data.Media;
-
-    /**
-     * Usernames mentioned in the post
-     */
-    mentions: Array<string>;
-
-    /**
-     * Post engagement metrics
-     */
-    metrics: Data.Metrics;
-
-    /**
-     * Social media platform
-     */
-    platform: 'instagram';
-
-    /**
-     * Platform-specific post ID
-     */
-    platform_id: string;
-
-    /**
-     * Post timestamp
-     */
-    posted_at: string;
-
-    /**
-     * Profile unique identifier
-     */
-    profile_id: string;
-
-    /**
-     * Type of post
-     */
-    type: 'image' | 'video' | 'carousel' | 'reel' | 'story';
-
-    /**
-     * Post URL
-     */
-    url: string;
+    name: string | null;
   }
 
-  export namespace Data {
+  /**
+   * Post media information
+   */
+  export interface Media {
     /**
-     * Post location information
+     * Video duration in seconds
      */
-    export interface Location {
-      /**
-       * Location name
-       */
-      name: string | null;
-    }
+    duration_seconds: number | null;
 
     /**
-     * Post media information
+     * Thumbnail URL
      */
-    export interface Media {
-      /**
-       * Video duration in seconds
-       */
-      duration_seconds: number | null;
-
-      /**
-       * Thumbnail URL
-       */
-      thumbnail_url: string | null;
-
-      /**
-       * Media URL
-       */
-      url: string | null;
-
-      /**
-       * Video URL (for video content)
-       */
-      video_url: string | null;
-    }
+    thumbnail_url: string | null;
 
     /**
-     * Post engagement metrics
+     * Media URL
      */
-    export interface Metrics {
-      /**
-       * Comment count
-       */
-      comments: number | null;
+    url: string | null;
 
-      /**
-       * Engagement rate for this post
-       */
-      engagement_rate: number | null;
+    /**
+     * Video URL (for video content)
+     */
+    video_url: string | null;
+  }
 
-      /**
-       * Like count
-       */
-      likes: number | null;
+  /**
+   * Post engagement metrics
+   */
+  export interface Metrics {
+    /**
+     * Comment count
+     */
+    comments: number | null;
 
-      /**
-       * Share count
-       */
-      shares: number | null;
+    /**
+     * Engagement rate for this post as a percentage (e.g. 3.8 means 3.8%)
+     */
+    engagement_rate: number | null;
 
-      /**
-       * View count (for video content)
-       */
-      views: number | null;
-    }
+    /**
+     * Like count
+     */
+    likes: number | null;
+
+    /**
+     * Share count
+     */
+    shares: number | null;
+
+    /**
+     * View count (for video content)
+     */
+    views: number | null;
   }
 }
 
-export interface PostListParams {
+export interface PostListParams extends CursorParams {
   /**
    * Creator ID (use this OR platform+username)
    */
   creator_id?: string;
-
-  /**
-   * Pagination cursor for next page
-   */
-  cursor?: string;
-
-  /**
-   * Maximum posts to return
-   */
-  limit?: string;
 
   /**
    * Platform (required with username)
@@ -222,5 +193,9 @@ export interface PostListParams {
 }
 
 export declare namespace Posts {
-  export { type PostListResponse as PostListResponse, type PostListParams as PostListParams };
+  export {
+    type PostListResponse as PostListResponse,
+    type PostListResponsesCursor as PostListResponsesCursor,
+    type PostListParams as PostListParams,
+  };
 }

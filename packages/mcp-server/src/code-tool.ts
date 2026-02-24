@@ -21,9 +21,9 @@ For example:
 
 \`\`\`
 async function run(client) {
-  const response = await client.search.query({ query: 'sustainable fashion creators with engaged audiences', limit: 25 });
+  const search = await client.search.create({ query: 'sustainable fashion creators with engaged audiences', limit: 25 });
 
-  console.log(response.data);
+  console.log(search.data);
 }
 \`\`\`
 

@@ -34,11 +34,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/search.ts">SearchQueryResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchCreateResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">query</a>({ ...params }) -> SearchQueryResponse</code>
+- <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">create</a>({ ...params }) -> SearchCreateResponse</code>
 
 # Profiles
 
@@ -60,8 +60,32 @@ Types:
 
 Methods:
 
-- <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponse</code>
-
-# Live
+- <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponsesCursor</code>
 
 # Raw
+
+## Instagram
+
+Types:
+
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetProfileResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/raw/instagram/profile/{username}">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getProfile</a>(username, { ...params }) -> InstagramGetProfileResponse</code>
+
+## Youtube
+
+Types:
+
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelTranscriptsResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeGetTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/youtube.ts">YoutubeSearchResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/raw/youtube/channel/{handle}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getChannel</a>(handle, { ...params }) -> YoutubeGetChannelResponse</code>
+- <code title="get /v1/raw/youtube/channel-transcripts/{handle}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getChannelTranscripts</a>(handle, { ...params }) -> YoutubeGetChannelTranscriptsResponse</code>
+- <code title="get /v1/raw/youtube/transcript/{video_id}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getTranscript</a>(videoID, { ...params }) -> YoutubeGetTranscriptResponse</code>
+- <code title="get /v1/raw/youtube/search">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">search</a>({ ...params }) -> YoutubeSearchResponse</code>
