@@ -18,7 +18,7 @@ export class Search extends APIResource {
    *   with millennial audience")
    * - Search by content style ("creators who post cinematic travel videos")
    *
-   * **Pricing**: $0.01 per creator returned
+   * **Pricing**: 25 credits base + 2 credits per creator returned
    *
    * @example
    * ```ts
