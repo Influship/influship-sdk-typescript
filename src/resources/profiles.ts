@@ -17,7 +17,7 @@ export class Profiles extends APIResource {
    * - Growth data (30-day follower growth, monthly rate)
    * - Activity data (last post date, posting frequency)
    *
-   * **Pricing**: Free (included in your plan)
+   * **Pricing**: 0.1 credits per request ($0.001)
    *
    * @example
    * ```ts
@@ -42,7 +42,7 @@ export class Profiles extends APIResource {
    * - `not_found`: Array of profiles that weren't found (consider live scraping
    *   these)
    *
-   * **Pricing**: Free (included in your plan)
+   * **Pricing**: 0.1 credits per profile ($0.001)
    *
    * @example
    * ```ts

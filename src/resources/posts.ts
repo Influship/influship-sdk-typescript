@@ -21,7 +21,7 @@ export class Posts extends APIResource {
    * - `most_views`: Most views first (video content)
    * - `most_comments`: Most comments first
    *
-   * **Pricing**: $0.005 per post returned
+   * **Pricing**: 0.05 credits per post returned ($0.0005)
    */
   list(
     query: PostListParams | null | undefined = {},

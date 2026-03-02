@@ -10,7 +10,7 @@ export class Youtube extends APIResource {
    * Fetch fresh YouTube channel data including subscriber count, video count, and
    * total views.
    *
-   * **Pricing**: $0.005 per channel
+   * **Pricing**: 0.5 credits per profile scraped ($0.005)
    */
   getChannel(
     handle: string,
@@ -31,7 +31,7 @@ export class Youtube extends APIResource {
    * - Partial success — individual video failures don't block the response
    * - Optional timestamped segments for each transcript
    *
-   * **Pricing**: $0.005 per transcript successfully fetched
+   * **Pricing**: 0.5 credits per transcript fetched ($0.005)
    */
   getChannelTranscripts(
     handle: string,
@@ -43,7 +43,7 @@ export class Youtube extends APIResource {
 
   /**
    * Fetch YouTube video transcript/captions. Returns timestamped segments and full
-   * text. Useful for content analysis and brand safety checks.
+   * text. Useful for content analysis.
    *
    * **Supported sources:**
    *
@@ -51,7 +51,7 @@ export class Youtube extends APIResource {
    * - Auto-generated captions
    * - Multiple language tracks
    *
-   * **Pricing**: $0.005 per transcript
+   * **Pricing**: 0.5 credits per transcript ($0.005)
    */
   getTranscript(
     videoID: string,
@@ -64,7 +64,7 @@ export class Youtube extends APIResource {
   /**
    * Search YouTube videos and channels.
    *
-   * **Pricing**: $0.005 per result returned
+   * **Pricing**: 0.5 credits per result returned ($0.005)
    */
   search(query: YoutubeSearchParams, options?: RequestOptions): APIPromise<YoutubeSearchResponse> {
     return this._client.get('/v1/raw/youtube/search', { query, ...options });
