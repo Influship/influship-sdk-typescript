@@ -40,7 +40,7 @@ const search = await client.search.create({
   limit: 25,
 });
 
-console.log(search.data);
+console.log(search.search_id);
 ```
 
 ### Request & Response types
@@ -195,7 +195,7 @@ const { data: search, response: raw } = await client.search
   .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(search.data);
+console.log(search.search_id);
 ```
 
 ### Logging
