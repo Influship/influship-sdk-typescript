@@ -31,7 +31,7 @@ For example:
 async function run(client) {
   const search = await client.search.create({ query: 'sustainable fashion creators with engaged audiences', limit: 25 });
 
-  console.log(search.data);
+  console.log(search.search_id);
 }
 \`\`\`
 

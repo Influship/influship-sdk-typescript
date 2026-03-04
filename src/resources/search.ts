@@ -11,6 +11,9 @@ export class Search extends APIResource {
    * and context to match creators based on content themes, audience demographics,
    * and style.
    *
+   * The response includes a `search_id` that can be used with `GET /v1/search/{id}`
+   * to paginate through results for free.
+   *
    * **Use cases:**
    *
    * - Find creators in a specific niche ("vegan food bloggers in LA")
@@ -45,6 +48,16 @@ export interface SearchCreateResponse {
    * Cursor for the next page
    */
   next_cursor: string | null;
+
+  /**
+   * Search ID. Use with GET /v1/search/{id} for free pagination.
+   */
+  search_id: string;
+
+  /**
+   * Total number of results across all pages
+   */
+  total: number;
 }
 
 export namespace SearchCreateResponse {
@@ -118,11 +131,6 @@ export interface SearchCreateParams {
    * Natural language search query
    */
   query: string;
-
-  /**
-   * Pagination cursor for next page
-   */
-  cursor?: string;
 
   /**
    * Additional filters
