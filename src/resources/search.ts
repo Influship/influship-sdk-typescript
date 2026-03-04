@@ -5,6 +5,9 @@ import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * AI-powered semantic search to find creators using natural language queries. Understands intent and context to match creators based on content themes, audience, and style.
+ */
 export class Search extends APIResource {
   /**
    * Search for creators using natural language queries. The AI understands intent

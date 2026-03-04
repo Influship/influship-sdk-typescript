@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { Cursor, type CursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Retrieve and analyze social media posts with engagement metrics, media content, and performance data.
+ */
 export class Posts extends APIResource {
   /**
    * Retrieve posts for a creator or profile with engagement metrics and media data.
