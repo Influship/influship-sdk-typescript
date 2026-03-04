@@ -761,10 +761,25 @@ export class Influship {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * API health and status endpoints
+   */
   health: API.Health = new API.Health(this);
+  /**
+   * Retrieve creator profiles and discover new creators through search, autocomplete, and lookalike matching. Creators are cross-platform entities that may have profiles on multiple social networks.
+   */
   creators: API.Creators = new API.Creators(this);
+  /**
+   * AI-powered semantic search to find creators using natural language queries. Understands intent and context to match creators based on content themes, audience, and style.
+   */
   search: API.Search = new API.Search(this);
+  /**
+   * Access individual social media profiles with detailed metrics, growth data, and activity information. Profiles are platform-specific accounts linked to creators.
+   */
   profiles: API.Profiles = new API.Profiles(this);
+  /**
+   * Retrieve and analyze social media posts with engagement metrics, media content, and performance data.
+   */
   posts: API.Posts = new API.Posts(this);
   raw: API.Raw = new API.Raw(this);
 }

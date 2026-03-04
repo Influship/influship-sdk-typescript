@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * API health and status endpoints
+ */
 export class Health extends APIResource {
   /**
    * Check API health status. No authentication required.

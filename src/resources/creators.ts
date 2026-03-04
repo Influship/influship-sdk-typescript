@@ -6,6 +6,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Retrieve creator profiles and discover new creators through search, autocomplete, and lookalike matching. Creators are cross-platform entities that may have profiles on multiple social networks.
+ */
 export class Creators extends APIResource {
   /**
    * Retrieve a creator's profile including AI-generated summary, content themes, and

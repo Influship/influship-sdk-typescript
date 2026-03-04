@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Fetch fresh data directly from social platforms in real-time. Use when you need the most current information or data for profiles not yet in our database.
+ */
 export class Youtube extends APIResource {
   /**
    * Fetch fresh YouTube channel data including subscriber count, video count, and
