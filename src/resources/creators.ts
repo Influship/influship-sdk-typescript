@@ -3,9 +3,13 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { BodyCursor, type BodyCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Retrieve creator profiles and discover new creators through search, autocomplete, and lookalike matching. Creators are cross-platform entities that may have profiles on multiple social networks.
+ */
 export class Creators extends APIResource {
   /**
    * Retrieve a creator's profile including AI-generated summary, content themes, and
@@ -19,7 +23,7 @@ export class Creators extends APIResource {
    *
    * - `profiles`: Include all linked social profiles with metrics
    *
-   * **Pricing**: Free (included in your plan)
+   * **Pricing**: 0.1 credits per request ($0.001)
    *
    * @example
    * ```ts
@@ -53,7 +57,7 @@ export class Creators extends APIResource {
    * - `matched_platforms`: Return only profiles that matched the query
    * - `all_platforms`: Return all linked profiles (default)
    *
-   * **Pricing**: Free (included in your plan)
+   * **Pricing**: 0.05 credits per request ($0.0005)
    *
    * @example
    * ```ts
@@ -86,17 +90,27 @@ export class Creators extends APIResource {
    * 2. Optionally weight seeds to prioritize certain creators
    * 3. Get ranked results with similarity scores and shared traits
    *
-   * **Pricing**: $0.02 per creator returned
+   * **Pricing**: 1.5 credits per creator returned ($0.015)
    *
    * @example
    * ```ts
-   * const response = await client.creators.lookalike({
-   *   seeds: [{}],
-   * });
+   * // Automatically fetches more pages as needed.
+   * for await (const creatorLookalikeResponse of client.creators.lookalike(
+   *   { seeds: [{}] },
+   * )) {
+   *   // ...
+   * }
    * ```
    */
-  lookalike(body: CreatorLookalikeParams, options?: RequestOptions): APIPromise<CreatorLookalikeResponse> {
-    return this._client.post('/v1/creators/lookalike', { body, ...options });
+  lookalike(
+    body: CreatorLookalikeParams,
+    options?: RequestOptions,
+  ): PagePromise<CreatorLookalikeResponsesBodyCursor, CreatorLookalikeResponse> {
+    return this._client.getAPIList('/v1/creators/lookalike', BodyCursor<CreatorLookalikeResponse>, {
+      body,
+      method: 'post',
+      ...options,
+    });
   }
 
   /**
@@ -116,7 +130,7 @@ export class Creators extends APIResource {
    * 2. Provide up to 100 creators to evaluate
    * 3. Get detailed scores with explanations and evidence
    *
-   * **Pricing**: $0.05 per creator evaluated
+   * **Pricing**: 1 credit per creator scored ($0.01)
    *
    * @example
    * ```ts
@@ -133,6 +147,8 @@ export class Creators extends APIResource {
     return this._client.post('/v1/creators/match', { body, ...options });
   }
 }
+
+export type CreatorLookalikeResponsesBodyCursor = BodyCursor<CreatorLookalikeResponse>;
 
 export interface CreatorRetrieveResponse {
   /**
@@ -244,77 +260,36 @@ export namespace CreatorAutocompleteResponse {
 }
 
 export interface CreatorLookalikeResponse {
-  data: Array<CreatorLookalikeResponse.Data>;
+  /**
+   * Basic creator information
+   */
+  creator: Shared.CreatorBasic;
 
   /**
-   * Whether more results are available
+   * Abbreviated profile information
    */
-  has_more: boolean;
+  primary_profile: Shared.ProfileSummary | null;
 
   /**
-   * Cursor for the next page
+   * Similarity information for lookalike match
    */
-  next_cursor: string | null;
+  similarity: CreatorLookalikeResponse.Similarity;
 }
 
 export namespace CreatorLookalikeResponse {
-  export interface Data {
+  /**
+   * Similarity information for lookalike match
+   */
+  export interface Similarity {
     /**
-     * Basic creator information
+     * Similarity score (0-1)
      */
-    creator: Data.Creator;
-
-    /**
-     * Abbreviated profile information
-     */
-    primary_profile: Shared.ProfileSummary | null;
+    score: number;
 
     /**
-     * Similarity information for lookalike match
+     * Shared traits with seed creators
      */
-    similarity: Data.Similarity;
-  }
-
-  export namespace Data {
-    /**
-     * Basic creator information
-     */
-    export interface Creator {
-      /**
-       * Creator unique identifier
-       */
-      id: string;
-
-      /**
-       * Avatar URL
-       */
-      avatar_url: string | null;
-
-      /**
-       * Creator bio
-       */
-      bio: string | null;
-
-      /**
-       * Creator display name
-       */
-      name: string;
-    }
-
-    /**
-     * Similarity information for lookalike match
-     */
-    export interface Similarity {
-      /**
-       * Similarity score (0-1)
-       */
-      score: number;
-
-      /**
-       * Shared traits with seed creators
-       */
-      shared_traits: Array<string>;
-    }
+    shared_traits: Array<string>;
   }
 }
 
@@ -418,26 +393,16 @@ export interface CreatorAutocompleteParams {
   scope?: 'creator_only' | 'matched_platforms' | 'all_platforms';
 }
 
-export interface CreatorLookalikeParams {
+export interface CreatorLookalikeParams extends BodyCursorParams {
   /**
    * Seed creators to find similar creators for
    */
   seeds: Array<CreatorLookalikeParams.Seed>;
 
   /**
-   * Pagination cursor for next page
-   */
-  cursor?: string;
-
-  /**
    * Additional filters
    */
   filters?: CreatorLookalikeParams.Filters;
-
-  /**
-   * Maximum results to return
-   */
-  limit?: number;
 }
 
 export namespace CreatorLookalikeParams {
@@ -574,6 +539,7 @@ export declare namespace Creators {
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
     type CreatorLookalikeResponse as CreatorLookalikeResponse,
     type CreatorMatchResponse as CreatorMatchResponse,
+    type CreatorLookalikeResponsesBodyCursor as CreatorLookalikeResponsesBodyCursor,
     type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
     type CreatorLookalikeParams as CreatorLookalikeParams,

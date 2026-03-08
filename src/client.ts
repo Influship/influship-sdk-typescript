@@ -11,11 +11,17 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
+import {
+  AbstractPage,
+  type BodyCursorParams,
+  BodyCursorResponse,
+  type QueryCursorParams,
+  QueryCursorResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -24,6 +30,7 @@ import {
   CreatorAutocompleteResponse,
   CreatorLookalikeParams,
   CreatorLookalikeResponse,
+  CreatorLookalikeResponsesBodyCursor,
   CreatorMatchParams,
   CreatorMatchResponse,
   CreatorRetrieveParams,
@@ -31,15 +38,27 @@ import {
   Creators,
 } from './resources/creators';
 import { Health, HealthCheckResponse } from './resources/health';
-import { PostListParams, PostListResponse, PostListResponsesCursor, Posts } from './resources/posts';
+import { PostListParams, PostListResponse, PostListResponsesQueryCursor, Posts } from './resources/posts';
 import {
+  ProfileActivity,
   ProfileGetParams,
   ProfileGetResponse,
+  ProfileGrowth,
   ProfileLookupParams,
   ProfileLookupResponse,
+  ProfileMetrics,
+  ProfileResponseData,
   Profiles,
 } from './resources/profiles';
-import { Search, SearchCreateParams, SearchCreateResponse } from './resources/search';
+import {
+  MatchInfo,
+  Search,
+  SearchCreateParams,
+  SearchCreateResponse,
+  SearchRetrieveParams,
+  SearchRetrieveResponse,
+  SearchRetrieveResponsesQueryCursor,
+} from './resources/search';
 import { Raw } from './resources/raw/raw';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -234,8 +253,8 @@ export class Influship {
     return buildHeaders([{ 'X-API-Key': this.apiKey }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -267,12 +286,13 @@ export class Influship {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -601,9 +621,9 @@ export class Influship {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -735,7 +755,7 @@ export class Influship {
     ) {
       return {
         bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: this.stringifyQuery(body as Record<string, unknown>),
+        body: this.stringifyQuery(body),
       };
     } else {
       return this.#encoder({ body, headers });
@@ -761,10 +781,25 @@ export class Influship {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * API health and status endpoints
+   */
   health: API.Health = new API.Health(this);
+  /**
+   * Retrieve creator profiles and discover new creators through search, autocomplete, and lookalike matching. Creators are cross-platform entities that may have profiles on multiple social networks.
+   */
   creators: API.Creators = new API.Creators(this);
+  /**
+   * AI-powered semantic search to find creators using natural language queries. Understands intent and context to match creators based on content themes, audience, and style.
+   */
   search: API.Search = new API.Search(this);
+  /**
+   * Access individual social media profiles with detailed metrics, growth data, and activity information. Profiles are platform-specific accounts linked to creators.
+   */
   profiles: API.Profiles = new API.Profiles(this);
+  /**
+   * Retrieve and analyze social media posts with engagement metrics, media content, and performance data.
+   */
   posts: API.Posts = new API.Posts(this);
   raw: API.Raw = new API.Raw(this);
 }
@@ -779,8 +814,11 @@ Influship.Raw = Raw;
 export declare namespace Influship {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import Cursor = Pagination.Cursor;
-  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
+  export import QueryCursor = Pagination.QueryCursor;
+  export { type QueryCursorParams as QueryCursorParams, type QueryCursorResponse as QueryCursorResponse };
+
+  export import BodyCursor = Pagination.BodyCursor;
+  export { type BodyCursorParams as BodyCursorParams, type BodyCursorResponse as BodyCursorResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -790,6 +828,7 @@ export declare namespace Influship {
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
     type CreatorLookalikeResponse as CreatorLookalikeResponse,
     type CreatorMatchResponse as CreatorMatchResponse,
+    type CreatorLookalikeResponsesBodyCursor as CreatorLookalikeResponsesBodyCursor,
     type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
     type CreatorLookalikeParams as CreatorLookalikeParams,
@@ -798,12 +837,20 @@ export declare namespace Influship {
 
   export {
     Search as Search,
+    type MatchInfo as MatchInfo,
     type SearchCreateResponse as SearchCreateResponse,
+    type SearchRetrieveResponse as SearchRetrieveResponse,
+    type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,
     type SearchCreateParams as SearchCreateParams,
+    type SearchRetrieveParams as SearchRetrieveParams,
   };
 
   export {
     Profiles as Profiles,
+    type ProfileActivity as ProfileActivity,
+    type ProfileGrowth as ProfileGrowth,
+    type ProfileMetrics as ProfileMetrics,
+    type ProfileResponseData as ProfileResponseData,
     type ProfileGetResponse as ProfileGetResponse,
     type ProfileLookupResponse as ProfileLookupResponse,
     type ProfileGetParams as ProfileGetParams,
@@ -813,11 +860,12 @@ export declare namespace Influship {
   export {
     Posts as Posts,
     type PostListResponse as PostListResponse,
-    type PostListResponsesCursor as PostListResponsesCursor,
+    type PostListResponsesQueryCursor as PostListResponsesQueryCursor,
     type PostListParams as PostListParams,
   };
 
   export { Raw as Raw };
 
+  export type CreatorBasic = API.CreatorBasic;
   export type ProfileSummary = API.ProfileSummary;
 }

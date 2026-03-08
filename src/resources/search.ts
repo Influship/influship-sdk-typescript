@@ -1,15 +1,24 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, QueryCursor, type QueryCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
+/**
+ * AI-powered semantic search to find creators using natural language queries. Understands intent and context to match creators based on content themes, audience, and style.
+ */
 export class Search extends APIResource {
   /**
    * Search for creators using natural language queries. The AI understands intent
    * and context to match creators based on content themes, audience demographics,
    * and style.
+   *
+   * The response includes a `search_id` that can be used with `GET /v1/search/{id}`
+   * to paginate through results for free.
    *
    * **Use cases:**
    *
@@ -18,7 +27,7 @@ export class Search extends APIResource {
    *   with millennial audience")
    * - Search by content style ("creators who post cinematic travel videos")
    *
-   * **Pricing**: $0.01 per creator returned
+   * **Pricing**: 25 credits base + 2 credits per creator returned
    *
    * @example
    * ```ts
@@ -31,6 +40,52 @@ export class Search extends APIResource {
   create(body: SearchCreateParams, options?: RequestOptions): APIPromise<SearchCreateResponse> {
     return this._client.post('/v1/search', { body, ...options });
   }
+
+  /**
+   * Paginate through results from a previous search. Use the `search_id` returned by
+   * `POST /v1/search` to fetch additional pages.
+   *
+   * Search sessions expire after 1 hour. After expiry, a new search must be run.
+   *
+   * **Pricing**: 0 credits (included with initial search)
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const searchRetrieveResponse of client.search.retrieve(
+   *   '123e4567-e89b-12d3-a456-426614174000',
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  retrieve(
+    id: string,
+    query: SearchRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SearchRetrieveResponsesQueryCursor, SearchRetrieveResponse> {
+    return this._client.getAPIList(path`/v1/search/${id}`, QueryCursor<SearchRetrieveResponse>, {
+      query,
+      ...options,
+    });
+  }
+}
+
+export type SearchRetrieveResponsesQueryCursor = QueryCursor<SearchRetrieveResponse>;
+
+/**
+ * Search match information
+ */
+export interface MatchInfo {
+  /**
+   * Human-readable match reasons
+   */
+  reasons: Array<string>;
+
+  /**
+   * Match relevance score (0-1)
+   */
+  score: number;
 }
 
 export interface SearchCreateResponse {
@@ -45,6 +100,16 @@ export interface SearchCreateResponse {
    * Cursor for the next page
    */
   next_cursor: string | null;
+
+  /**
+   * Search ID. Use with GET /v1/search/{id} for free pagination.
+   */
+  search_id: string;
+
+  /**
+   * Total number of results across all pages
+   */
+  total: number;
 }
 
 export namespace SearchCreateResponse {
@@ -52,12 +117,12 @@ export namespace SearchCreateResponse {
     /**
      * Basic creator information
      */
-    creator: Data.Creator;
+    creator: Shared.CreatorBasic;
 
     /**
      * Search match information
      */
-    match: Data.Match;
+    match: SearchAPI.MatchInfo;
 
     /**
      * Abbreviated profile information
@@ -69,48 +134,28 @@ export namespace SearchCreateResponse {
      */
     relevant_profile: Shared.ProfileSummary | null;
   }
+}
 
-  export namespace Data {
-    /**
-     * Basic creator information
-     */
-    export interface Creator {
-      /**
-       * Creator unique identifier
-       */
-      id: string;
+export interface SearchRetrieveResponse {
+  /**
+   * Basic creator information
+   */
+  creator: Shared.CreatorBasic;
 
-      /**
-       * Avatar URL
-       */
-      avatar_url: string | null;
+  /**
+   * Search match information
+   */
+  match: MatchInfo;
 
-      /**
-       * Creator bio
-       */
-      bio: string | null;
+  /**
+   * Abbreviated profile information
+   */
+  primary_profile: Shared.ProfileSummary | null;
 
-      /**
-       * Creator display name
-       */
-      name: string;
-    }
-
-    /**
-     * Search match information
-     */
-    export interface Match {
-      /**
-       * Human-readable match reasons
-       */
-      reasons: Array<string>;
-
-      /**
-       * Match relevance score (0-1)
-       */
-      score: number;
-    }
-  }
+  /**
+   * Abbreviated profile information
+   */
+  relevant_profile: Shared.ProfileSummary | null;
 }
 
 export interface SearchCreateParams {
@@ -118,11 +163,6 @@ export interface SearchCreateParams {
    * Natural language search query
    */
   query: string;
-
-  /**
-   * Pagination cursor for next page
-   */
-  cursor?: string;
 
   /**
    * Additional filters
@@ -194,6 +234,15 @@ export namespace SearchCreateParams {
   }
 }
 
+export interface SearchRetrieveParams extends QueryCursorParams {}
+
 export declare namespace Search {
-  export { type SearchCreateResponse as SearchCreateResponse, type SearchCreateParams as SearchCreateParams };
+  export {
+    type MatchInfo as MatchInfo,
+    type SearchCreateResponse as SearchCreateResponse,
+    type SearchRetrieveResponse as SearchRetrieveResponse,
+    type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,
+    type SearchCreateParams as SearchCreateParams,
+    type SearchRetrieveParams as SearchRetrieveParams,
+  };
 }

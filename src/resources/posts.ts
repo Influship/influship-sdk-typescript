@@ -1,9 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import { Cursor, type CursorParams, PagePromise } from '../core/pagination';
+import { PagePromise, QueryCursor, type QueryCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Retrieve and analyze social media posts with engagement metrics, media content, and performance data.
+ */
 export class Posts extends APIResource {
   /**
    * Retrieve posts for a creator or profile with engagement metrics and media data.
@@ -21,17 +24,17 @@ export class Posts extends APIResource {
    * - `most_views`: Most views first (video content)
    * - `most_comments`: Most comments first
    *
-   * **Pricing**: $0.005 per post returned
+   * **Pricing**: 0.05 credits per post returned ($0.0005)
    */
   list(
     query: PostListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<PostListResponsesCursor, PostListResponse> {
-    return this._client.getAPIList('/v1/posts', Cursor<PostListResponse>, { query, ...options });
+  ): PagePromise<PostListResponsesQueryCursor, PostListResponse> {
+    return this._client.getAPIList('/v1/posts', QueryCursor<PostListResponse>, { query, ...options });
   }
 }
 
-export type PostListResponsesCursor = Cursor<PostListResponse>;
+export type PostListResponsesQueryCursor = QueryCursor<PostListResponse>;
 
 /**
  * Full post details
@@ -170,7 +173,7 @@ export namespace PostListResponse {
   }
 }
 
-export interface PostListParams extends CursorParams {
+export interface PostListParams extends QueryCursorParams {
   /**
    * Creator ID (use this OR platform+username)
    */
@@ -195,7 +198,7 @@ export interface PostListParams extends CursorParams {
 export declare namespace Posts {
   export {
     type PostListResponse as PostListResponse,
-    type PostListResponsesCursor as PostListResponsesCursor,
+    type PostListResponsesQueryCursor as PostListResponsesQueryCursor,
     type PostListParams as PostListParams,
   };
 }

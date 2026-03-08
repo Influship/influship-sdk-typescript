@@ -4,6 +4,7 @@ export { Instagram, type InstagramGetProfileResponse, type InstagramGetProfilePa
 export { Raw } from './raw';
 export {
   Youtube,
+  type TranscriptSegment,
   type YoutubeGetChannelResponse,
   type YoutubeGetChannelTranscriptsResponse,
   type YoutubeGetTranscriptResponse,

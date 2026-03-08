@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Fetch fresh data directly from social platforms in real-time. Use when you need the most current information or data for profiles not yet in our database.
+ */
 export class Instagram extends APIResource {
   /**
    * Fetch fresh Instagram profile data directly from Instagram in real-time. Use
@@ -19,7 +22,7 @@ export class Instagram extends APIResource {
    * **Note:** Live scraping is slower than cached data (2-5 seconds) and costs more.
    * Use cached endpoints when freshness isn't critical.
    *
-   * **Pricing**: $0.005 per profile scraped
+   * **Pricing**: 0.5 credits per profile scraped ($0.005)
    */
   getProfile(
     username: string,

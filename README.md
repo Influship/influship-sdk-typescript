@@ -40,7 +40,7 @@ const search = await client.search.create({
   limit: 25,
 });
 
-console.log(search.data);
+console.log(search.search_id);
 ```
 
 ### Request & Response types
@@ -146,22 +146,28 @@ List methods in the Influship API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllPostListResponses(params) {
-  const allPostListResponses = [];
+async function fetchAllSearchRetrieveResponses(params) {
+  const allSearchRetrieveResponses = [];
   // Automatically fetches more pages as needed.
-  for await (const postListResponse of client.posts.list()) {
-    allPostListResponses.push(postListResponse);
+  for await (const searchRetrieveResponse of client.search.retrieve('search_abc123', {
+    cursor: 'eyJvZmZzZXQiOjEwfQ==',
+    limit: 10,
+  })) {
+    allSearchRetrieveResponses.push(searchRetrieveResponse);
   }
-  return allPostListResponses;
+  return allSearchRetrieveResponses;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.posts.list();
-for (const postListResponse of page.data) {
-  console.log(postListResponse);
+let page = await client.search.retrieve('search_abc123', {
+  cursor: 'eyJvZmZzZXQiOjEwfQ==',
+  limit: 10,
+});
+for (const searchRetrieveResponse of page.data) {
+  console.log(searchRetrieveResponse);
 }
 
 // Convenience methods are provided for manually paginating:
@@ -195,7 +201,7 @@ const { data: search, response: raw } = await client.search
   .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(search.data);
+console.log(search.search_id);
 ```
 
 ### Logging
@@ -385,7 +391,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/influship/influship-sdk-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Influship/influship-sdk-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 
