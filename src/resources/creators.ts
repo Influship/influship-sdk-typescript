@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { BodyCursor, type BodyCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -93,13 +94,23 @@ export class Creators extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.creators.lookalike({
-   *   seeds: [{}],
-   * });
+   * // Automatically fetches more pages as needed.
+   * for await (const creatorLookalikeResponse of client.creators.lookalike(
+   *   { seeds: [{}] },
+   * )) {
+   *   // ...
+   * }
    * ```
    */
-  lookalike(body: CreatorLookalikeParams, options?: RequestOptions): APIPromise<CreatorLookalikeResponse> {
-    return this._client.post('/v1/creators/lookalike', { body, ...options });
+  lookalike(
+    body: CreatorLookalikeParams,
+    options?: RequestOptions,
+  ): PagePromise<CreatorLookalikeResponsesBodyCursor, CreatorLookalikeResponse> {
+    return this._client.getAPIList('/v1/creators/lookalike', BodyCursor<CreatorLookalikeResponse>, {
+      body,
+      method: 'post',
+      ...options,
+    });
   }
 
   /**
@@ -136,6 +147,8 @@ export class Creators extends APIResource {
     return this._client.post('/v1/creators/match', { body, ...options });
   }
 }
+
+export type CreatorLookalikeResponsesBodyCursor = BodyCursor<CreatorLookalikeResponse>;
 
 export interface CreatorRetrieveResponse {
   /**
@@ -247,52 +260,36 @@ export namespace CreatorAutocompleteResponse {
 }
 
 export interface CreatorLookalikeResponse {
-  data: Array<CreatorLookalikeResponse.Data>;
+  /**
+   * Basic creator information
+   */
+  creator: Shared.CreatorBasic;
 
   /**
-   * Whether more results are available
+   * Abbreviated profile information
    */
-  has_more: boolean;
+  primary_profile: Shared.ProfileSummary | null;
 
   /**
-   * Cursor for the next page
+   * Similarity information for lookalike match
    */
-  next_cursor: string | null;
+  similarity: CreatorLookalikeResponse.Similarity;
 }
 
 export namespace CreatorLookalikeResponse {
-  export interface Data {
+  /**
+   * Similarity information for lookalike match
+   */
+  export interface Similarity {
     /**
-     * Basic creator information
+     * Similarity score (0-1)
      */
-    creator: Shared.CreatorBasic;
+    score: number;
 
     /**
-     * Abbreviated profile information
+     * Shared traits with seed creators
      */
-    primary_profile: Shared.ProfileSummary | null;
-
-    /**
-     * Similarity information for lookalike match
-     */
-    similarity: Data.Similarity;
-  }
-
-  export namespace Data {
-    /**
-     * Similarity information for lookalike match
-     */
-    export interface Similarity {
-      /**
-       * Similarity score (0-1)
-       */
-      score: number;
-
-      /**
-       * Shared traits with seed creators
-       */
-      shared_traits: Array<string>;
-    }
+    shared_traits: Array<string>;
   }
 }
 
@@ -396,26 +393,16 @@ export interface CreatorAutocompleteParams {
   scope?: 'creator_only' | 'matched_platforms' | 'all_platforms';
 }
 
-export interface CreatorLookalikeParams {
+export interface CreatorLookalikeParams extends BodyCursorParams {
   /**
    * Seed creators to find similar creators for
    */
   seeds: Array<CreatorLookalikeParams.Seed>;
 
   /**
-   * Pagination cursor for next page
-   */
-  cursor?: string;
-
-  /**
    * Additional filters
    */
   filters?: CreatorLookalikeParams.Filters;
-
-  /**
-   * Maximum results to return
-   */
-  limit?: number;
 }
 
 export namespace CreatorLookalikeParams {
@@ -552,6 +539,7 @@ export declare namespace Creators {
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
     type CreatorLookalikeResponse as CreatorLookalikeResponse,
     type CreatorMatchResponse as CreatorMatchResponse,
+    type CreatorLookalikeResponsesBodyCursor as CreatorLookalikeResponsesBodyCursor,
     type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
     type CreatorLookalikeParams as CreatorLookalikeParams,

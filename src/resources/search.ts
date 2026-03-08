@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { PagePromise, QueryCursor, type QueryCursorParams } from '../core/pagination';
@@ -72,6 +73,21 @@ export class Search extends APIResource {
 
 export type SearchRetrieveResponsesQueryCursor = QueryCursor<SearchRetrieveResponse>;
 
+/**
+ * Search match information
+ */
+export interface MatchInfo {
+  /**
+   * Human-readable match reasons
+   */
+  reasons: Array<string>;
+
+  /**
+   * Match relevance score (0-1)
+   */
+  score: number;
+}
+
 export interface SearchCreateResponse {
   data: Array<SearchCreateResponse.Data>;
 
@@ -106,7 +122,7 @@ export namespace SearchCreateResponse {
     /**
      * Search match information
      */
-    match: Data.Match;
+    match: SearchAPI.MatchInfo;
 
     /**
      * Abbreviated profile information
@@ -117,23 +133,6 @@ export namespace SearchCreateResponse {
      * Abbreviated profile information
      */
     relevant_profile: Shared.ProfileSummary | null;
-  }
-
-  export namespace Data {
-    /**
-     * Search match information
-     */
-    export interface Match {
-      /**
-       * Human-readable match reasons
-       */
-      reasons: Array<string>;
-
-      /**
-       * Match relevance score (0-1)
-       */
-      score: number;
-    }
   }
 }
 
@@ -146,7 +145,7 @@ export interface SearchRetrieveResponse {
   /**
    * Search match information
    */
-  match: SearchRetrieveResponse.Match;
+  match: MatchInfo;
 
   /**
    * Abbreviated profile information
@@ -157,23 +156,6 @@ export interface SearchRetrieveResponse {
    * Abbreviated profile information
    */
   relevant_profile: Shared.ProfileSummary | null;
-}
-
-export namespace SearchRetrieveResponse {
-  /**
-   * Search match information
-   */
-  export interface Match {
-    /**
-     * Human-readable match reasons
-     */
-    reasons: Array<string>;
-
-    /**
-     * Match relevance score (0-1)
-     */
-    score: number;
-  }
 }
 
 export interface SearchCreateParams {
@@ -256,6 +238,7 @@ export interface SearchRetrieveParams extends QueryCursorParams {}
 
 export declare namespace Search {
   export {
+    type MatchInfo as MatchInfo,
     type SearchCreateResponse as SearchCreateResponse,
     type SearchRetrieveResponse as SearchRetrieveResponse,
     type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,

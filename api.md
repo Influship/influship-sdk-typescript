@@ -28,13 +28,14 @@ Methods:
 
 - <code title="get /v1/creators/{id}">client.creators.<a href="./src/resources/creators.ts">retrieve</a>(id, { ...params }) -> CreatorRetrieveResponse</code>
 - <code title="get /v1/creators/autocomplete">client.creators.<a href="./src/resources/creators.ts">autocomplete</a>({ ...params }) -> CreatorAutocompleteResponse</code>
-- <code title="post /v1/creators/lookalike">client.creators.<a href="./src/resources/creators.ts">lookalike</a>({ ...params }) -> CreatorLookalikeResponse</code>
+- <code title="post /v1/creators/lookalike">client.creators.<a href="./src/resources/creators.ts">lookalike</a>({ ...params }) -> CreatorLookalikeResponsesBodyCursor</code>
 - <code title="post /v1/creators/match">client.creators.<a href="./src/resources/creators.ts">match</a>({ ...params }) -> CreatorMatchResponse</code>
 
 # Search
 
 Types:
 
+- <code><a href="./src/resources/search.ts">MatchInfo</a></code>
 - <code><a href="./src/resources/search.ts">SearchCreateResponse</a></code>
 - <code><a href="./src/resources/search.ts">SearchRetrieveResponse</a></code>
 
