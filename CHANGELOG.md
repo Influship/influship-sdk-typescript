@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2026-03-08)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* update SDK settings ([8ae1e31](https://github.com/Influship/influship-sdk-typescript/commit/8ae1e319214344034e19b3cc79d21f53e2bce1b5))
+
 ## 0.3.0 (2026-03-08)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.2.0...v0.3.0)
