@@ -223,8 +223,8 @@ export class BodyCursor<Item> extends AbstractPage<Item> implements BodyCursorRe
 
     return {
       ...this.options,
-      query: {
-        ...maybeObj(this.options.query),
+      body: {
+        ...maybeObj(this.options.body),
         cursor,
       },
     };

@@ -30,6 +30,7 @@ import {
   CreatorAutocompleteResponse,
   CreatorLookalikeParams,
   CreatorLookalikeResponse,
+  CreatorLookalikeResponsesBodyCursor,
   CreatorMatchParams,
   CreatorMatchResponse,
   CreatorRetrieveParams,
@@ -50,6 +51,7 @@ import {
   Profiles,
 } from './resources/profiles';
 import {
+  MatchInfo,
   Search,
   SearchCreateParams,
   SearchCreateResponse,
@@ -826,6 +828,7 @@ export declare namespace Influship {
     type CreatorAutocompleteResponse as CreatorAutocompleteResponse,
     type CreatorLookalikeResponse as CreatorLookalikeResponse,
     type CreatorMatchResponse as CreatorMatchResponse,
+    type CreatorLookalikeResponsesBodyCursor as CreatorLookalikeResponsesBodyCursor,
     type CreatorRetrieveParams as CreatorRetrieveParams,
     type CreatorAutocompleteParams as CreatorAutocompleteParams,
     type CreatorLookalikeParams as CreatorLookalikeParams,
@@ -834,6 +837,7 @@ export declare namespace Influship {
 
   export {
     Search as Search,
+    type MatchInfo as MatchInfo,
     type SearchCreateResponse as SearchCreateResponse,
     type SearchRetrieveResponse as SearchRetrieveResponse,
     type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,

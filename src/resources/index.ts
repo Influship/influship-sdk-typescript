@@ -11,6 +11,7 @@ export {
   type CreatorAutocompleteParams,
   type CreatorLookalikeParams,
   type CreatorMatchParams,
+  type CreatorLookalikeResponsesBodyCursor,
 } from './creators';
 export { Health, type HealthCheckResponse } from './health';
 export {
@@ -33,6 +34,7 @@ export {
 export { Raw } from './raw/raw';
 export {
   Search,
+  type MatchInfo,
   type SearchCreateResponse,
   type SearchRetrieveResponse,
   type SearchCreateParams,
