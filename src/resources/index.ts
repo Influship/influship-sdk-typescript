@@ -13,13 +13,29 @@ export {
   type CreatorMatchParams,
 } from './creators';
 export { Health, type HealthCheckResponse } from './health';
-export { Posts, type PostListResponse, type PostListParams, type PostListResponsesCursor } from './posts';
+export {
+  Posts,
+  type PostListResponse,
+  type PostListParams,
+  type PostListResponsesQueryCursor,
+} from './posts';
 export {
   Profiles,
+  type ProfileActivity,
+  type ProfileGrowth,
+  type ProfileMetrics,
+  type ProfileResponseData,
   type ProfileGetResponse,
   type ProfileLookupResponse,
   type ProfileGetParams,
   type ProfileLookupParams,
 } from './profiles';
 export { Raw } from './raw/raw';
-export { Search, type SearchCreateResponse, type SearchCreateParams } from './search';
+export {
+  Search,
+  type SearchCreateResponse,
+  type SearchRetrieveResponse,
+  type SearchCreateParams,
+  type SearchRetrieveParams,
+  type SearchRetrieveResponsesQueryCursor,
+} from './search';

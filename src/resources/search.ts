@@ -3,7 +3,9 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, QueryCursor, type QueryCursorParams } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 /**
  * AI-powered semantic search to find creators using natural language queries. Understands intent and context to match creators based on content themes, audience, and style.
@@ -37,7 +39,38 @@ export class Search extends APIResource {
   create(body: SearchCreateParams, options?: RequestOptions): APIPromise<SearchCreateResponse> {
     return this._client.post('/v1/search', { body, ...options });
   }
+
+  /**
+   * Paginate through results from a previous search. Use the `search_id` returned by
+   * `POST /v1/search` to fetch additional pages.
+   *
+   * Search sessions expire after 1 hour. After expiry, a new search must be run.
+   *
+   * **Pricing**: 0 credits (included with initial search)
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const searchRetrieveResponse of client.search.retrieve(
+   *   '123e4567-e89b-12d3-a456-426614174000',
+   * )) {
+   *   // ...
+   * }
+   * ```
+   */
+  retrieve(
+    id: string,
+    query: SearchRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SearchRetrieveResponsesQueryCursor, SearchRetrieveResponse> {
+    return this._client.getAPIList(path`/v1/search/${id}`, QueryCursor<SearchRetrieveResponse>, {
+      query,
+      ...options,
+    });
+  }
 }
+
+export type SearchRetrieveResponsesQueryCursor = QueryCursor<SearchRetrieveResponse>;
 
 export interface SearchCreateResponse {
   data: Array<SearchCreateResponse.Data>;
@@ -68,7 +101,7 @@ export namespace SearchCreateResponse {
     /**
      * Basic creator information
      */
-    creator: Data.Creator;
+    creator: Shared.CreatorBasic;
 
     /**
      * Search match information
@@ -88,31 +121,6 @@ export namespace SearchCreateResponse {
 
   export namespace Data {
     /**
-     * Basic creator information
-     */
-    export interface Creator {
-      /**
-       * Creator unique identifier
-       */
-      id: string;
-
-      /**
-       * Avatar URL
-       */
-      avatar_url: string | null;
-
-      /**
-       * Creator bio
-       */
-      bio: string | null;
-
-      /**
-       * Creator display name
-       */
-      name: string;
-    }
-
-    /**
      * Search match information
      */
     export interface Match {
@@ -126,6 +134,45 @@ export namespace SearchCreateResponse {
        */
       score: number;
     }
+  }
+}
+
+export interface SearchRetrieveResponse {
+  /**
+   * Basic creator information
+   */
+  creator: Shared.CreatorBasic;
+
+  /**
+   * Search match information
+   */
+  match: SearchRetrieveResponse.Match;
+
+  /**
+   * Abbreviated profile information
+   */
+  primary_profile: Shared.ProfileSummary | null;
+
+  /**
+   * Abbreviated profile information
+   */
+  relevant_profile: Shared.ProfileSummary | null;
+}
+
+export namespace SearchRetrieveResponse {
+  /**
+   * Search match information
+   */
+  export interface Match {
+    /**
+     * Human-readable match reasons
+     */
+    reasons: Array<string>;
+
+    /**
+     * Match relevance score (0-1)
+     */
+    score: number;
   }
 }
 
@@ -205,6 +252,14 @@ export namespace SearchCreateParams {
   }
 }
 
+export interface SearchRetrieveParams extends QueryCursorParams {}
+
 export declare namespace Search {
-  export { type SearchCreateResponse as SearchCreateResponse, type SearchCreateParams as SearchCreateParams };
+  export {
+    type SearchCreateResponse as SearchCreateResponse,
+    type SearchRetrieveResponse as SearchRetrieveResponse,
+    type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,
+    type SearchCreateParams as SearchCreateParams,
+    type SearchRetrieveParams as SearchRetrieveParams,
+  };
 }

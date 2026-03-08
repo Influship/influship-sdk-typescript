@@ -15,7 +15,13 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type CursorParams, CursorResponse } from './core/pagination';
+import {
+  AbstractPage,
+  type BodyCursorParams,
+  BodyCursorResponse,
+  type QueryCursorParams,
+  QueryCursorResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -31,15 +37,26 @@ import {
   Creators,
 } from './resources/creators';
 import { Health, HealthCheckResponse } from './resources/health';
-import { PostListParams, PostListResponse, PostListResponsesCursor, Posts } from './resources/posts';
+import { PostListParams, PostListResponse, PostListResponsesQueryCursor, Posts } from './resources/posts';
 import {
+  ProfileActivity,
   ProfileGetParams,
   ProfileGetResponse,
+  ProfileGrowth,
   ProfileLookupParams,
   ProfileLookupResponse,
+  ProfileMetrics,
+  ProfileResponseData,
   Profiles,
 } from './resources/profiles';
-import { Search, SearchCreateParams, SearchCreateResponse } from './resources/search';
+import {
+  Search,
+  SearchCreateParams,
+  SearchCreateResponse,
+  SearchRetrieveParams,
+  SearchRetrieveResponse,
+  SearchRetrieveResponsesQueryCursor,
+} from './resources/search';
 import { Raw } from './resources/raw/raw';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -795,8 +812,11 @@ Influship.Raw = Raw;
 export declare namespace Influship {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import Cursor = Pagination.Cursor;
-  export { type CursorParams as CursorParams, type CursorResponse as CursorResponse };
+  export import QueryCursor = Pagination.QueryCursor;
+  export { type QueryCursorParams as QueryCursorParams, type QueryCursorResponse as QueryCursorResponse };
+
+  export import BodyCursor = Pagination.BodyCursor;
+  export { type BodyCursorParams as BodyCursorParams, type BodyCursorResponse as BodyCursorResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -815,11 +835,18 @@ export declare namespace Influship {
   export {
     Search as Search,
     type SearchCreateResponse as SearchCreateResponse,
+    type SearchRetrieveResponse as SearchRetrieveResponse,
+    type SearchRetrieveResponsesQueryCursor as SearchRetrieveResponsesQueryCursor,
     type SearchCreateParams as SearchCreateParams,
+    type SearchRetrieveParams as SearchRetrieveParams,
   };
 
   export {
     Profiles as Profiles,
+    type ProfileActivity as ProfileActivity,
+    type ProfileGrowth as ProfileGrowth,
+    type ProfileMetrics as ProfileMetrics,
+    type ProfileResponseData as ProfileResponseData,
     type ProfileGetResponse as ProfileGetResponse,
     type ProfileLookupResponse as ProfileLookupResponse,
     type ProfileGetParams as ProfileGetParams,
@@ -829,11 +856,12 @@ export declare namespace Influship {
   export {
     Posts as Posts,
     type PostListResponse as PostListResponse,
-    type PostListResponsesCursor as PostListResponsesCursor,
+    type PostListResponsesQueryCursor as PostListResponsesQueryCursor,
     type PostListParams as PostListParams,
   };
 
   export { Raw as Raw };
 
+  export type CreatorBasic = API.CreatorBasic;
   export type ProfileSummary = API.ProfileSummary;
 }

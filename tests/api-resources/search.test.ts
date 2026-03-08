@@ -35,4 +35,28 @@ describe('resource search', () => {
       platforms: ['instagram'],
     });
   });
+
+  // Mock server tests are disabled
+  test.skip('retrieve', async () => {
+    const responsePromise = client.search.retrieve('123e4567-e89b-12d3-a456-426614174000');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.search.retrieve(
+        '123e4567-e89b-12d3-a456-426614174000',
+        { cursor: 'cursor', limit: 25 },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Influship.NotFoundError);
+  });
 });

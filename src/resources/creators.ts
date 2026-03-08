@@ -265,7 +265,7 @@ export namespace CreatorLookalikeResponse {
     /**
      * Basic creator information
      */
-    creator: Data.Creator;
+    creator: Shared.CreatorBasic;
 
     /**
      * Abbreviated profile information
@@ -279,31 +279,6 @@ export namespace CreatorLookalikeResponse {
   }
 
   export namespace Data {
-    /**
-     * Basic creator information
-     */
-    export interface Creator {
-      /**
-       * Creator unique identifier
-       */
-      id: string;
-
-      /**
-       * Avatar URL
-       */
-      avatar_url: string | null;
-
-      /**
-       * Creator bio
-       */
-      bio: string | null;
-
-      /**
-       * Creator display name
-       */
-      name: string;
-    }
-
     /**
      * Similarity information for lookalike match
      */

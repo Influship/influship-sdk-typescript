@@ -110,6 +110,7 @@ const fuse = new Fuse(
     'client.creators.match',
     'client.creators.retrieve',
     'client.search.create',
+    'client.search.retrieve',
     'client.profiles.get',
     'client.profiles.lookup',
     'client.posts.list',
