@@ -47,6 +47,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/search',
   },
   {
+    clientCallName: 'client.search.retrieve',
+    fullyQualifiedName: 'search.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v1/search/{id}',
+  },
+  {
     clientCallName: 'client.profiles.get',
     fullyQualifiedName: 'profiles.get',
     httpMethod: 'get',

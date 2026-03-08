@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as YoutubeAPI from './youtube';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -72,6 +73,23 @@ export class Youtube extends APIResource {
   search(query: YoutubeSearchParams, options?: RequestOptions): APIPromise<YoutubeSearchResponse> {
     return this._client.get('/v1/raw/youtube/search', { query, ...options });
   }
+}
+
+export interface TranscriptSegment {
+  /**
+   * Duration in seconds
+   */
+  duration: number;
+
+  /**
+   * Start time in seconds
+   */
+  start: number;
+
+  /**
+   * Segment text
+   */
+  text: string;
 }
 
 export interface YoutubeGetChannelResponse {
@@ -258,7 +276,7 @@ export namespace YoutubeGetChannelTranscriptsResponse {
       /**
        * Timestamped segments (only if include_segments=true)
        */
-      transcript: Array<Item.Transcript> | null;
+      transcript: Array<YoutubeAPI.TranscriptSegment> | null;
 
       /**
        * Video URL
@@ -279,25 +297,6 @@ export namespace YoutubeGetChannelTranscriptsResponse {
        * Word count of transcript
        */
       word_count: number | null;
-    }
-
-    export namespace Item {
-      export interface Transcript {
-        /**
-         * Duration in seconds
-         */
-        duration: number;
-
-        /**
-         * Start time in seconds
-         */
-        start: number;
-
-        /**
-         * Segment text
-         */
-        text: string;
-      }
     }
   }
 }
@@ -331,7 +330,7 @@ export namespace YoutubeGetTranscriptResponse {
     /**
      * Transcript segments
      */
-    transcript: Array<Data.Transcript>;
+    transcript: Array<YoutubeAPI.TranscriptSegment>;
 
     /**
      * Video URL
@@ -347,25 +346,6 @@ export namespace YoutubeGetTranscriptResponse {
      * Total word count
      */
     word_count: number;
-  }
-
-  export namespace Data {
-    export interface Transcript {
-      /**
-       * Duration in seconds
-       */
-      duration: number;
-
-      /**
-       * Start time in seconds
-       */
-      start: number;
-
-      /**
-       * Segment text
-       */
-      text: string;
-    }
   }
 }
 
@@ -592,6 +572,7 @@ export interface YoutubeSearchParams {
 
 export declare namespace Youtube {
   export {
+    type TranscriptSegment as TranscriptSegment,
     type YoutubeGetChannelResponse as YoutubeGetChannelResponse,
     type YoutubeGetChannelTranscriptsResponse as YoutubeGetChannelTranscriptsResponse,
     type YoutubeGetTranscriptResponse as YoutubeGetTranscriptResponse,

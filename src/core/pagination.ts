@@ -107,7 +107,7 @@ export class PagePromise<
   }
 }
 
-export interface CursorResponse<Item> {
+export interface QueryCursorResponse<Item> {
   next_cursor: string | null;
 
   has_more: boolean;
@@ -115,13 +115,13 @@ export interface CursorResponse<Item> {
   data: Array<Item>;
 }
 
-export interface CursorParams {
+export interface QueryCursorParams {
   cursor?: string;
 
   limit?: number;
 }
 
-export class Cursor<Item> extends AbstractPage<Item> implements CursorResponse<Item> {
+export class QueryCursor<Item> extends AbstractPage<Item> implements QueryCursorResponse<Item> {
   next_cursor: string | null;
 
   has_more: boolean;
@@ -131,7 +131,69 @@ export class Cursor<Item> extends AbstractPage<Item> implements CursorResponse<I
   constructor(
     client: Influship,
     response: Response,
-    body: CursorResponse<Item>,
+    body: QueryCursorResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.next_cursor = body.next_cursor || null;
+    this.has_more = body.has_more || false;
+    this.data = body.data || [];
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.data ?? [];
+  }
+
+  override hasNextPage(): boolean {
+    if (this.has_more === false) {
+      return false;
+    }
+
+    return super.hasNextPage();
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.next_cursor;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        cursor,
+      },
+    };
+  }
+}
+
+export interface BodyCursorResponse<Item> {
+  next_cursor: string | null;
+
+  has_more: boolean;
+
+  data: Array<Item>;
+}
+
+export interface BodyCursorParams {
+  cursor?: string;
+
+  limit?: number;
+}
+
+export class BodyCursor<Item> extends AbstractPage<Item> implements BodyCursorResponse<Item> {
+  next_cursor: string | null;
+
+  has_more: boolean;
+
+  data: Array<Item>;
+
+  constructor(
+    client: Influship,
+    response: Response,
+    body: BodyCursorResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);

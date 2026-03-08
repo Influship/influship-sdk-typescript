@@ -2,6 +2,7 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">CreatorBasic</a></code>
 - <code><a href="./src/resources/shared.ts">ProfileSummary</a></code>
 
 # Health
@@ -35,15 +36,21 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/search.ts">SearchCreateResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchRetrieveResponse</a></code>
 
 Methods:
 
 - <code title="post /v1/search">client.search.<a href="./src/resources/search.ts">create</a>({ ...params }) -> SearchCreateResponse</code>
+- <code title="get /v1/search/{id}">client.search.<a href="./src/resources/search.ts">retrieve</a>(id, { ...params }) -> SearchRetrieveResponsesQueryCursor</code>
 
 # Profiles
 
 Types:
 
+- <code><a href="./src/resources/profiles.ts">ProfileActivity</a></code>
+- <code><a href="./src/resources/profiles.ts">ProfileGrowth</a></code>
+- <code><a href="./src/resources/profiles.ts">ProfileMetrics</a></code>
+- <code><a href="./src/resources/profiles.ts">ProfileResponseData</a></code>
 - <code><a href="./src/resources/profiles.ts">ProfileGetResponse</a></code>
 - <code><a href="./src/resources/profiles.ts">ProfileLookupResponse</a></code>
 
@@ -60,7 +67,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponsesCursor</code>
+- <code title="get /v1/posts">client.posts.<a href="./src/resources/posts.ts">list</a>({ ...params }) -> PostListResponsesQueryCursor</code>
 
 # Raw
 
@@ -78,6 +85,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/raw/youtube.ts">TranscriptSegment</a></code>
 - <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelResponse</a></code>
 - <code><a href="./src/resources/raw/youtube.ts">YoutubeGetChannelTranscriptsResponse</a></code>
 - <code><a href="./src/resources/raw/youtube.ts">YoutubeGetTranscriptResponse</a></code>

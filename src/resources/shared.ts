@@ -1,6 +1,31 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 /**
+ * Basic creator information
+ */
+export interface CreatorBasic {
+  /**
+   * Creator unique identifier
+   */
+  id: string;
+
+  /**
+   * Avatar URL
+   */
+  avatar_url: string | null;
+
+  /**
+   * Creator bio
+   */
+  bio: string | null;
+
+  /**
+   * Creator display name
+   */
+  name: string;
+}
+
+/**
  * Abbreviated profile information
  */
 export interface ProfileSummary {

@@ -5,6 +5,7 @@ import * as InstagramAPI from './instagram';
 import { Instagram, InstagramGetProfileParams, InstagramGetProfileResponse } from './instagram';
 import * as YoutubeAPI from './youtube';
 import {
+  TranscriptSegment,
   Youtube,
   YoutubeGetChannelParams,
   YoutubeGetChannelResponse,
@@ -33,6 +34,7 @@ export declare namespace Raw {
 
   export {
     Youtube as Youtube,
+    type TranscriptSegment as TranscriptSegment,
     type YoutubeGetChannelResponse as YoutubeGetChannelResponse,
     type YoutubeGetChannelTranscriptsResponse as YoutubeGetChannelTranscriptsResponse,
     type YoutubeGetTranscriptResponse as YoutubeGetTranscriptResponse,
