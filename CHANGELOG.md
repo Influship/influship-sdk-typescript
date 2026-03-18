@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.2 (2026-03-17)
+
+Full Changelog: [v0.3.1...v0.3.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.1...v0.3.2)
+
+### Chores
+
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([f982b62](https://github.com/Influship/influship-sdk-typescript/commit/f982b629275ba9ce6abd60ae9c9cb59e420755df))
+* **internal:** configure MCP Server hosting ([46301f2](https://github.com/Influship/influship-sdk-typescript/commit/46301f201ba7f4b3c4173855c94f1c1aac1b043e))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([fa720e6](https://github.com/Influship/influship-sdk-typescript/commit/fa720e63ebd09acf1127187623c4878b5ac94c1a))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([e1812ff](https://github.com/Influship/influship-sdk-typescript/commit/e1812ff4868670826e684df0de46f7f791fc7c15))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([2f71ccb](https://github.com/Influship/influship-sdk-typescript/commit/2f71ccb14971aa9ae2d09947a17523208e35b204))
+* **internal:** tweak CI branches ([4e88652](https://github.com/Influship/influship-sdk-typescript/commit/4e886528b68bcbd8d321b6c12d683b4505f3742f))
+* **internal:** update dependencies to address dependabot vulnerabilities ([16eae9a](https://github.com/Influship/influship-sdk-typescript/commit/16eae9a35d3f52ac0859aebac65e31e854856ea0))
+
 ## 0.3.1 (2026-03-08)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.0...v0.3.1)
