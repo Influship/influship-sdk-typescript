@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.3 (2026-03-24)
+
+Full Changelog: [v0.3.2...v0.3.3](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.2...v0.3.3)
+
+### Chores
+
+* **internal:** fix MCP server TS errors that occur with required client options ([9d713ec](https://github.com/Influship/influship-sdk-typescript/commit/9d713ec6d69e3795cf2a37d7d09d6fdbdfaefc2a))
+* **internal:** update gitignore ([5042f54](https://github.com/Influship/influship-sdk-typescript/commit/5042f54f5bf70cf593051463bd6c216a332441b8))
+
 ## 0.3.2 (2026-03-17)
 
 Full Changelog: [v0.3.1...v0.3.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.1...v0.3.2)
