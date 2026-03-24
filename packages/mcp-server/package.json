@@ -1,5 +1,5 @@
 {
-  "name": "influship-mcp",
+  "name": "influship-api-mcp",
   "version": "0.3.3",
   "description": "The official MCP Server for the Influship API",
   "author": "Influship <support@influship.com>",
@@ -77,8 +77,8 @@
     "tsconfig-paths": "^4.0.0"
   },
   "imports": {
-    "influship-mcp": ".",
-    "influship-mcp/*": "./src/*"
+    "influship-api-mcp": ".",
+    "influship-api-mcp/*": "./src/*"
   },
   "exports": {
     ".": {

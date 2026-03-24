@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "influship-mcp/*": ["./dist/src/*"],
-      "influship-mcp": ["./dist/src/index.ts"]
+      "influship-api-mcp/*": ["./dist/src/*"],
+      "influship-api-mcp": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
