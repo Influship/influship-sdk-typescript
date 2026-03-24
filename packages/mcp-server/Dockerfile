@@ -3,10 +3,10 @@
 # This Dockerfile builds a Docker image for the MCP Server.
 #
 # To build the image locally:
-#   docker build -f packages/mcp-server/Dockerfile -t influship-mcp:local .
+#   docker build -f packages/mcp-server/Dockerfile -t influship-api-mcp:local .
 #
 # To run the image:
-#   docker run -i influship-mcp:local [OPTIONS]
+#   docker run -i influship-api-mcp:local [OPTIONS]
 #
 # Common options:
 #   --tool=<name>              Include specific tools
@@ -16,7 +16,7 @@
 #   --transport=<type>         Set transport type (stdio or http)
 #
 # For a full list of options:
-#   docker run -i influship-mcp:local --help
+#   docker run -i influship-api-mcp:local --help
 #
 # Note: The MCP server uses stdio transport by default. Docker's -i flag
 # enables interactive mode, allowing the container to communicate over stdin/stdout.

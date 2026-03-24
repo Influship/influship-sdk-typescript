@@ -1,6 +1,6 @@
 {
   "dxt_version": "0.2",
-  "name": "influship-mcp",
+  "name": "influship-api-mcp",
   "version": "0.3.3",
   "description": "The official MCP Server for the Influship API",
   "author": {
