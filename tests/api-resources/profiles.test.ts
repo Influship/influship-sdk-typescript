@@ -28,7 +28,11 @@ describe('resource profiles', () => {
   // Mock server tests are disabled
   test.skip('lookup: only required params', async () => {
     const responsePromise = client.profiles.lookup({
-      profiles: [{ platform: 'instagram', username: 'fitness_coach_jane' }],
+      profiles: [
+        { platform: 'instagram', username: 'fitness_coach_jane' },
+        { platform: 'instagram', username: 'wellness_guru' },
+        { platform: 'instagram', username: 'healthy_eating_tips' },
+      ],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -42,7 +46,11 @@ describe('resource profiles', () => {
   // Mock server tests are disabled
   test.skip('lookup: required and optional params', async () => {
     const response = await client.profiles.lookup({
-      profiles: [{ platform: 'instagram', username: 'fitness_coach_jane' }],
+      profiles: [
+        { platform: 'instagram', username: 'fitness_coach_jane' },
+        { platform: 'instagram', username: 'wellness_guru' },
+        { platform: 'instagram', username: 'healthy_eating_tips' },
+      ],
     });
   });
 });

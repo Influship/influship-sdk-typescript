@@ -10,9 +10,7 @@ const client = new Influship({
 describe('resource search', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.search.create({
-      query: 'fitness influencers with 100k+ followers who post workout videos',
-    });
+    const responsePromise = client.search.create({ query: 'fitness influencers who post workout videos' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -25,13 +23,13 @@ describe('resource search', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.search.create({
-      query: 'fitness influencers with 100k+ followers who post workout videos',
+      query: 'fitness influencers who post workout videos',
       filters: {
-        engagement_rate: { max: 10, min: 1.5 },
-        followers: { max: 500000, min: 10000 },
+        engagement_rate: { max: 10, min: 2 },
+        followers: { max: 500000, min: 50000 },
         verified: true,
       },
-      limit: 25,
+      limit: 10,
       platforms: ['instagram'],
     });
   });

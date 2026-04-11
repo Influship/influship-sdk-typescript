@@ -32,8 +32,7 @@ export class Search extends APIResource {
    * @example
    * ```ts
    * const search = await client.search.create({
-   *   query:
-   *     'fitness influencers with 100k+ followers who post workout videos',
+   *   query: 'fitness influencers who post workout videos',
    * });
    * ```
    */

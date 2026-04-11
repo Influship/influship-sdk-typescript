@@ -135,10 +135,9 @@ export class Creators extends APIResource {
    * @example
    * ```ts
    * const response = await client.creators.match({
-   *   creators: [{}],
+   *   creators: [{}, {}],
    *   intent: {
-   *     query:
-   *       'Looking for fitness influencers to promote our new protein bar',
+   *     query: 'Promote our new plant-based protein powder',
    *   },
    * });
    * ```
