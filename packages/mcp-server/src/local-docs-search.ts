@@ -62,18 +62,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## check\n\n`client.health.check(): { ok: boolean; timestamp: string; }`\n\n**get** `/health`\n\nCheck API health status. No authentication required.\n\n### Returns\n\n- `{ ok: boolean; timestamp: string; }`\n  Health check response\n\n  - `ok: boolean`\n  - `timestamp: string`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.health.check();\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
-        example: 'curl https://api.influship.com/health \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      typescript: {
+        method: 'client.health.check',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.health.check();\n\nconsole.log(response.ok);",
       },
       python: {
         method: 'health.check',
         example:
           'from influship import Influship\n\nclient = Influship()\nresponse = client.health.check()\nprint(response.ok)',
       },
-      typescript: {
-        method: 'client.health.check',
-        example:
-          "import Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.health.check();\n\nconsole.log(response.ok);",
+      http: {
+        example: 'curl https://api.influship.com/health \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -92,18 +92,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.creators.retrieve(id: string, include: 'profiles'[]): { data: object; warning?: string; }`\n\n**get** `/v1/creators/{id}`\n\nRetrieve a creator's profile including AI-generated summary, content themes, and optionally their linked social profiles.\n\n**What is a Creator?**\nA creator is a cross-platform entity representing a person or brand. They may have profiles on multiple social networks (Instagram, YouTube, TikTok, etc.) that are linked together.\n\n**Include options:**\n- `profiles`: Include all linked social profiles with metrics\n\n**Pricing**: 0.1 credits per request ($0.001)\n\n### Parameters\n\n- `id: string`\n  Creator unique identifier\n\n- `include: 'profiles'[]`\n  Additional data to include in response\n\n### Returns\n\n- `{ data: { id: string; ai_summary: string; avatar_url: string; bio: string; content_themes: string[]; name: string; profiles?: object[]; }; warning?: string; }`\n\n  - `data: { id: string; ai_summary: string; avatar_url: string; bio: string; content_themes: string[]; name: string; profiles?: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }[]; }`\n  - `warning?: string`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst creator = await client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000', { include: ['profiles'] });\n\nconsole.log(creator);\n```",
     perLanguage: {
-      http: {
-        example: 'curl https://api.influship.com/v1/creators/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      typescript: {
+        method: 'client.creators.retrieve',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst creator = await client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000', {\n  include: ['profiles'],\n});\n\nconsole.log(creator.data);",
       },
       python: {
         method: 'creators.retrieve',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\ncreator = client.creators.retrieve(\n    id="123e4567-e89b-12d3-a456-426614174000",\n    include=["profiles"],\n)\nprint(creator.data)',
       },
-      typescript: {
-        method: 'client.creators.retrieve',
-        example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst creator = await client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000', {\n  include: ['profiles'],\n});\n\nconsole.log(creator.data);",
+      http: {
+        example: 'curl https://api.influship.com/v1/creators/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -127,19 +127,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## autocomplete\n\n`client.creators.autocomplete(q: string, limit?: number, platform?: 'instagram', scope?: 'creator_only' | 'matched_platforms' | 'all_platforms'): { data: object[]; }`\n\n**get** `/v1/creators/autocomplete`\n\nFast typeahead search for creators by name or username. Optimized for search-as-you-type UIs with sub-100ms response times.\n\n**Matching behavior:**\n- Matches against creator name, username, and display name\n- Results include which field matched and the matching value\n- Prefix matching (e.g., \"fit\" matches \"fitness_coach\")\n\n**Scope options:**\n- `creator_only`: Return only the creator entity\n- `matched_platforms`: Return only profiles that matched the query\n- `all_platforms`: Return all linked profiles (default)\n\n**Pricing**: 0.05 credits per request ($0.0005)\n\n### Parameters\n\n- `q: string`\n  Search query (min 2 characters)\n\n- `limit?: number`\n  Maximum results to return\n\n- `platform?: 'instagram'`\n  Filter by platform\n\n- `scope?: 'creator_only' | 'matched_platforms' | 'all_platforms'`\n  Which platforms to include in results\n\n### Returns\n\n- `{ data: { id: string; avatar: string; name: string; platforms: { display_name: string; match_field: string; match_type: 'name' | 'username' | 'display_name'; platform: 'instagram'; username: string; }[]; }[]; }`\n\n  - `data: { id: string; avatar: string; name: string; platforms: { display_name: string; match_field: string; match_type: 'name' | 'username' | 'display_name'; platform: 'instagram'; username: string; }[]; }[]`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.creators.autocomplete({ q: 'fitness' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.creators.autocomplete',
         example:
-          'curl https://api.influship.com/v1/creators/autocomplete \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.autocomplete({ q: 'fitness' });\n\nconsole.log(response.data);",
       },
       python: {
         method: 'creators.autocomplete',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creators.autocomplete(\n    q="fitness",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.creators.autocomplete',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.autocomplete({ q: 'fitness' });\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/creators/autocomplete \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -163,19 +163,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## lookalike\n\n`client.creators.lookalike(seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[], cursor?: string, filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }, limit?: number): { creator: creator_basic; primary_profile: profile_summary; similarity: object; }`\n\n**post** `/v1/creators/lookalike`\n\nFind creators similar to provided seed creators using AI-powered similarity matching. Analyzes content themes, audience overlap, posting style, and engagement patterns.\n\n**Use cases:**\n- Expand campaigns with creators similar to proven performers\n- Find alternatives when preferred creators are unavailable\n- Discover emerging creators in the same niche\n\n**How it works:**\n1. Provide 1-10 seed creators (by ID or platform/username)\n2. Optionally weight seeds to prioritize certain creators\n3. Get ranked results with similarity scores and shared traits\n\n**Pricing**: 1.5 credits per creator returned ($0.015)\n\n### Parameters\n\n- `seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[]`\n  Seed creators to find similar creators for\n\n- `cursor?: string`\n  Pagination cursor for next page\n\n- `filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }`\n  Additional filters\n  - `engagement_rate?: { max?: number; min?: number; }`\n    Filter by engagement rate\n  - `followers?: { max?: number; min?: number; }`\n    Filter by follower count\n  - `verified?: boolean`\n    Filter by verified status\n\n- `limit?: number`\n  Maximum results to return\n\n### Returns\n\n- `{ creator: { id: string; avatar_url: string; bio: string; name: string; }; primary_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; similarity: { score: number; shared_traits: string[]; }; }`\n\n  - `creator: { id: string; avatar_url: string; bio: string; name: string; }`\n  - `primary_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }`\n  - `similarity: { score: number; shared_traits: string[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse);\n}\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.creators.lookalike',
         example:
-          'curl https://api.influship.com/v1/creators/lookalike \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "seeds": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            }\n          ],\n          "limit": 20\n        }\'',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse.creator);\n}",
       },
       python: {
         method: 'creators.lookalike',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.creators.lookalike(\n    seeds=[{}],\n)\npage = page.data[0]\nprint(page.creator)',
       },
-      typescript: {
-        method: 'client.creators.lookalike',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse.creator);\n}",
+          'curl https://api.influship.com/v1/creators/lookalike \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "seeds": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            }\n          ],\n          "limit": 20\n        }\'',
       },
     },
   },
@@ -197,19 +197,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## match\n\n`client.creators.match(creators: { creator_id?: string; platform?: 'instagram'; username?: string; }[], intent: { query: string; context?: string; }): { data: object[]; }`\n\n**post** `/v1/creators/match`\n\nEvaluate how well creators match a specific campaign using AI analysis. Returns a fit score (0-1), decision recommendation (good/neutral/avoid), and evidence-based explanations.\n\n**Use cases:**\n- Vet shortlisted creators before outreach\n- Rank candidates for a specific campaign\n- Get AI-generated talking points for why a creator fits\n\n**How it works:**\n1. Describe your campaign intent and target audience\n2. Provide up to 100 creators to evaluate\n3. Get detailed scores with explanations and evidence\n\n**Pricing**: 1 credit per creator scored ($0.01)\n\n### Parameters\n\n- `creators: { creator_id?: string; platform?: 'instagram'; username?: string; }[]`\n  Creators to evaluate\n\n- `intent: { query: string; context?: string; }`\n  Campaign intent for creator matching\n  - `query: string`\n    Campaign description\n  - `context?: string`\n    Additional context about the campaign\n\n### Returns\n\n- `{ data: { creator: { id: string; avatar_url: string; name: string; }; input: { creator_id?: string; platform?: 'instagram'; username?: string; }; match: { decision: 'good' | 'neutral' | 'avoid'; reasons: object[]; score: number; }; }[]; }`\n\n  - `data: { creator: { id: string; avatar_url: string; name: string; }; input: { creator_id?: string; platform?: 'instagram'; username?: string; }; match: { decision: 'good' | 'neutral' | 'avoid'; reasons: { text: string; fact_id?: string; source_post_id?: string; }[]; score: number; }; }[]`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.creators.match({\n  creators: [{}, {}],\n  intent: { query: 'Promote our new plant-based protein powder' },\n});\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.creators.match',
         example:
-          'curl https://api.influship.com/v1/creators/match \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "creators": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            },\n            {\n              "creator_id": "123e4567-e89b-12d3-a456-426614174000"\n            }\n          ],\n          "intent": {\n            "query": "Promote our new plant-based protein powder",\n            "context": "Target audience is health-conscious millennials interested in sustainable fitness"\n          }\n        }\'',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.match({\n  creators: [{}, {}],\n  intent: { query: 'Promote our new plant-based protein powder' },\n});\n\nconsole.log(response.data);",
       },
       python: {
         method: 'creators.match',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creators.match(\n    creators=[{}, {}],\n    intent={\n        "query": "Promote our new plant-based protein powder"\n    },\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.creators.match',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.match({\n  creators: [{}, {}],\n  intent: { query: 'Promote our new plant-based protein powder' },\n});\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/creators/match \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "creators": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            },\n            {\n              "creator_id": "123e4567-e89b-12d3-a456-426614174000"\n            }\n          ],\n          "intent": {\n            "query": "Promote our new plant-based protein powder",\n            "context": "Target audience is health-conscious millennials interested in sustainable fitness"\n          }\n        }\'',
       },
     },
   },
@@ -233,19 +233,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.search.create(query: string, filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }, limit?: number, platforms?: 'instagram'[]): { data: object[]; has_more: boolean; next_cursor: string; search_id: string; total: number; }`\n\n**post** `/v1/search`\n\nSearch for creators using natural language queries. The AI understands intent and context to match creators based on content themes, audience demographics, and style.\n\nThe response includes a `search_id` that can be used with `GET /v1/search/{id}` to paginate through results for free.\n\n**Use cases:**\n- Find creators in a specific niche (\"vegan food bloggers in LA\")\n- Discover creators with specific audience characteristics (\"fitness influencers with millennial audience\")\n- Search by content style (\"creators who post cinematic travel videos\")\n\n**Pricing**: 25 credits base + 2 credits per creator returned\n\n### Parameters\n\n- `query: string`\n  Natural language search query\n\n- `filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }`\n  Additional filters\n  - `engagement_rate?: { max?: number; min?: number; }`\n    Filter by engagement rate\n  - `followers?: { max?: number; min?: number; }`\n    Filter by follower count\n  - `verified?: boolean`\n    Filter by verified status\n\n- `limit?: number`\n  Maximum results to return\n\n- `platforms?: 'instagram'[]`\n  Filter results to specific platforms\n\n### Returns\n\n- `{ data: { creator: object; match: object; primary_profile: object; relevant_profile: object; }[]; has_more: boolean; next_cursor: string; search_id: string; total: number; }`\n\n  - `data: { creator: { id: string; avatar_url: string; bio: string; name: string; }; match: { reasons: string[]; score: number; }; primary_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; relevant_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; }[]`\n  - `has_more: boolean`\n  - `next_cursor: string`\n  - `search_id: string`\n  - `total: number`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst search = await client.search.create({ query: 'fitness influencers who post workout videos' });\n\nconsole.log(search);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.search.create',
         example:
-          'curl https://api.influship.com/v1/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "query": "fitness influencers who post workout videos",\n          "limit": 10,\n          "platforms": [\n            "instagram"\n          ]\n        }\'',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst search = await client.search.create({ query: 'fitness influencers who post workout videos' });\n\nconsole.log(search.search_id);",
       },
       python: {
         method: 'search.create',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nsearch = client.search.create(\n    query="fitness influencers who post workout videos",\n)\nprint(search.search_id)',
       },
-      typescript: {
-        method: 'client.search.create',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst search = await client.search.create({ query: 'fitness influencers who post workout videos' });\n\nconsole.log(search.search_id);",
+          'curl https://api.influship.com/v1/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "query": "fitness influencers who post workout videos",\n          "limit": 10,\n          "platforms": [\n            "instagram"\n          ]\n        }\'',
       },
     },
   },
@@ -264,18 +264,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.search.retrieve(id: string, cursor?: string, limit?: number): { creator: creator_basic; match: match_info; primary_profile: profile_summary; relevant_profile: profile_summary; }`\n\n**get** `/v1/search/{id}`\n\nPaginate through results from a previous search. Use the `search_id` returned by `POST /v1/search` to fetch additional pages.\n\nSearch sessions expire after 1 hour. After expiry, a new search must be run.\n\n**Pricing**: 0 credits (included with initial search)\n\n### Parameters\n\n- `id: string`\n  Search ID returned from POST /v1/search\n\n- `cursor?: string`\n  Pagination cursor for next page\n\n- `limit?: number`\n  Maximum results to return\n\n### Returns\n\n- `{ creator: { id: string; avatar_url: string; bio: string; name: string; }; match: { reasons: string[]; score: number; }; primary_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; relevant_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; }`\n\n  - `creator: { id: string; avatar_url: string; bio: string; name: string; }`\n  - `match: { reasons: string[]; score: number; }`\n  - `primary_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }`\n  - `relevant_profile: { id: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\n// Automatically fetches more pages as needed.\nfor await (const searchRetrieveResponse of client.search.retrieve('123e4567-e89b-12d3-a456-426614174000')) {\n  console.log(searchRetrieveResponse);\n}\n```",
     perLanguage: {
-      http: {
-        example: 'curl https://api.influship.com/v1/search/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      typescript: {
+        method: 'client.search.retrieve',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const searchRetrieveResponse of client.search.retrieve(\n  '123e4567-e89b-12d3-a456-426614174000',\n)) {\n  console.log(searchRetrieveResponse.creator);\n}",
       },
       python: {
         method: 'search.retrieve',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.search.retrieve(\n    id="123e4567-e89b-12d3-a456-426614174000",\n)\npage = page.data[0]\nprint(page.creator)',
       },
-      typescript: {
-        method: 'client.search.retrieve',
-        example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const searchRetrieveResponse of client.search.retrieve(\n  '123e4567-e89b-12d3-a456-426614174000',\n)) {\n  console.log(searchRetrieveResponse.creator);\n}",
+      http: {
+        example: 'curl https://api.influship.com/v1/search/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -294,19 +294,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get\n\n`client.profiles.get(platform: string, username: string): { data: profile_response_data; warning?: string; }`\n\n**get** `/v1/profiles/{platform}/{username}`\n\nRetrieve detailed profile data including metrics, growth statistics, and activity information from our database.\n\n**Response includes:**\n- Basic info (bio, avatar, verification status)\n- Performance metrics (followers, engagement rate, avg likes/comments)\n- Growth data (30-day follower growth, monthly rate)\n- Activity data (last post date, posting frequency)\n\n**Pricing**: 0.1 credits per request ($0.001)\n\n### Parameters\n\n- `platform: string`\n  Platform name\n\n- `username: string`\n  Username on the platform\n\n### Returns\n\n- `{ data: { id: string; activity: profile_activity; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: profile_growth; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: profile_metrics; platform: 'instagram'; pronouns: string[]; url: string; username: string; }; warning?: string; }`\n\n  - `data: { id: string; activity: { last_post_at: string; }; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: { followers_30d_pct: number; }; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: { avg_comments_recent: number; avg_likes_recent: number; avg_views_recent: number; engagement_rate: number; followers: number; following: number; posts: number; posts_last_30d: number; posts_per_week: number; }; platform: 'instagram'; pronouns: string[]; url: string; username: string; }`\n  - `warning?: string`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst profile = await client.profiles.get('fitness_coach_jane', { platform: 'instagram' });\n\nconsole.log(profile);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.profiles.get',
         example:
-          'curl https://api.influship.com/v1/profiles/$PLATFORM/$USERNAME \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst profile = await client.profiles.get('fitness_coach_jane', { platform: 'instagram' });\n\nconsole.log(profile.data);",
       },
       python: {
         method: 'profiles.get',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nprofile = client.profiles.get(\n    username="fitness_coach_jane",\n    platform="instagram",\n)\nprint(profile.data)',
       },
-      typescript: {
-        method: 'client.profiles.get',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst profile = await client.profiles.get('fitness_coach_jane', { platform: 'instagram' });\n\nconsole.log(profile.data);",
+          'curl https://api.influship.com/v1/profiles/$PLATFORM/$USERNAME \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -325,19 +325,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## lookup\n\n`client.profiles.lookup(profiles: { platform: 'instagram'; username: string; }[]): { data: profile_response_data[]; not_found: object[]; }`\n\n**post** `/v1/profiles/lookup`\n\nLook up multiple profiles in a single request. Efficiently retrieve data for up to 100 profiles at once.\n\n**Response includes:**\n- `found`: Array of profiles that exist in our database\n- `not_found`: Array of profiles that weren't found (consider live scraping these)\n\n**Pricing**: 0.1 credits per profile ($0.001)\n\n### Parameters\n\n- `profiles: { platform: 'instagram'; username: string; }[]`\n  Profiles to lookup\n\n### Returns\n\n- `{ data: { id: string; activity: profile_activity; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: profile_growth; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: profile_metrics; platform: 'instagram'; pronouns: string[]; url: string; username: string; }[]; not_found: { platform: 'instagram'; username: string; }[]; }`\n\n  - `data: { id: string; activity: { last_post_at: string; }; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: { followers_30d_pct: number; }; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: { avg_comments_recent: number; avg_likes_recent: number; avg_views_recent: number; engagement_rate: number; followers: number; following: number; posts: number; posts_last_30d: number; posts_per_week: number; }; platform: 'instagram'; pronouns: string[]; url: string; username: string; }[]`\n  - `not_found: { platform: 'instagram'; username: string; }[]`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.profiles.lookup({ profiles: [{ platform: 'instagram', username: 'fitness_coach_jane' }, { platform: 'instagram', username: 'wellness_guru' }, { platform: 'instagram', username: 'healthy_eating_tips' }] });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.profiles.lookup',
         example:
-          'curl https://api.influship.com/v1/profiles/lookup \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "profiles": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            },\n            {\n              "platform": "instagram",\n              "username": "wellness_guru"\n            },\n            {\n              "platform": "instagram",\n              "username": "healthy_eating_tips"\n            }\n          ]\n        }\'',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.profiles.lookup({\n  profiles: [\n    { platform: 'instagram', username: 'fitness_coach_jane' },\n    { platform: 'instagram', username: 'wellness_guru' },\n    { platform: 'instagram', username: 'healthy_eating_tips' },\n  ],\n});\n\nconsole.log(response.data);",
       },
       python: {
         method: 'profiles.lookup',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.profiles.lookup(\n    profiles=[{\n        "platform": "instagram",\n        "username": "fitness_coach_jane",\n    }, {\n        "platform": "instagram",\n        "username": "wellness_guru",\n    }, {\n        "platform": "instagram",\n        "username": "healthy_eating_tips",\n    }],\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.profiles.lookup',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.profiles.lookup({\n  profiles: [\n    { platform: 'instagram', username: 'fitness_coach_jane' },\n    { platform: 'instagram', username: 'wellness_guru' },\n    { platform: 'instagram', username: 'healthy_eating_tips' },\n  ],\n});\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/profiles/lookup \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "profiles": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            },\n            {\n              "platform": "instagram",\n              "username": "wellness_guru"\n            },\n            {\n              "platform": "instagram",\n              "username": "healthy_eating_tips"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -363,18 +363,18 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.posts.list(creator_id?: string, cursor?: string, limit?: number, platform?: 'instagram', sort?: 'recent' | 'top_engagement' | 'most_likes' | 'most_views' | 'most_comments', username?: string): { id: string; caption: string; hashtags: string[]; location: object; media: object; mentions: string[]; metrics: object; platform: 'instagram'; platform_id: string; posted_at: string; profile_id: string; type: 'image' | 'video' | 'carousel' | 'reel' | 'story'; url: string; }`\n\n**get** `/v1/posts`\n\nRetrieve posts for a creator or profile with engagement metrics and media data.\n\n**Query options:**\n- By creator: Use `creator_id` to get posts across all their profiles\n- By profile: Use `platform` + `username` for a specific profile's posts\n\n**Sort options:**\n- `recent`: Most recent posts first (default)\n- `top_engagement`: Highest engagement rate first\n- `most_likes`: Most likes first\n- `most_views`: Most views first (video content)\n- `most_comments`: Most comments first\n\n**Pricing**: 0.05 credits per post returned ($0.0005)\n\n### Parameters\n\n- `creator_id?: string`\n  Creator ID (use this OR platform+username)\n\n- `cursor?: string`\n  Pagination cursor for next page\n\n- `limit?: number`\n  Maximum posts to return\n\n- `platform?: 'instagram'`\n  Platform (required with username)\n\n- `sort?: 'recent' | 'top_engagement' | 'most_likes' | 'most_views' | 'most_comments'`\n  Sort order\n\n- `username?: string`\n  Username (required with platform)\n\n### Returns\n\n- `{ id: string; caption: string; hashtags: string[]; location: { name: string; }; media: { duration_seconds: number; thumbnail_url: string; url: string; video_url: string; }; mentions: string[]; metrics: { comments: number; engagement_rate: number; likes: number; shares: number; views: number; }; platform: 'instagram'; platform_id: string; posted_at: string; profile_id: string; type: 'image' | 'video' | 'carousel' | 'reel' | 'story'; url: string; }`\n  Full post details\n\n  - `id: string`\n  - `caption: string`\n  - `hashtags: string[]`\n  - `location: { name: string; }`\n  - `media: { duration_seconds: number; thumbnail_url: string; url: string; video_url: string; }`\n  - `mentions: string[]`\n  - `metrics: { comments: number; engagement_rate: number; likes: number; shares: number; views: number; }`\n  - `platform: 'instagram'`\n  - `platform_id: string`\n  - `posted_at: string`\n  - `profile_id: string`\n  - `type: 'image' | 'video' | 'carousel' | 'reel' | 'story'`\n  - `url: string`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\n// Automatically fetches more pages as needed.\nfor await (const postListResponse of client.posts.list()) {\n  console.log(postListResponse);\n}\n```",
     perLanguage: {
-      http: {
-        example: 'curl https://api.influship.com/v1/posts \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      typescript: {
+        method: 'client.posts.list',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const postListResponse of client.posts.list()) {\n  console.log(postListResponse.id);\n}",
       },
       python: {
         method: 'posts.list',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.posts.list()\npage = page.data[0]\nprint(page.id)',
       },
-      typescript: {
-        method: 'client.posts.list',
-        example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const postListResponse of client.posts.list()) {\n  console.log(postListResponse.id);\n}",
+      http: {
+        example: 'curl https://api.influship.com/v1/posts \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -393,19 +393,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_profile\n\n`client.raw.instagram.getProfile(username: string, include_posts?: boolean, post_limit?: number): { data: object; }`\n\n**get** `/v1/raw/instagram/profile/{username}`\n\nFetch fresh Instagram profile data directly from Instagram in real-time. Use this when you need the most current follower counts, bio, or recent activity.\n\n**When to use live scraping:**\n- Profile not found in our database\n- Need real-time follower/engagement data\n- Verifying current profile status before campaign\n\n**Note:** Live scraping is slower than cached data (2-5 seconds) and costs more. Use cached endpoints when freshness isn't critical.\n\n**Pricing**: 0.5 credits per profile scraped ($0.005)\n\n### Parameters\n\n- `username: string`\n  Username on the platform\n\n- `include_posts?: boolean`\n  Include recent posts in response\n\n- `post_limit?: number`\n  Number of posts to include\n\n### Returns\n\n- `{ data: { id: string; activity: { last_post_at: string; }; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: { followers_30d_pct: number; }; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: { avg_comments_recent: number; avg_likes_recent: number; avg_views_recent: number; engagement_rate: number; followers: number; following: number; posts: number; posts_last_30d: number; posts_per_week: number; }; platform: 'instagram'; pronouns: string[]; scraped_at: string; url: string; username: string; posts?: { id: string; caption: string; comments_count: number; likes_count: number; media_url: string; platform_id: string; posted_at: string; type: 'image' | 'video' | 'carousel' | 'reel' | 'story'; url: string; }[]; }; }`\n\n  - `data: { id: string; activity: { last_post_at: string; }; avatar_url: string; bio: string; category: string; creator_id: string; data_updated_at: string; display_name: string; external_url: string; growth: { followers_30d_pct: number; }; is_business: boolean; is_private: boolean; is_verified: boolean; metrics: { avg_comments_recent: number; avg_likes_recent: number; avg_views_recent: number; engagement_rate: number; followers: number; following: number; posts: number; posts_last_30d: number; posts_per_week: number; }; platform: 'instagram'; pronouns: string[]; scraped_at: string; url: string; username: string; posts?: { id: string; caption: string; comments_count: number; likes_count: number; media_url: string; platform_id: string; posted_at: string; type: 'image' | 'video' | 'carousel' | 'reel' | 'story'; url: string; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.instagram.getProfile('fitness_coach_jane');\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.raw.instagram.getProfile',
         example:
-          'curl https://api.influship.com/v1/raw/instagram/profile/$USERNAME \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getProfile('fitness_coach_jane');\n\nconsole.log(response.data);",
       },
       python: {
         method: 'raw.instagram.get_profile',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_profile(\n    username="fitness_coach_jane",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.raw.instagram.getProfile',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getProfile('fitness_coach_jane');\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/raw/instagram/profile/$USERNAME \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -424,19 +424,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_channel\n\n`client.raw.youtube.getChannel(handle: string, include_videos?: boolean, video_limit?: number): { data: object; }`\n\n**get** `/v1/raw/youtube/channel/{handle}`\n\nFetch fresh YouTube channel data including subscriber count, video count, and total views.\n\n**Pricing**: 0.5 credits per channel scraped ($0.005)\n\n### Parameters\n\n- `handle: string`\n  YouTube channel handle\n\n- `include_videos?: boolean`\n  Include recent videos in response\n\n- `video_limit?: number`\n  Number of videos to include\n\n### Returns\n\n- `{ data: { avatar_url: string; description: string; handle: string; name: string; scraped_at: string; subscribers: number; videos_count: number; views_total: number; videos?: { id: string; comments: number; duration_seconds: number; likes: number; published_at: string; thumbnail_url: string; title: string; url: string; views: number; }[]; }; }`\n\n  - `data: { avatar_url: string; description: string; handle: string; name: string; scraped_at: string; subscribers: number; videos_count: number; views_total: number; videos?: { id: string; comments: number; duration_seconds: number; likes: number; published_at: string; thumbnail_url: string; title: string; url: string; views: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.youtube.getChannel('@techreviews');\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.raw.youtube.getChannel',
         example:
-          'curl https://api.influship.com/v1/raw/youtube/channel/$HANDLE \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannel('@techreviews');\n\nconsole.log(response.data);",
       },
       python: {
         method: 'raw.youtube.get_channel',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_channel(\n    handle="@techreviews",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.raw.youtube.getChannel',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannel('@techreviews');\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/raw/youtube/channel/$HANDLE \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -455,19 +455,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_transcript\n\n`client.raw.youtube.getTranscript(video_id: string, language?: string): { data: object; }`\n\n**get** `/v1/raw/youtube/transcript/{video_id}`\n\nFetch YouTube video transcript/captions. Returns timestamped segments and full text. Useful for content analysis.\n\n**Supported sources:**\n- Manual captions (highest quality)\n- Auto-generated captions\n- Multiple language tracks\n\n**Pricing**: 0.5 credits per transcript ($0.005)\n\n### Parameters\n\n- `video_id: string`\n  YouTube video ID\n\n- `language?: string`\n  Language code or \"auto\" for automatic detection\n\n### Returns\n\n- `{ data: { available_languages: string[]; full_text: string; language: string; title: string; transcript: object[]; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { available_languages: string[]; full_text: string; language: string; title: string; transcript: { duration: number; start: number; text: string; }[]; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.youtube.getTranscript('dQw4w9WgXcQ');\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.raw.youtube.getTranscript',
         example:
-          'curl https://api.influship.com/v1/raw/youtube/transcript/$VIDEO_ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getTranscript('dQw4w9WgXcQ');\n\nconsole.log(response.data);",
       },
       python: {
         method: 'raw.youtube.get_transcript',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_transcript(\n    video_id="dQw4w9WgXcQ",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.raw.youtube.getTranscript',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getTranscript('dQw4w9WgXcQ');\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/raw/youtube/transcript/$VIDEO_ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -492,19 +492,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_channel_transcripts\n\n`client.raw.youtube.getChannelTranscripts(handle: string, include_segments?: boolean, language?: string, sort_by?: 'popular' | 'newest' | 'oldest', video_limit?: number): { data: object; }`\n\n**get** `/v1/raw/youtube/channel-transcripts/{handle}`\n\nFetch transcripts for multiple videos from a YouTube channel. Videos can be sorted by popularity, newest, or oldest before selection.\n\n**Features:**\n- Fetches up to 20 video transcripts per request\n- Sort by popular (most views), newest, or oldest\n- Partial success — individual video failures don't block the response\n- Optional timestamped segments for each transcript\n\n**Pricing**: 0.5 credits per transcript fetched ($0.005)\n\n### Parameters\n\n- `handle: string`\n  YouTube channel handle\n\n- `include_segments?: boolean`\n  Include timestamped transcript segments in response\n\n- `language?: string`\n  Language code for transcripts\n\n- `sort_by?: 'popular' | 'newest' | 'oldest'`\n  How to sort channel videos before selecting\n\n- `video_limit?: number`\n  Number of videos to fetch transcripts for (max 20)\n\n### Returns\n\n- `{ data: { channel_id: string; channel_name: string; handle: string; items: { error: string; full_text: string; language: string; published_text: string; source: 'manual' | 'auto_generated'; title: string; transcript: transcript_segment[]; url: string; video_id: string; view_count: number; word_count: number; }[]; scraped_at: string; transcripts_failed: number; transcripts_fetched: number; videos_found: number; }; }`\n\n  - `data: { channel_id: string; channel_name: string; handle: string; items: { error: string; full_text: string; language: string; published_text: string; source: 'manual' | 'auto_generated'; title: string; transcript: { duration: number; start: number; text: string; }[]; url: string; video_id: string; view_count: number; word_count: number; }[]; scraped_at: string; transcripts_failed: number; transcripts_fetched: number; videos_found: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.youtube.getChannelTranscripts('@techreviews');\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.raw.youtube.getChannelTranscripts',
         example:
-          'curl https://api.influship.com/v1/raw/youtube/channel-transcripts/$HANDLE \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannelTranscripts('@techreviews');\n\nconsole.log(response.data);",
       },
       python: {
         method: 'raw.youtube.get_channel_transcripts',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_channel_transcripts(\n    handle="@techreviews",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.raw.youtube.getChannelTranscripts',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannelTranscripts('@techreviews');\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/raw/youtube/channel-transcripts/$HANDLE \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -523,19 +523,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## search\n\n`client.raw.youtube.search(q: string, country_code?: string, language_code?: string, limit?: number): { data: object; }`\n\n**get** `/v1/raw/youtube/search`\n\nSearch YouTube videos and channels.\n\n**Pricing**: 0.5 credits per result returned ($0.005)\n\n### Parameters\n\n- `q: string`\n  Search query\n\n- `country_code?: string`\n  Country code for localized results (ISO 3166-1 alpha-2)\n\n- `language_code?: string`\n  Language code for results\n\n- `limit?: number`\n  Maximum number of results to return\n\n### Returns\n\n- `{ data: { estimated_results: number; query: string; results: { channel_handle: string; channel_id: string; channel_name: string; channel_verified: boolean; description: string; duration_seconds: number; duration_text: string; published_at: string; published_text: string; thumbnail_url: string; title: string; type: 'video'; url: string; video_id: string; view_count: number; view_count_text: string; } | { channel_handle: string; channel_id: string; channel_name: string; channel_verified: boolean; description: string; subscriber_count: number; thumbnail_url: string; type: 'channel'; url: string; video_count: number; }[]; scraped_at: string; }; }`\n\n  - `data: { estimated_results: number; query: string; results: { channel_handle: string; channel_id: string; channel_name: string; channel_verified: boolean; description: string; duration_seconds: number; duration_text: string; published_at: string; published_text: string; thumbnail_url: string; title: string; type: 'video'; url: string; video_id: string; view_count: number; view_count_text: string; } | { channel_handle: string; channel_id: string; channel_name: string; channel_verified: boolean; description: string; subscriber_count: number; thumbnail_url: string; type: 'channel'; url: string; video_count: number; }[]; scraped_at: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.youtube.search({ q: 'fitness workout' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.raw.youtube.search',
         example:
-          'curl https://api.influship.com/v1/raw/youtube/search \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.search({ q: 'fitness workout' });\n\nconsole.log(response.data);",
       },
       python: {
         method: 'raw.youtube.search',
         example:
           'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.search(\n    q="fitness workout",\n)\nprint(response.data)',
       },
-      typescript: {
-        method: 'client.raw.youtube.search',
+      http: {
         example:
-          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.search({ q: 'fitness workout' });\n\nconsole.log(response.data);",
+          'curl https://api.influship.com/v1/raw/youtube/search \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
