@@ -77,18 +77,18 @@ describe('resource creators', () => {
       cursor: 'cursor',
       filters: {
         engagement_rate: { max: 10, min: 1.5 },
-        followers: { max: 500000, min: 10000 },
+        followers: { max: 500000, min: 25000 },
         verified: true,
       },
-      limit: 25,
+      limit: 20,
     });
   });
 
   // Mock server tests are disabled
   test.skip('match: only required params', async () => {
     const responsePromise = client.creators.match({
-      creators: [{}],
-      intent: { query: 'Looking for fitness influencers to promote our new protein bar' },
+      creators: [{}, {}],
+      intent: { query: 'Promote our new plant-based protein powder' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -108,10 +108,15 @@ describe('resource creators', () => {
           platform: 'instagram',
           username: 'fitness_coach_jane',
         },
+        {
+          creator_id: '123e4567-e89b-12d3-a456-426614174000',
+          platform: 'instagram',
+          username: 'fitness_coach_jane',
+        },
       ],
       intent: {
-        query: 'Looking for fitness influencers to promote our new protein bar',
-        context: 'Target audience is health-conscious millennials',
+        query: 'Promote our new plant-based protein powder',
+        context: 'Target audience is health-conscious millennials interested in sustainable fitness',
       },
     });
   });

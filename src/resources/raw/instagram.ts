@@ -34,219 +34,119 @@ export class Instagram extends APIResource {
 }
 
 export interface InstagramGetProfileResponse {
-  /**
-   * Live scraped profile data
-   */
   data: InstagramGetProfileResponse.Data;
 }
 
 export namespace InstagramGetProfileResponse {
-  /**
-   * Live scraped profile data
-   */
   export interface Data {
-    /**
-     * Profile unique identifier
-     */
-    id: string;
+    bio_links: Array<Data.BioLink>;
 
-    activity: Data.Activity;
+    biography: string;
 
-    /**
-     * Avatar URL
-     */
-    avatar_url: string | null;
+    category_name: string | null;
 
-    /**
-     * Profile bio
-     */
-    bio: string | null;
+    engagement_rate: number;
 
-    /**
-     * Account category
-     */
-    category: string | null;
-
-    /**
-     * Creator unique identifier
-     */
-    creator_id: string;
-
-    /**
-     * Last data refresh timestamp
-     */
-    data_updated_at: string | null;
-
-    /**
-     * Display name
-     */
-    display_name: string | null;
-
-    /**
-     * External website URL
-     */
     external_url: string | null;
 
-    growth: Data.Growth;
+    follower_count: number;
 
-    /**
-     * Whether this is a business account
-     */
+    following_count: number;
+
+    full_name: string;
+
+    highlight_reel_count: number;
+
     is_business: boolean;
 
-    /**
-     * Whether the account is private
-     */
     is_private: boolean;
 
-    /**
-     * Whether the account is verified
-     */
+    is_professional: boolean;
+
     is_verified: boolean;
 
-    metrics: Data.Metrics;
+    media_count: number;
 
-    /**
-     * Social media platform
-     */
-    platform: 'instagram';
+    posts: Array<Data.Post>;
 
-    /**
-     * Listed pronouns
-     */
-    pronouns: Array<string> | null;
+    profile_pic_url: string;
 
-    /**
-     * When this data was scraped
-     */
+    pronouns: Array<string>;
+
+    related_profiles: Array<Data.RelatedProfile>;
+
     scraped_at: string;
 
-    /**
-     * Profile URL
-     */
-    url: string;
+    user_id: string;
 
-    /**
-     * Profile username
-     */
     username: string;
 
-    /**
-     * Recent posts (only included when include_posts=true)
-     */
-    posts?: Array<Data.Post>;
+    profile_pic_url_hd?: string;
   }
 
   export namespace Data {
-    export interface Activity {
-      /**
-       * Timestamp of last post
-       */
-      last_post_at: string | null;
+    export interface BioLink {
+      title: string;
+
+      url: string;
+
+      link_type?: string;
     }
 
-    export interface Growth {
-      /**
-       * Follower growth percentage over 30 days (e.g. 2.5 means +2.5%)
-       */
-      followers_30d_pct: number;
-    }
-
-    export interface Metrics {
-      /**
-       * Average comments on recent posts
-       */
-      avg_comments_recent: number;
-
-      /**
-       * Average likes on recent posts
-       */
-      avg_likes_recent: number;
-
-      /**
-       * Average views on recent posts
-       */
-      avg_views_recent: number | null;
-
-      /**
-       * Engagement rate as a percentage (e.g. 3.5 means 3.5%)
-       */
-      engagement_rate: number;
-
-      /**
-       * Follower count
-       */
-      followers: number;
-
-      /**
-       * Following count
-       */
-      following: number;
-
-      /**
-       * Total post count
-       */
-      posts: number;
-
-      /**
-       * Posts in the last 30 days
-       */
-      posts_last_30d: number;
-
-      /**
-       * Average posts per week
-       */
-      posts_per_week: number;
-    }
-
-    /**
-     * Simplified post from live scrape
-     */
     export interface Post {
-      /**
-       * Post unique identifier
-       */
       id: string;
 
-      /**
-       * Post caption
-       */
       caption: string | null;
 
-      /**
-       * Comment count
-       */
-      comments_count: number | null;
+      comment_count: number;
 
-      /**
-       * Like count
-       */
-      likes_count: number | null;
+      display_url: string;
 
-      /**
-       * Primary media URL
-       */
-      media_url: string | null;
+      is_video: boolean;
 
-      /**
-       * Platform-specific post ID
-       */
-      platform_id: string;
+      like_count: number;
 
-      /**
-       * Post timestamp
-       */
-      posted_at: string;
+      post_type: 'image' | 'video' | 'carousel';
 
-      /**
-       * Type of post
-       */
-      type: 'image' | 'video' | 'carousel' | 'reel' | 'story';
+      shortcode: string;
 
-      /**
-       * Post URL
-       */
-      url: string;
+      taken_at: number | null;
+
+      accessibility_caption?: string | null;
+
+      carousel_items?: Array<Post.CarouselItem>;
+
+      thumbnail_url?: string;
+
+      video_url?: string;
+
+      view_count?: number;
+    }
+
+    export namespace Post {
+      export interface CarouselItem {
+        display_url: string;
+
+        index: number;
+
+        is_video: boolean;
+
+        thumbnail_url?: string;
+
+        video_url?: string;
+      }
+    }
+
+    export interface RelatedProfile {
+      full_name: string | null;
+
+      is_private: boolean;
+
+      is_verified: boolean;
+
+      profile_pic_url: string | null;
+
+      username: string;
     }
   }
 }

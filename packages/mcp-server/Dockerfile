@@ -3,10 +3,10 @@
 # This Dockerfile builds a Docker image for the MCP Server.
 #
 # To build the image locally:
-#   docker build -f packages/mcp-server/Dockerfile -t influship-mcp:local .
+#   docker build -f packages/mcp-server/Dockerfile -t influship-api-mcp:local .
 #
 # To run the image:
-#   docker run -i influship-mcp:local [OPTIONS]
+#   docker run -i influship-api-mcp:local [OPTIONS]
 #
 # Common options:
 #   --tool=<name>              Include specific tools
@@ -16,7 +16,7 @@
 #   --transport=<type>         Set transport type (stdio or http)
 #
 # For a full list of options:
-#   docker run -i influship-mcp:local --help
+#   docker run -i influship-api-mcp:local --help
 #
 # Note: The MCP server uses stdio transport by default. Docker's -i flag
 # enables interactive mode, allowing the container to communicate over stdin/stdout.
@@ -35,7 +35,9 @@ COPY . .
 
 # Install all dependencies and build everything
 RUN yarn install --frozen-lockfile && \
-    yarn build
+    yarn build && \
+    # Remove the symlink to the SDK so it doesn't interfere with the explicit COPY below
+    rm -Rf packages/mcp-server/node_modules/influship
 
 FROM denoland/deno:alpine-2.7.1
 

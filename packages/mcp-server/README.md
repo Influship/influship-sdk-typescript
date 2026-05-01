@@ -10,7 +10,7 @@ You can run the MCP Server directly via `npx`:
 
 ```sh
 export INFLUSHIP_API_KEY="My API Key"
-npx -y influship-mcp@latest
+npx -y influship-api-mcp@latest
 ```
 
 ### Via MCP Client
@@ -25,7 +25,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "influship_api": {
       "command": "npx",
-      "args": ["-y", "influship-mcp"],
+      "args": ["-y", "influship-api-mcp"],
       "env": {
         "INFLUSHIP_API_KEY": "My API Key"
       }
@@ -39,14 +39,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=influship-mcp&config=eyJuYW1lIjoiaW5mbHVzaGlwLW1jcCIsInRyYW5zcG9ydCI6Imh0dHAiLCJ1cmwiOiJodHRwczovL2luZmx1c2hpcC1hcGkuc3RsbWNwLmNvbSIsImhlYWRlcnMiOnsiWC1BUEktS2V5IjoiTXkgQVBJIEtleSJ9fQ)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=influship-api-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImluZmx1c2hpcC1hcGktbWNwIl0sImVudiI6eyJJTkZMVVNISVBfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22influship-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Finfluship-api.stlmcp.com%22%2C%22headers%22%3A%7B%22X-API-Key%22%3A%22My%20API%20Key%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22influship-api-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22influship-api-mcp%22%5D%2C%22env%22%3A%7B%22INFLUSHIP_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)
 
 ### Claude Code
 
@@ -54,7 +54,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add influship_mcp_api --header "X-API-Key: My API Key" --transport http https://influship-api.stlmcp.com
+claude mcp add influship_api_mcp_api --env INFLUSHIP_API_KEY="My API Key" -- npx -y influship-api-mcp
 ```
 
 ## Code Mode

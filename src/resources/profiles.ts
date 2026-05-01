@@ -55,6 +55,11 @@ export class Profiles extends APIResource {
    *       platform: 'instagram',
    *       username: 'fitness_coach_jane',
    *     },
+   *     { platform: 'instagram', username: 'wellness_guru' },
+   *     {
+   *       platform: 'instagram',
+   *       username: 'healthy_eating_tips',
+   *     },
    *   ],
    * });
    * ```

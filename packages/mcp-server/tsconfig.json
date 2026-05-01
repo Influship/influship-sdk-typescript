@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "influship-mcp/*": ["./src/*"],
-      "influship-mcp": ["./src/index.ts"]
+      "influship-api-mcp/*": ["./src/*"],
+      "influship-api-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 
