@@ -104,14 +104,34 @@ export namespace YoutubeGetChannelResponse {
     avatar_url: string | null;
 
     /**
-     * Channel description
+     * Channel banner image URL
      */
-    description: string | null;
+    banner_url: string | null;
 
     /**
-     * Channel handle
+     * YouTube channel ID
      */
-    handle: string;
+    channel_id: string;
+
+    /**
+     * Channel country code
+     */
+    country: string | null;
+
+    /**
+     * Channel description
+     */
+    description: string;
+
+    /**
+     * Channel handle (without @)
+     */
+    handle: string | null;
+
+    /**
+     * Channel keywords / tags
+     */
+    keywords: Array<string>;
 
     /**
      * Channel name
@@ -126,50 +146,45 @@ export namespace YoutubeGetChannelResponse {
     /**
      * Subscriber count
      */
-    subscribers: number;
+    subscribers: number | null;
+
+    /**
+     * Subscriber count text as displayed by YouTube
+     */
+    subscribers_text: string | null;
+
+    /**
+     * Recent videos (empty when include_videos=false)
+     */
+    videos: Array<Data.Video>;
 
     /**
      * Total video count
      */
-    videos_count: number;
+    videos_count: number | null;
 
     /**
-     * Total view count
+     * Total view count across all videos
      */
-    views_total: number;
-
-    /**
-     * Recent videos (only included when include_videos=true)
-     */
-    videos?: Array<Data.Video>;
+    views_total: number | null;
   }
 
   export namespace Data {
     export interface Video {
-      /**
-       * Video ID
-       */
-      id: string;
-
-      /**
-       * Comment count
-       */
-      comments: number | null;
-
       /**
        * Video duration in seconds
        */
       duration_seconds: number | null;
 
       /**
-       * Like count
+       * Video duration text (e.g., "30:45")
        */
-      likes: number | null;
+      duration_text: string | null;
 
       /**
-       * Publish timestamp
+       * Relative publish time as displayed by YouTube
        */
-      published_at: string;
+      published_text: string | null;
 
       /**
        * Thumbnail URL
@@ -187,9 +202,19 @@ export namespace YoutubeGetChannelResponse {
       url: string;
 
       /**
+       * YouTube video ID
+       */
+      video_id: string;
+
+      /**
        * View count
        */
-      views: number | null;
+      view_count: number | null;
+
+      /**
+       * View count text as displayed by YouTube
+       */
+      view_count_text: string | null;
     }
   }
 }
@@ -308,9 +333,9 @@ export interface YoutubeGetTranscriptResponse {
 export namespace YoutubeGetTranscriptResponse {
   export interface Data {
     /**
-     * Available transcript languages
+     * All caption tracks available on this video
      */
-    available_languages: Array<string>;
+    available_languages: Array<Data.AvailableLanguage>;
 
     /**
      * Full transcript as plain text
@@ -321,6 +346,16 @@ export namespace YoutubeGetTranscriptResponse {
      * Transcript language code
      */
     language: string;
+
+    /**
+     * When this data was scraped
+     */
+    scraped_at: string;
+
+    /**
+     * Caption source — manual subtitles or auto-generated
+     */
+    source: 'manual' | 'auto_generated';
 
     /**
      * Video title
@@ -346,6 +381,25 @@ export namespace YoutubeGetTranscriptResponse {
      * Total word count
      */
     word_count: number;
+  }
+
+  export namespace Data {
+    export interface AvailableLanguage {
+      /**
+       * Language code (e.g., "en", "es", "en-orig")
+       */
+      code: string;
+
+      /**
+       * Whether this track is auto-generated
+       */
+      is_auto: boolean;
+
+      /**
+       * Human-readable language name
+       */
+      name: string;
+    }
   }
 }
 
