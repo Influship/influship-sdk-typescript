@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.4.0 (2026-05-01)
+
+Full Changelog: [v0.3.3...v0.4.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.3...v0.4.0)
+
+### Features
+
+* **api:** update instagram profile, youtube channel/transcript response types ([0c4e5c0](https://github.com/Influship/influship-sdk-typescript/commit/0c4e5c0d44f856604a7dce094d31915b4bac6978))
+* support setting headers via env ([39aca1e](https://github.com/Influship/influship-sdk-typescript/commit/39aca1e576b0756ff53684977862e886e719b2d3))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([57cc5f3](https://github.com/Influship/influship-sdk-typescript/commit/57cc5f318d5273567517cf9f8a00d159a7f73569))
+* **ci:** escape input path in publish-npm workflow ([1293f91](https://github.com/Influship/influship-sdk-typescript/commit/1293f91c04d9203b6805446c77384368f07080c2))
+* **ci:** skip lint on metadata-only changes ([c95e7ab](https://github.com/Influship/influship-sdk-typescript/commit/c95e7ab02921050360e41afc8964bcd97a7dc626))
+* **format:** run eslint and prettier separately ([c5cdeab](https://github.com/Influship/influship-sdk-typescript/commit/c5cdeabf3bfb96b6f9bf028b7565d294e8952bcf))
+* **internal:** codegen related update ([aceb42c](https://github.com/Influship/influship-sdk-typescript/commit/aceb42cb7ce6d09dd53142b2491a6ab4acad165c))
+* **internal:** codegen related update ([417f634](https://github.com/Influship/influship-sdk-typescript/commit/417f634940ebaef527d289a35e53fefdf5fd67d2))
+* **internal:** codegen related update ([8b7ce85](https://github.com/Influship/influship-sdk-typescript/commit/8b7ce8573329da8ee67047b40890475245216f7a))
+* **internal:** codegen related update ([cb07a1a](https://github.com/Influship/influship-sdk-typescript/commit/cb07a1ac75a9bd424a7eef3f7826c4a4757d8905))
+* **internal:** fix MCP docker image builds in yarn projects ([345ed15](https://github.com/Influship/influship-sdk-typescript/commit/345ed151d171c7aecc1dbf89155bb40c288297a4))
+* **internal:** fix MCP server import ordering ([20e0bc6](https://github.com/Influship/influship-sdk-typescript/commit/20e0bc6bd2596228f91ae5f49aad3cb46062d07a))
+* **internal:** improve local docs search for MCP servers ([06f4d99](https://github.com/Influship/influship-sdk-typescript/commit/06f4d99b016cb4f69e4750c4cac609092a95f070))
+* **internal:** improve local docs search for MCP servers ([5be75f7](https://github.com/Influship/influship-sdk-typescript/commit/5be75f798f5b6c1159453fc900fbc99641c1b67b))
+* **internal:** more robust bootstrap script ([67549c1](https://github.com/Influship/influship-sdk-typescript/commit/67549c12339128eb287d8ec623b85bdb2af17b1d))
+* **internal:** rename MCP server package from influship-mcp to influship-api-mcp ([b965d1e](https://github.com/Influship/influship-sdk-typescript/commit/b965d1ef793b55afb79f1cb35374cee3cfe5ee7d))
+* **internal:** show error causes in MCP servers when running in local mode ([2a2a2a4](https://github.com/Influship/influship-sdk-typescript/commit/2a2a2a44af55ad4064187df4780532030ee6b4ad))
+* **internal:** support custom-instructions-path flag in MCP servers ([7ea25f0](https://github.com/Influship/influship-sdk-typescript/commit/7ea25f0adfdc9a03bec88dad6ed22f0bacfeed02))
+* **internal:** support local docs search in MCP servers ([49c7920](https://github.com/Influship/influship-sdk-typescript/commit/49c792023f321c6579ef4332df2ab70ad98ba6c1))
+* **internal:** support type annotations when running MCP in local execution mode ([39c12b6](https://github.com/Influship/influship-sdk-typescript/commit/39c12b6111ab96c5dd31d44c0862c00beb3ddeb1))
+* **internal:** use link instead of file in MCP server package.json files ([4a5bc04](https://github.com/Influship/influship-sdk-typescript/commit/4a5bc040286911e206c3bf9440a0d7c79a0269b6))
+* **mcp-server:** add support for session id, forward client info ([bc18dde](https://github.com/Influship/influship-sdk-typescript/commit/bc18dde4f45b1a1e54b9d2fa3bd98f6d306454ff))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([a6c38ff](https://github.com/Influship/influship-sdk-typescript/commit/a6c38ff04c87e42903f7e5b1e4dbe4d084de7ab1))
+* **mcp-server:** log client info ([f33d640](https://github.com/Influship/influship-sdk-typescript/commit/f33d640a9a5edd1678ad4f9680ef82d30e4fe116))
+* restructure docs search code ([c61506c](https://github.com/Influship/influship-sdk-typescript/commit/c61506cb2409fe71ebd298e97522d33d1b77f501))
+* update SDK settings ([65f0280](https://github.com/Influship/influship-sdk-typescript/commit/65f02802cad2d0ff29d3434442e20dc1af67adf6))
+* update SDK settings ([76f614c](https://github.com/Influship/influship-sdk-typescript/commit/76f614c217554062694bd736aa0e51680bd67907))
+
+
+### Documentation
+
+* update examples ([783a861](https://github.com/Influship/influship-sdk-typescript/commit/783a86153f74c22b46e87e13a8512e2f195e12e3))
+
 ## 0.3.3 (2026-03-24)
 
 Full Changelog: [v0.3.2...v0.3.3](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.2...v0.3.3)
