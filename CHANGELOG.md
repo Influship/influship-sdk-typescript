@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 (2026-05-01)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** change publish method for ts target to OIDC ([9e283cf](https://github.com/Influship/influship-sdk-typescript/commit/9e283cfb654435a3154ef2eec9f20c2d42f69f76))
+
+
+### Chores
+
+* update SDK settings ([bf20071](https://github.com/Influship/influship-sdk-typescript/commit/bf20071c4f86def93709b2cca2c4b16eb5fe0d22))
+* update SDK settings ([b26ab07](https://github.com/Influship/influship-sdk-typescript/commit/b26ab079bdd186df4bce4435fe8b56aa20e4d81e))
+
 ## 0.4.0 (2026-05-01)
 
 Full Changelog: [v0.3.3...v0.4.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.3.3...v0.4.0)
