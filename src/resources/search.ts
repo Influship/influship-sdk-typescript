@@ -27,6 +27,9 @@ export class Search extends APIResource {
    *   with millennial audience")
    * - Search by content style ("creators who post cinematic travel videos")
    *
+   * Also callable as the `search_creators` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
+   *
    * **Pricing**: 25 credits base + 2 credits per creator returned
    *
    * @example
