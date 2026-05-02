@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.1 (2026-05-02)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.0...v0.5.1)
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([d40febb](https://github.com/Influship/influship-sdk-typescript/commit/d40febb9697d8250fa1ba876b50aafacf6846534))
+
+
+### Documentation
+
+* **api:** add MCP tool references to creators/profiles/posts/search methods ([d40f4c3](https://github.com/Influship/influship-sdk-typescript/commit/d40f4c311e489fb35bedfa6e3b52675c01a2a40d))
+
 ## 0.5.0 (2026-05-01)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.4.0...v0.5.0)
