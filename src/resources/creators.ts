@@ -23,6 +23,9 @@ export class Creators extends APIResource {
    *
    * - `profiles`: Include all linked social profiles with metrics
    *
+   * Also callable as the `get_creator` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
+   *
    * **Pricing**: 0.1 credits per request ($0.001)
    *
    * @example
@@ -57,6 +60,9 @@ export class Creators extends APIResource {
    * - `matched_platforms`: Return only profiles that matched the query
    * - `all_platforms`: Return all linked profiles (default)
    *
+   * Also callable as the `autocomplete_creators` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
+   *
    * **Pricing**: 0.05 credits per request ($0.0005)
    *
    * @example
@@ -89,6 +95,9 @@ export class Creators extends APIResource {
    * 1. Provide 1-10 seed creators (by ID or platform/username)
    * 2. Optionally weight seeds to prioritize certain creators
    * 3. Get ranked results with similarity scores and shared traits
+   *
+   * Also callable as the `find_lookalike_creators` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
    *
    * **Pricing**: 1.5 credits per creator returned ($0.015)
    *
@@ -129,6 +138,9 @@ export class Creators extends APIResource {
    * 1. Describe your campaign intent and target audience
    * 2. Provide up to 100 creators to evaluate
    * 3. Get detailed scores with explanations and evidence
+   *
+   * Also callable as the `match_creators` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
    *
    * **Pricing**: 1 credit per creator scored ($0.01)
    *

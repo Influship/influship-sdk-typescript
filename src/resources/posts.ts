@@ -24,6 +24,9 @@ export class Posts extends APIResource {
    * - `most_views`: Most views first (video content)
    * - `most_comments`: Most comments first
    *
+   * Also callable as the `get_posts` MCP tool — see
+   * [the MCP server guide](/guides/mcp-server) for setup.
+   *
    * **Pricing**: 0.05 credits per post returned ($0.0005)
    */
   list(
