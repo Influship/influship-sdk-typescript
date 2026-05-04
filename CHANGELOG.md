@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 (2026-05-04)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.1...v0.5.2)
+
+### Bug Fixes
+
+* **types:** make include optional in creators.retrieve ([b3e4e3a](https://github.com/Influship/influship-sdk-typescript/commit/b3e4e3a8eba0434e808fdb38c004e4dfd83d86f2))
+
 ## 0.5.1 (2026-05-02)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.0...v0.5.1)
