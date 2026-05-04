@@ -32,13 +32,12 @@ export class Creators extends APIResource {
    * ```ts
    * const creator = await client.creators.retrieve(
    *   '123e4567-e89b-12d3-a456-426614174000',
-   *   { include: ['profiles'] },
    * );
    * ```
    */
   retrieve(
     id: string,
-    query: CreatorRetrieveParams,
+    query: CreatorRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<CreatorRetrieveResponse> {
     return this._client.get(path`/v1/creators/${id}`, { query, ...options });
@@ -379,7 +378,7 @@ export interface CreatorRetrieveParams {
   /**
    * Additional data to include in response
    */
-  include: Array<'profiles'>;
+  include?: Array<'profiles'>;
 }
 
 export interface CreatorAutocompleteParams {
