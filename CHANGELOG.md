@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-05-05)
+
+Full Changelog: [v0.5.2...v0.6.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.2...v0.6.0)
+
+### Features
+
+* **api:** add audience_demographics/brand_alignment/key_facts/vibe to creators retrieve ([1b034f9](https://github.com/Influship/influship-sdk-typescript/commit/1b034f98e412096b7e281fee843248236a2a1d21))
+
 ## 0.5.2 (2026-05-04)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.1...v0.5.2)
