@@ -189,6 +189,11 @@ export namespace CreatorRetrieveResponse {
     ai_summary: string | null;
 
     /**
+     * Synthesized audience demographic summary
+     */
+    audience_demographics: string | null;
+
+    /**
      * Avatar URL
      */
     avatar_url: string | null;
@@ -199,14 +204,29 @@ export namespace CreatorRetrieveResponse {
     bio: string | null;
 
     /**
+     * Brand categories this creator is likely to align with
+     */
+    brand_alignment: Array<string>;
+
+    /**
      * Content themes/topics
      */
     content_themes: Array<string>;
 
     /**
+     * Synthesized facts and notable context about the creator
+     */
+    key_facts: Array<string>;
+
+    /**
      * Creator display name
      */
     name: string;
+
+    /**
+     * Synthesized description of visual style and tone
+     */
+    vibe_and_aesthetics: string | null;
 
     /**
      * Social profiles (only included when include=profiles)
