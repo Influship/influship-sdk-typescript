@@ -175,7 +175,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.influship.com/v1/creators/lookalike \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "seeds": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            }\n          ],\n          "limit": 20\n        }\'',
+          'curl https://api.influship.com/v1/creators/lookalike \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "seeds": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            }\n          ],\n          "filters": {\n            "followers": {\n              "min": 25000\n            }\n          },\n          "limit": 20\n        }\'',
       },
     },
   },
@@ -245,7 +245,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.influship.com/v1/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "query": "fitness influencers who post workout videos",\n          "limit": 10,\n          "platforms": [\n            "instagram"\n          ]\n        }\'',
+          'curl https://api.influship.com/v1/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "query": "fitness influencers who post workout videos",\n          "filters": {\n            "engagement_rate": {\n              "min": 2\n            },\n            "followers": {\n              "max": 500000,\n              "min": 50000\n            },\n            "verified": true\n          },\n          "limit": 10,\n          "platforms": [\n            "instagram"\n          ]\n        }\'',
       },
     },
   },
