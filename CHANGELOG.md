@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.7.0 (2026-05-09)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** add creator_kinds parameter to search.create ([290edb1](https://github.com/Influship/influship-sdk-typescript/commit/290edb1a0e46723b2d2721cc8087f56aa6b343e7))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([de059df](https://github.com/Influship/influship-sdk-typescript/commit/de059df0223cf692cadf308efdecdd3ecb64f808))
+
+
+### Documentation
+
+* update http mcp docs ([9b8a494](https://github.com/Influship/influship-sdk-typescript/commit/9b8a4949cf27aec23023a9f2bf4de179d38a2990))
+
 ## 0.6.0 (2026-05-05)
 
 Full Changelog: [v0.5.2...v0.6.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.5.2...v0.6.0)
