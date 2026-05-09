@@ -24,6 +24,7 @@ describe('resource search', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.search.create({
       query: 'fitness influencers who post workout videos',
+      creator_kinds: ['INFLUENCER'],
       filters: {
         engagement_rate: { max: 10, min: 2 },
         followers: { max: 500000, min: 50000 },

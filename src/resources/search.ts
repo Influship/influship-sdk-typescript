@@ -167,6 +167,12 @@ export interface SearchCreateParams {
   query: string;
 
   /**
+   * Restrict results to specific creator kinds (e.g. INFLUENCER vs THEME_PAGE). Omit
+   * for no filter.
+   */
+  creator_kinds?: Array<'INFLUENCER' | 'THEME_PAGE'>;
+
+  /**
    * Additional filters
    */
   filters?: SearchCreateParams.Filters;
