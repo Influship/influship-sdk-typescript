@@ -15,6 +15,13 @@ export class Youtube extends APIResource {
    * total views.
    *
    * **Pricing**: 0.5 credits per channel scraped ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response = await client.raw.youtube.getChannel(
+   *   '@techreviews',
+   * );
+   * ```
    */
   getChannel(
     handle: string,
@@ -36,6 +43,14 @@ export class Youtube extends APIResource {
    * - Optional timestamped segments for each transcript
    *
    * **Pricing**: 0.5 credits per transcript fetched ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.raw.youtube.getChannelTranscripts(
+   *     '@techreviews',
+   *   );
+   * ```
    */
   getChannelTranscripts(
     handle: string,
@@ -56,6 +71,13 @@ export class Youtube extends APIResource {
    * - Multiple language tracks
    *
    * **Pricing**: 0.5 credits per transcript ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response = await client.raw.youtube.getTranscript(
+   *   'dQw4w9WgXcQ',
+   * );
+   * ```
    */
   getTranscript(
     videoID: string,
@@ -69,6 +91,13 @@ export class Youtube extends APIResource {
    * Search YouTube videos and channels.
    *
    * **Pricing**: 0.5 credits per result returned ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response = await client.raw.youtube.search({
+   *   q: 'fitness workout',
+   * });
+   * ```
    */
   search(query: YoutubeSearchParams, options?: RequestOptions): APIPromise<YoutubeSearchResponse> {
     return this._client.get('/v1/raw/youtube/search', { query, ...options });

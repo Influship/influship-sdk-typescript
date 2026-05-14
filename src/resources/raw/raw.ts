@@ -2,7 +2,18 @@
 
 import { APIResource } from '../../core/resource';
 import * as InstagramAPI from './instagram';
-import { Instagram, InstagramGetProfileParams, InstagramGetProfileResponse } from './instagram';
+import {
+  Instagram,
+  InstagramGetPostResponse,
+  InstagramGetPostsParams,
+  InstagramGetPostsResponse,
+  InstagramGetProfileParams,
+  InstagramGetProfileResponse,
+  InstagramGetTranscriptParams,
+  InstagramGetTranscriptResponse,
+  InstagramGetTranscriptsParams,
+  InstagramGetTranscriptsResponse,
+} from './instagram';
 import * as YoutubeAPI from './youtube';
 import {
   TranscriptSegment,
@@ -28,8 +39,15 @@ Raw.Youtube = Youtube;
 export declare namespace Raw {
   export {
     Instagram as Instagram,
+    type InstagramGetPostResponse as InstagramGetPostResponse,
+    type InstagramGetPostsResponse as InstagramGetPostsResponse,
     type InstagramGetProfileResponse as InstagramGetProfileResponse,
+    type InstagramGetTranscriptResponse as InstagramGetTranscriptResponse,
+    type InstagramGetTranscriptsResponse as InstagramGetTranscriptsResponse,
+    type InstagramGetPostsParams as InstagramGetPostsParams,
     type InstagramGetProfileParams as InstagramGetProfileParams,
+    type InstagramGetTranscriptParams as InstagramGetTranscriptParams,
+    type InstagramGetTranscriptsParams as InstagramGetTranscriptsParams,
   };
 
   export {
