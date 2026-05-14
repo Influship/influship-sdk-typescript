@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2026-05-14)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** add getPost/getTranscript methods and fields to instagram ([8d37459](https://github.com/Influship/influship-sdk-typescript/commit/8d3745968dcb902d8eef329fecb378be5bb5c9ce))
+
 ## 0.7.0 (2026-05-09)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.6.0...v0.7.0)
