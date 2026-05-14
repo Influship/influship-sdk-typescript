@@ -1,6 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Instagram, type InstagramGetProfileResponse, type InstagramGetProfileParams } from './instagram';
+export {
+  Instagram,
+  type InstagramGetPostResponse,
+  type InstagramGetPostsResponse,
+  type InstagramGetProfileResponse,
+  type InstagramGetTranscriptResponse,
+  type InstagramGetTranscriptsResponse,
+  type InstagramGetPostsParams,
+  type InstagramGetProfileParams,
+  type InstagramGetTranscriptParams,
+  type InstagramGetTranscriptsParams,
+} from './instagram';
 export { Raw } from './raw';
 export {
   Youtube,
