@@ -76,11 +76,19 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostsResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetProfileResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">InstagramGetTranscriptsResponse</a></code>
 
 Methods:
 
+- <code title="get /v1/raw/instagram/post/{shortcode}">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getPost</a>(shortcode) -> InstagramGetPostResponse</code>
+- <code title="post /v1/raw/instagram/posts">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getPosts</a>({ ...params }) -> InstagramGetPostsResponse</code>
 - <code title="get /v1/raw/instagram/profile/{username}">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getProfile</a>(username, { ...params }) -> InstagramGetProfileResponse</code>
+- <code title="get /v1/raw/instagram/transcript/{shortcode}">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getTranscript</a>(shortcode, { ...params }) -> InstagramGetTranscriptResponse</code>
+- <code title="post /v1/raw/instagram/transcripts">client.raw.instagram.<a href="./src/resources/raw/instagram.ts">getTranscripts</a>({ ...params }) -> InstagramGetTranscriptsResponse</code>
 
 ## Youtube
 

@@ -71,10 +71,34 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/posts',
   },
   {
+    clientCallName: 'client.raw.instagram.getPost',
+    fullyQualifiedName: 'raw.instagram.getPost',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/instagram/post/{shortcode}',
+  },
+  {
+    clientCallName: 'client.raw.instagram.getPosts',
+    fullyQualifiedName: 'raw.instagram.getPosts',
+    httpMethod: 'post',
+    httpPath: '/v1/raw/instagram/posts',
+  },
+  {
     clientCallName: 'client.raw.instagram.getProfile',
     fullyQualifiedName: 'raw.instagram.getProfile',
     httpMethod: 'get',
     httpPath: '/v1/raw/instagram/profile/{username}',
+  },
+  {
+    clientCallName: 'client.raw.instagram.getTranscript',
+    fullyQualifiedName: 'raw.instagram.getTranscript',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/instagram/transcript/{shortcode}',
+  },
+  {
+    clientCallName: 'client.raw.instagram.getTranscripts',
+    fullyQualifiedName: 'raw.instagram.getTranscripts',
+    httpMethod: 'post',
+    httpPath: '/v1/raw/instagram/transcripts',
   },
   {
     clientCallName: 'client.raw.youtube.getChannel',
