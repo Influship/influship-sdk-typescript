@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2026-05-15)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.0...v0.8.1)
+
+### Bug Fixes
+
+* **api:** remove source field from instagram transcript responses ([841391f](https://github.com/Influship/influship-sdk-typescript/commit/841391f4cf38334f682b242656a26638643c1732))
+
 ## 0.8.0 (2026-05-14)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.7.0...v0.8.0)
