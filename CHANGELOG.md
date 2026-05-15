@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.1 (2026-05-15)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.9.0...v0.9.1)
+
+### Chores
+
+* **types:** move RawScraperError to shared types ([7d21736](https://github.com/Influship/influship-sdk-typescript/commit/7d21736dadf0f10eab219a5baaa60ee0b7f65040))
+
+
+### Documentation
+
+* **api:** clarify raw.instagram method descriptions ([06141e9](https://github.com/Influship/influship-sdk-typescript/commit/06141e97b2df6faae2fe0911e6c28b36547d202a))
+
 ## 0.9.0 (2026-05-15)
 
 Full Changelog: [v0.8.2...v0.9.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.2...v0.9.0)
