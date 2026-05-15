@@ -880,4 +880,5 @@ export declare namespace Influship {
 
   export type CreatorBasic = API.CreatorBasic;
   export type ProfileSummary = API.ProfileSummary;
+  export type RawScraperError = API.RawScraperError;
 }

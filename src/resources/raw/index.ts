@@ -4,7 +4,6 @@ export {
   Instagram,
   type InstagramSinglePostResponse,
   type InstagramTranscriptResponse,
-  type RawScraperError,
   type InstagramGetPostResponse,
   type InstagramGetPostsResponse,
   type InstagramGetProfileResponse,
