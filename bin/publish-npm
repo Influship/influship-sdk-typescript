@@ -4,7 +4,7 @@ set -eux
 
 npm config set '//registry.npmjs.org/:_authToken' "$NPM_TOKEN"
 
-pnpm build
+yarn build
 cd dist
 
 # Get package name and version from package.json
@@ -57,5 +57,5 @@ else
   TAG="latest"
 fi
 
-# Publish with the appropriate tag.
-pnpm publish --tag "$TAG"
+# Publish with the appropriate tag
+yarn publish --tag "$TAG"
