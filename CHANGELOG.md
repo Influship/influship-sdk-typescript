@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 (2026-05-15)
+
+Full Changelog: [v0.8.2...v0.9.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.2...v0.9.0)
+
+### Features
+
+* **types:** add InstagramSinglePostResponse/TranscriptResponse/RawScraperError types ([3be8483](https://github.com/Influship/influship-sdk-typescript/commit/3be8483f43a77cb1cee3ee3492acf9740c358b92))
+
 ## 0.8.2 (2026-05-15)
 
 Full Changelog: [v0.8.1...v0.8.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.1...v0.8.2)
