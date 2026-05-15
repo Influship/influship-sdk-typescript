@@ -76,6 +76,9 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/raw/instagram.ts">InstagramSinglePostResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">InstagramTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/instagram.ts">RawScraperError</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostsResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetProfileResponse</a></code>
