@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as InstagramAPI from './instagram';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -427,16 +428,6 @@ export namespace InstagramTranscriptResponse {
   }
 }
 
-export interface RawScraperError {
-  error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
-
-  message: string;
-
-  retry_after?: number;
-
-  username?: string;
-}
-
 export interface InstagramGetPostResponse {
   data: InstagramSinglePostResponse;
 }
@@ -468,7 +459,7 @@ export namespace InstagramGetPostsResponse {
     }
 
     export interface InstagramPostBatchErrorItem {
-      error: InstagramAPI.RawScraperError;
+      error: Shared.RawScraperError;
 
       shortcode: string;
 
@@ -716,7 +707,7 @@ export namespace InstagramGetTranscriptsResponse {
     }
 
     export interface InstagramTranscriptBatchErrorItem {
-      error: InstagramAPI.RawScraperError;
+      error: Shared.RawScraperError;
 
       shortcode: string;
 
@@ -769,7 +760,6 @@ export declare namespace Instagram {
   export {
     type InstagramSinglePostResponse as InstagramSinglePostResponse,
     type InstagramTranscriptResponse as InstagramTranscriptResponse,
-    type RawScraperError as RawScraperError,
     type InstagramGetPostResponse as InstagramGetPostResponse,
     type InstagramGetPostsResponse as InstagramGetPostsResponse,
     type InstagramGetProfileResponse as InstagramGetProfileResponse,
