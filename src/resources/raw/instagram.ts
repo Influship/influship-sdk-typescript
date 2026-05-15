@@ -694,8 +694,6 @@ export namespace InstagramGetTranscriptResponse {
 
     shortcode: string;
 
-    source: 'native' | 'whisper' | 'groq';
-
     transcript: string;
 
     word_count: number;
@@ -879,8 +877,6 @@ export namespace InstagramGetTranscriptsResponse {
         scraped_at: string;
 
         shortcode: string;
-
-        source: 'native' | 'whisper' | 'groq';
 
         transcript: string;
 
