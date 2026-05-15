@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'influship_api',
-      version: '0.9.1',
+      version: '0.9.2',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
