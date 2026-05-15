@@ -17,8 +17,8 @@ export class Instagram extends APIResource {
    * product mentions, music attribution, location, display resources, and video
    * versions.
    *
-   * **Note:** These fields are only guaranteed on this raw single-post lookup for
-   * now. Regular cached post-list endpoints may not include them yet.
+   * **Note:** These fields are only guaranteed on this raw single-post lookup.
+   * Cached post-list endpoints may not include them.
    *
    * **Pricing**: 1 credit per post scraped ($0.01)
    *
@@ -85,12 +85,7 @@ export class Instagram extends APIResource {
 
   /**
    * Transcribe an Instagram video post by shortcode and return the raw post-page
-   * data used for transcription. For now this raw endpoint retranscribes every
-   * request and piggybacks the post plus transcript into our database when the owner
-   * account exists.
-   *
-   * **Note:** Cached transcript reads are a planned follow-up; public pricing stays
-   * the same for live and cached transcript delivery.
+   * data used for transcription.
    *
    * **Pricing**: 5 credits per transcript ($0.05)
    *
@@ -114,10 +109,8 @@ export class Instagram extends APIResource {
    * item per requested shortcode with per-item success or error details. Successful
    * items include the raw post-page data used for transcription.
    *
-   * **Note:** Batch transcription is capped at 10 shortcodes per request,
-   * retranscribes every request for now, and is charged for every requested
-   * shortcode. Cached transcript reads are a planned follow-up; public pricing stays
-   * the same for live and cached transcript delivery.
+   * **Note:** Batch transcription is capped at 10 shortcodes per request and is
+   * charged for every requested shortcode.
    *
    * **Pricing**: 5 credits per transcript ($0.05)
    *
