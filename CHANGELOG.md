@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.2 (2026-05-15)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.1...v0.8.2)
+
+### Bug Fixes
+
+* **types:** remove model and provider fields from instagram transcript responses ([c858b52](https://github.com/Influship/influship-sdk-typescript/commit/c858b52cac5fd2f994ac79403f13633012c4ff1f))
+
 ## 0.8.1 (2026-05-15)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.8.0...v0.8.1)
