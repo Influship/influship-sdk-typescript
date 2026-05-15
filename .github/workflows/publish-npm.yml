@@ -27,13 +27,9 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Enable pnpm
-        run: |
-          corepack enable
-
       - name: Install dependencies
         run: |
-          pnpm install --frozen-lockfile
+          yarn install
 
       - name: Publish to NPM
         run: |
@@ -42,13 +38,12 @@ jobs:
           else
             PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
           fi
-          pnpm tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+          yarn tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
         env:
           INPUT_PATH: ${{ github.event.inputs.path }}
           NPM_TOKEN: ${{ secrets.INFLUSHIP_NPM_TOKEN || secrets.NPM_TOKEN }}
 
       - name: Upload MCP Server DXT GitHub release asset
-        if: github.event_name == 'release'
         run: |
           gh release upload ${{ github.event.release.tag_name }} \
             packages/mcp-server/influship_api.mcpb
