@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.0 (2026-05-15)
+
+Full Changelog: [v0.9.1...v0.10.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.9.1...v0.10.0)
+
+### Features
+
+* Fix Stainless pnpm option placement ([4b11938](https://github.com/Influship/influship-sdk-typescript/commit/4b1193838bf5240a4ba603afe527fdb2fdb905b0))
+
+
+### Bug Fixes
+
+* use pnpm for SDK publishing ([#22](https://github.com/Influship/influship-sdk-typescript/issues/22)) ([bd3394c](https://github.com/Influship/influship-sdk-typescript/commit/bd3394c9956ffe1f0af5ec569520c06a4fe2d6fc))
+
 ## 0.9.1 (2026-05-15)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.9.0...v0.9.1)
