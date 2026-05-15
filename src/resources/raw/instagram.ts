@@ -699,10 +699,6 @@ export namespace InstagramGetTranscriptResponse {
     word_count: number;
 
     duration_seconds?: number;
-
-    model?: string;
-
-    provider?: string;
   }
 
   export namespace Data {
@@ -883,10 +879,6 @@ export namespace InstagramGetTranscriptsResponse {
         word_count: number;
 
         duration_seconds?: number;
-
-        model?: string;
-
-        provider?: string;
       }
 
       export namespace Data {
