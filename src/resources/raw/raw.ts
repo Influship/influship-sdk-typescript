@@ -13,6 +13,9 @@ import {
   InstagramGetTranscriptResponse,
   InstagramGetTranscriptsParams,
   InstagramGetTranscriptsResponse,
+  InstagramSinglePostResponse,
+  InstagramTranscriptResponse,
+  RawScraperError,
 } from './instagram';
 import * as YoutubeAPI from './youtube';
 import {
@@ -39,6 +42,9 @@ Raw.Youtube = Youtube;
 export declare namespace Raw {
   export {
     Instagram as Instagram,
+    type InstagramSinglePostResponse as InstagramSinglePostResponse,
+    type InstagramTranscriptResponse as InstagramTranscriptResponse,
+    type RawScraperError as RawScraperError,
     type InstagramGetPostResponse as InstagramGetPostResponse,
     type InstagramGetPostsResponse as InstagramGetPostsResponse,
     type InstagramGetProfileResponse as InstagramGetProfileResponse,

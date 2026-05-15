@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as InstagramAPI from './instagram';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -134,150 +135,310 @@ export class Instagram extends APIResource {
   }
 }
 
-export interface InstagramGetPostResponse {
-  data: InstagramGetPostResponse.Data;
+export interface InstagramSinglePostResponse {
+  post: InstagramSinglePostResponse.Post;
+
+  scraped_at: string;
 }
 
-export namespace InstagramGetPostResponse {
-  export interface Data {
-    post: Data.Post;
+export namespace InstagramSinglePostResponse {
+  export interface Post {
+    id: string;
 
-    scraped_at: string;
+    caption: string | null;
+
+    comment_count: number;
+
+    display_url: string;
+
+    is_video: boolean;
+
+    like_count: number;
+
+    post_type: 'image' | 'video' | 'carousel';
+
+    shortcode: string;
+
+    taken_at: number | null;
+
+    accessibility_caption?: string | null;
+
+    carousel_items?: Array<Post.CarouselItem>;
+
+    coauthor_usernames?: Array<string>;
+
+    display_resources?: Array<Post.DisplayResource>;
+
+    engagement_visibility?: Post.EngagementVisibility | null;
+
+    is_paid_partnership?: boolean | null;
+
+    is_pinned?: boolean | null;
+
+    location?: Post.Location | null;
+
+    music_attribution?: Post.MusicAttribution | null;
+
+    owner_username?: string;
+
+    product_mentions?: Array<Post.ProductMention>;
+
+    sponsor_usernames?: Array<string>;
+
+    tagged_usernames?: Array<string>;
+
+    thumbnail_url?: string;
+
+    video_url?: string;
+
+    video_versions?: Array<Post.VideoVersion>;
+
+    view_count?: number;
   }
 
-  export namespace Data {
-    export interface Post {
-      id: string;
-
-      caption: string | null;
-
-      comment_count: number;
-
+  export namespace Post {
+    export interface CarouselItem {
       display_url: string;
 
+      index: number;
+
       is_video: boolean;
-
-      like_count: number;
-
-      post_type: 'image' | 'video' | 'carousel';
-
-      shortcode: string;
-
-      taken_at: number | null;
-
-      accessibility_caption?: string | null;
-
-      carousel_items?: Array<Post.CarouselItem>;
-
-      coauthor_usernames?: Array<string>;
-
-      display_resources?: Array<Post.DisplayResource>;
-
-      engagement_visibility?: Post.EngagementVisibility | null;
-
-      is_paid_partnership?: boolean | null;
-
-      is_pinned?: boolean | null;
-
-      location?: Post.Location | null;
-
-      music_attribution?: Post.MusicAttribution | null;
-
-      owner_username?: string;
-
-      product_mentions?: Array<Post.ProductMention>;
-
-      sponsor_usernames?: Array<string>;
-
-      tagged_usernames?: Array<string>;
 
       thumbnail_url?: string;
 
       video_url?: string;
-
-      video_versions?: Array<Post.VideoVersion>;
-
-      view_count?: number;
     }
 
-    export namespace Post {
-      export interface CarouselItem {
-        display_url: string;
+    export interface DisplayResource {
+      config_height: number;
 
-        index: number;
+      config_width: number;
 
-        is_video: boolean;
+      src: string;
+    }
 
-        thumbnail_url?: string;
+    export interface EngagementVisibility {
+      comments_disabled?: boolean | null;
 
-        video_url?: string;
-      }
+      like_and_view_counts_disabled?: boolean | null;
 
-      export interface DisplayResource {
-        config_height: number;
+      viewer_can_reshare?: boolean | null;
+    }
 
-        config_width: number;
+    export interface Location {
+      id?: string | null;
 
-        src: string;
-      }
+      address_json?: { [key: string]: unknown } | null;
 
-      export interface EngagementVisibility {
-        comments_disabled?: boolean | null;
+      has_public_page?: boolean | null;
 
-        like_and_view_counts_disabled?: boolean | null;
+      lat?: number | null;
 
-        viewer_can_reshare?: boolean | null;
-      }
+      lng?: number | null;
 
-      export interface Location {
-        id?: string | null;
+      name?: string | null;
 
-        address_json?: unknown;
+      slug?: string | null;
+    }
 
-        has_public_page?: boolean | null;
+    export interface MusicAttribution {
+      artist_name?: string | null;
 
-        lat?: number | null;
+      audio_id?: string | null;
 
-        lng?: number | null;
+      should_mute_audio?: boolean | null;
 
-        name?: string | null;
+      song_name?: string | null;
 
-        slug?: string | null;
-      }
+      uses_original_audio?: boolean | null;
+    }
 
-      export interface MusicAttribution {
-        artist_name?: string | null;
+    export interface ProductMention {
+      merchant_username?: string | null;
 
-        audio_id?: string | null;
+      product_id?: string | null;
 
-        should_mute_audio?: boolean | null;
+      product_name?: string | null;
+    }
 
-        song_name?: string | null;
+    export interface VideoVersion {
+      url: string;
 
-        uses_original_audio?: boolean | null;
-      }
+      id?: string;
 
-      export interface ProductMention {
-        merchant_username?: string | null;
+      height?: number;
 
-        product_id?: string | null;
+      type?: number;
 
-        product_name?: string | null;
-      }
-
-      export interface VideoVersion {
-        url: string;
-
-        id?: string;
-
-        height?: number;
-
-        type?: number;
-
-        width?: number;
-      }
+      width?: number;
     }
   }
+}
+
+export interface InstagramTranscriptResponse {
+  full_text: string;
+
+  language: string;
+
+  post: InstagramTranscriptResponse.Post;
+
+  scraped_at: string;
+
+  shortcode: string;
+
+  transcript: string;
+
+  word_count: number;
+
+  duration_seconds?: number;
+}
+
+export namespace InstagramTranscriptResponse {
+  export interface Post {
+    id: string;
+
+    caption: string | null;
+
+    comment_count: number;
+
+    display_url: string;
+
+    is_video: boolean;
+
+    like_count: number;
+
+    post_type: 'image' | 'video' | 'carousel';
+
+    shortcode: string;
+
+    taken_at: number | null;
+
+    accessibility_caption?: string | null;
+
+    carousel_items?: Array<Post.CarouselItem>;
+
+    coauthor_usernames?: Array<string>;
+
+    display_resources?: Array<Post.DisplayResource>;
+
+    engagement_visibility?: Post.EngagementVisibility | null;
+
+    is_paid_partnership?: boolean | null;
+
+    is_pinned?: boolean | null;
+
+    location?: Post.Location | null;
+
+    music_attribution?: Post.MusicAttribution | null;
+
+    owner_username?: string;
+
+    product_mentions?: Array<Post.ProductMention>;
+
+    sponsor_usernames?: Array<string>;
+
+    tagged_usernames?: Array<string>;
+
+    thumbnail_url?: string;
+
+    video_url?: string;
+
+    video_versions?: Array<Post.VideoVersion>;
+
+    view_count?: number;
+  }
+
+  export namespace Post {
+    export interface CarouselItem {
+      display_url: string;
+
+      index: number;
+
+      is_video: boolean;
+
+      thumbnail_url?: string;
+
+      video_url?: string;
+    }
+
+    export interface DisplayResource {
+      config_height: number;
+
+      config_width: number;
+
+      src: string;
+    }
+
+    export interface EngagementVisibility {
+      comments_disabled?: boolean | null;
+
+      like_and_view_counts_disabled?: boolean | null;
+
+      viewer_can_reshare?: boolean | null;
+    }
+
+    export interface Location {
+      id?: string | null;
+
+      address_json?: { [key: string]: unknown } | null;
+
+      has_public_page?: boolean | null;
+
+      lat?: number | null;
+
+      lng?: number | null;
+
+      name?: string | null;
+
+      slug?: string | null;
+    }
+
+    export interface MusicAttribution {
+      artist_name?: string | null;
+
+      audio_id?: string | null;
+
+      should_mute_audio?: boolean | null;
+
+      song_name?: string | null;
+
+      uses_original_audio?: boolean | null;
+    }
+
+    export interface ProductMention {
+      merchant_username?: string | null;
+
+      product_id?: string | null;
+
+      product_name?: string | null;
+    }
+
+    export interface VideoVersion {
+      url: string;
+
+      id?: string;
+
+      height?: number;
+
+      type?: number;
+
+      width?: number;
+    }
+  }
+}
+
+export interface RawScraperError {
+  error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
+
+  message: string;
+
+  retry_after?: number;
+
+  username?: string;
+}
+
+export interface InstagramGetPostResponse {
+  data: InstagramSinglePostResponse;
 }
 
 export interface InstagramGetPostsResponse {
@@ -299,175 +460,21 @@ export namespace InstagramGetPostsResponse {
 
   export namespace Data {
     export interface InstagramPostBatchSuccessItem {
-      data: InstagramPostBatchSuccessItem.Data;
+      data: InstagramAPI.InstagramSinglePostResponse;
 
       shortcode: string;
 
       success: true;
     }
 
-    export namespace InstagramPostBatchSuccessItem {
-      export interface Data {
-        post: Data.Post;
-
-        scraped_at: string;
-      }
-
-      export namespace Data {
-        export interface Post {
-          id: string;
-
-          caption: string | null;
-
-          comment_count: number;
-
-          display_url: string;
-
-          is_video: boolean;
-
-          like_count: number;
-
-          post_type: 'image' | 'video' | 'carousel';
-
-          shortcode: string;
-
-          taken_at: number | null;
-
-          accessibility_caption?: string | null;
-
-          carousel_items?: Array<Post.CarouselItem>;
-
-          coauthor_usernames?: Array<string>;
-
-          display_resources?: Array<Post.DisplayResource>;
-
-          engagement_visibility?: Post.EngagementVisibility | null;
-
-          is_paid_partnership?: boolean | null;
-
-          is_pinned?: boolean | null;
-
-          location?: Post.Location | null;
-
-          music_attribution?: Post.MusicAttribution | null;
-
-          owner_username?: string;
-
-          product_mentions?: Array<Post.ProductMention>;
-
-          sponsor_usernames?: Array<string>;
-
-          tagged_usernames?: Array<string>;
-
-          thumbnail_url?: string;
-
-          video_url?: string;
-
-          video_versions?: Array<Post.VideoVersion>;
-
-          view_count?: number;
-        }
-
-        export namespace Post {
-          export interface CarouselItem {
-            display_url: string;
-
-            index: number;
-
-            is_video: boolean;
-
-            thumbnail_url?: string;
-
-            video_url?: string;
-          }
-
-          export interface DisplayResource {
-            config_height: number;
-
-            config_width: number;
-
-            src: string;
-          }
-
-          export interface EngagementVisibility {
-            comments_disabled?: boolean | null;
-
-            like_and_view_counts_disabled?: boolean | null;
-
-            viewer_can_reshare?: boolean | null;
-          }
-
-          export interface Location {
-            id?: string | null;
-
-            address_json?: unknown;
-
-            has_public_page?: boolean | null;
-
-            lat?: number | null;
-
-            lng?: number | null;
-
-            name?: string | null;
-
-            slug?: string | null;
-          }
-
-          export interface MusicAttribution {
-            artist_name?: string | null;
-
-            audio_id?: string | null;
-
-            should_mute_audio?: boolean | null;
-
-            song_name?: string | null;
-
-            uses_original_audio?: boolean | null;
-          }
-
-          export interface ProductMention {
-            merchant_username?: string | null;
-
-            product_id?: string | null;
-
-            product_name?: string | null;
-          }
-
-          export interface VideoVersion {
-            url: string;
-
-            id?: string;
-
-            height?: number;
-
-            type?: number;
-
-            width?: number;
-          }
-        }
-      }
-    }
-
     export interface InstagramPostBatchErrorItem {
-      error: InstagramPostBatchErrorItem.Error;
+      error: InstagramAPI.RawScraperError;
 
       shortcode: string;
 
       status: number;
 
       success: false;
-    }
-
-    export namespace InstagramPostBatchErrorItem {
-      export interface Error {
-        error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
-
-        message: string;
-
-        retry_after?: number;
-
-        username?: string;
-      }
     }
   }
 }
@@ -618,7 +625,7 @@ export namespace InstagramGetProfileResponse {
       export interface Location {
         id?: string | null;
 
-        address_json?: unknown;
+        address_json?: { [key: string]: unknown } | null;
 
         has_public_page?: boolean | null;
 
@@ -679,161 +686,7 @@ export namespace InstagramGetProfileResponse {
 }
 
 export interface InstagramGetTranscriptResponse {
-  data: InstagramGetTranscriptResponse.Data;
-}
-
-export namespace InstagramGetTranscriptResponse {
-  export interface Data {
-    full_text: string;
-
-    language: string;
-
-    post: Data.Post;
-
-    scraped_at: string;
-
-    shortcode: string;
-
-    transcript: string;
-
-    word_count: number;
-
-    duration_seconds?: number;
-  }
-
-  export namespace Data {
-    export interface Post {
-      id: string;
-
-      caption: string | null;
-
-      comment_count: number;
-
-      display_url: string;
-
-      is_video: boolean;
-
-      like_count: number;
-
-      post_type: 'image' | 'video' | 'carousel';
-
-      shortcode: string;
-
-      taken_at: number | null;
-
-      accessibility_caption?: string | null;
-
-      carousel_items?: Array<Post.CarouselItem>;
-
-      coauthor_usernames?: Array<string>;
-
-      display_resources?: Array<Post.DisplayResource>;
-
-      engagement_visibility?: Post.EngagementVisibility | null;
-
-      is_paid_partnership?: boolean | null;
-
-      is_pinned?: boolean | null;
-
-      location?: Post.Location | null;
-
-      music_attribution?: Post.MusicAttribution | null;
-
-      owner_username?: string;
-
-      product_mentions?: Array<Post.ProductMention>;
-
-      sponsor_usernames?: Array<string>;
-
-      tagged_usernames?: Array<string>;
-
-      thumbnail_url?: string;
-
-      video_url?: string;
-
-      video_versions?: Array<Post.VideoVersion>;
-
-      view_count?: number;
-    }
-
-    export namespace Post {
-      export interface CarouselItem {
-        display_url: string;
-
-        index: number;
-
-        is_video: boolean;
-
-        thumbnail_url?: string;
-
-        video_url?: string;
-      }
-
-      export interface DisplayResource {
-        config_height: number;
-
-        config_width: number;
-
-        src: string;
-      }
-
-      export interface EngagementVisibility {
-        comments_disabled?: boolean | null;
-
-        like_and_view_counts_disabled?: boolean | null;
-
-        viewer_can_reshare?: boolean | null;
-      }
-
-      export interface Location {
-        id?: string | null;
-
-        address_json?: unknown;
-
-        has_public_page?: boolean | null;
-
-        lat?: number | null;
-
-        lng?: number | null;
-
-        name?: string | null;
-
-        slug?: string | null;
-      }
-
-      export interface MusicAttribution {
-        artist_name?: string | null;
-
-        audio_id?: string | null;
-
-        should_mute_audio?: boolean | null;
-
-        song_name?: string | null;
-
-        uses_original_audio?: boolean | null;
-      }
-
-      export interface ProductMention {
-        merchant_username?: string | null;
-
-        product_id?: string | null;
-
-        product_name?: string | null;
-      }
-
-      export interface VideoVersion {
-        url: string;
-
-        id?: string;
-
-        height?: number;
-
-        type?: number;
-
-        width?: number;
-      }
-    }
-  }
+  data: InstagramTranscriptResponse;
 }
 
 export interface InstagramGetTranscriptsResponse {
@@ -855,187 +708,21 @@ export namespace InstagramGetTranscriptsResponse {
 
   export namespace Data {
     export interface InstagramTranscriptBatchSuccessItem {
-      data: InstagramTranscriptBatchSuccessItem.Data;
+      data: InstagramAPI.InstagramTranscriptResponse;
 
       shortcode: string;
 
       success: true;
     }
 
-    export namespace InstagramTranscriptBatchSuccessItem {
-      export interface Data {
-        full_text: string;
-
-        language: string;
-
-        post: Data.Post;
-
-        scraped_at: string;
-
-        shortcode: string;
-
-        transcript: string;
-
-        word_count: number;
-
-        duration_seconds?: number;
-      }
-
-      export namespace Data {
-        export interface Post {
-          id: string;
-
-          caption: string | null;
-
-          comment_count: number;
-
-          display_url: string;
-
-          is_video: boolean;
-
-          like_count: number;
-
-          post_type: 'image' | 'video' | 'carousel';
-
-          shortcode: string;
-
-          taken_at: number | null;
-
-          accessibility_caption?: string | null;
-
-          carousel_items?: Array<Post.CarouselItem>;
-
-          coauthor_usernames?: Array<string>;
-
-          display_resources?: Array<Post.DisplayResource>;
-
-          engagement_visibility?: Post.EngagementVisibility | null;
-
-          is_paid_partnership?: boolean | null;
-
-          is_pinned?: boolean | null;
-
-          location?: Post.Location | null;
-
-          music_attribution?: Post.MusicAttribution | null;
-
-          owner_username?: string;
-
-          product_mentions?: Array<Post.ProductMention>;
-
-          sponsor_usernames?: Array<string>;
-
-          tagged_usernames?: Array<string>;
-
-          thumbnail_url?: string;
-
-          video_url?: string;
-
-          video_versions?: Array<Post.VideoVersion>;
-
-          view_count?: number;
-        }
-
-        export namespace Post {
-          export interface CarouselItem {
-            display_url: string;
-
-            index: number;
-
-            is_video: boolean;
-
-            thumbnail_url?: string;
-
-            video_url?: string;
-          }
-
-          export interface DisplayResource {
-            config_height: number;
-
-            config_width: number;
-
-            src: string;
-          }
-
-          export interface EngagementVisibility {
-            comments_disabled?: boolean | null;
-
-            like_and_view_counts_disabled?: boolean | null;
-
-            viewer_can_reshare?: boolean | null;
-          }
-
-          export interface Location {
-            id?: string | null;
-
-            address_json?: unknown;
-
-            has_public_page?: boolean | null;
-
-            lat?: number | null;
-
-            lng?: number | null;
-
-            name?: string | null;
-
-            slug?: string | null;
-          }
-
-          export interface MusicAttribution {
-            artist_name?: string | null;
-
-            audio_id?: string | null;
-
-            should_mute_audio?: boolean | null;
-
-            song_name?: string | null;
-
-            uses_original_audio?: boolean | null;
-          }
-
-          export interface ProductMention {
-            merchant_username?: string | null;
-
-            product_id?: string | null;
-
-            product_name?: string | null;
-          }
-
-          export interface VideoVersion {
-            url: string;
-
-            id?: string;
-
-            height?: number;
-
-            type?: number;
-
-            width?: number;
-          }
-        }
-      }
-    }
-
     export interface InstagramTranscriptBatchErrorItem {
-      error: InstagramTranscriptBatchErrorItem.Error;
+      error: InstagramAPI.RawScraperError;
 
       shortcode: string;
 
       status: number;
 
       success: false;
-    }
-
-    export namespace InstagramTranscriptBatchErrorItem {
-      export interface Error {
-        error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
-
-        message: string;
-
-        retry_after?: number;
-
-        username?: string;
-      }
     }
   }
 }
@@ -1080,6 +767,9 @@ export interface InstagramGetTranscriptsParams {
 
 export declare namespace Instagram {
   export {
+    type InstagramSinglePostResponse as InstagramSinglePostResponse,
+    type InstagramTranscriptResponse as InstagramTranscriptResponse,
+    type RawScraperError as RawScraperError,
     type InstagramGetPostResponse as InstagramGetPostResponse,
     type InstagramGetPostsResponse as InstagramGetPostsResponse,
     type InstagramGetProfileResponse as InstagramGetProfileResponse,
