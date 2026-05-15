@@ -4,6 +4,7 @@ Types:
 
 - <code><a href="./src/resources/shared.ts">CreatorBasic</a></code>
 - <code><a href="./src/resources/shared.ts">ProfileSummary</a></code>
+- <code><a href="./src/resources/shared.ts">RawScraperError</a></code>
 
 # Health
 
@@ -78,7 +79,6 @@ Types:
 
 - <code><a href="./src/resources/raw/instagram.ts">InstagramSinglePostResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramTranscriptResponse</a></code>
-- <code><a href="./src/resources/raw/instagram.ts">RawScraperError</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetPostsResponse</a></code>
 - <code><a href="./src/resources/raw/instagram.ts">InstagramGetProfileResponse</a></code>

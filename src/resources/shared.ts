@@ -64,3 +64,13 @@ export interface ProfileSummary {
    */
   username: string;
 }
+
+export interface RawScraperError {
+  error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
+
+  message: string;
+
+  retry_after?: number;
+
+  username?: string;
+}
