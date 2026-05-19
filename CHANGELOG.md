@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.2 (2026-05-19)
+
+Full Changelog: [v0.10.1...v0.10.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.10.1...v0.10.2)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([1231833](https://github.com/Influship/influship-sdk-typescript/commit/12318334fcf65ad210e9df8158a4d937b2c4ff2a))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([21d1514](https://github.com/Influship/influship-sdk-typescript/commit/21d1514dfdd357754c7ce3765a56812b734ad20f))
+
 ## 0.10.1 (2026-05-15)
 
 Full Changelog: [v0.10.0...v0.10.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.10.0...v0.10.1)
