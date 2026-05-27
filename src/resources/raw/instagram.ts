@@ -20,6 +20,10 @@ export class Instagram extends APIResource {
    * **Note:** These fields are only guaranteed on this raw single-post lookup.
    * Cached post-list endpoints may not include them.
    *
+   * Returns fresh `video_url` (single best stream) and `video_versions[]`
+   * (multi-bitrate). These are signed Instagram CDN URLs valid for ~24h — download
+   * promptly. For carousels with embedded videos, see `carousel_items[].video_url`.
+   *
    * **Pricing**: 1 credit per post scraped ($0.01)
    *
    * @example
@@ -39,6 +43,9 @@ export class Instagram extends APIResource {
    *
    * **Note:** Batch post lookup is capped at 20 shortcodes per request and is
    * charged for every requested shortcode.
+   *
+   * Returns fresh `video_url` and `video_versions[]` per post (signed IG CDN URLs,
+   * ~24h validity). Batch up to 20 posts at 1 credit ($0.01) each.
    *
    * **Pricing**: 1 credit per post scraped ($0.01)
    *
@@ -65,6 +72,10 @@ export class Instagram extends APIResource {
    *
    * **Note:** Live scraping is slower than cached data (2-5 seconds) and costs more.
    * Use cached endpoints when freshness isn't critical.
+   *
+   * The `posts[]` array returns up to 12 recent posts with fresh `video_url` for
+   * each video post. This is the cheapest bulk-download path: 0.5 credits ($0.005)
+   * per profile call vs 1 credit per individual raw-post call.
    *
    * **Pricing**: 0.5 credits per profile scraped ($0.005)
    *
@@ -274,8 +285,6 @@ export interface InstagramTranscriptResponse {
 
   language: string;
 
-  post: InstagramTranscriptResponse.Post;
-
   scraped_at: string;
 
   shortcode: string;
@@ -285,6 +294,8 @@ export interface InstagramTranscriptResponse {
   word_count: number;
 
   duration_seconds?: number;
+
+  post?: InstagramTranscriptResponse.Post;
 }
 
 export namespace InstagramTranscriptResponse {

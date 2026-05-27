@@ -125,24 +125,48 @@ export namespace PostListResponse {
    */
   export interface Media {
     /**
-     * Video duration in seconds
+     * Per-item structure for carousel posts. Null for non-carousel posts. Per-item
+     * video_url is intentionally omitted (would be stale). For fresh video URLs, call
+     * GET /v1/raw/instagram/post/{shortcode}.
+     */
+    carousel_items: Array<Media.CarouselItem> | null;
+
+    /**
+     * Video duration in seconds. Null for non-video posts.
      */
     duration_seconds: number | null;
 
     /**
-     * Thumbnail URL
+     * Thumbnail URL. For videos, this is the cover frame.
      */
     thumbnail_url: string | null;
 
     /**
-     * Media URL
+     * Cover/primary image URL for image and carousel posts. Null for video posts —
+     * call GET /v1/raw/instagram/post/{shortcode} for a fresh, downloadable video URL.
+     * Note: returned image URLs are Instagram CDN URLs and may expire; a future change
+     * will migrate to persistent R2-hosted URLs.
      */
     url: string | null;
+  }
 
-    /**
-     * Video URL (for video content)
-     */
-    video_url: string | null;
+  export namespace Media {
+    export interface CarouselItem {
+      /**
+       * Zero-based position in the carousel.
+       */
+      index: number;
+
+      /**
+       * True if this item is a video.
+       */
+      is_video: boolean;
+
+      /**
+       * Thumbnail URL for this item. Cover frame for videos.
+       */
+      thumbnail_url: string | null;
+    }
   }
 
   /**
