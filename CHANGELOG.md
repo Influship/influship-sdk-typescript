@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 (2026-05-27)
+
+Full Changelog: [v0.10.2...v0.11.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.10.2...v0.11.0)
+
+### Features
+
+* honest cached /v1/posts video URLs + transcript read-through cache + discovery seeding ([bf7388e](https://github.com/Influship/influship-sdk-typescript/commit/bf7388e1a49cc65e03e42e5b0567f12767bce92f))
+
 ## 0.10.2 (2026-05-19)
 
 Full Changelog: [v0.10.1...v0.10.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.10.1...v0.10.2)
