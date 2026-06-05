@@ -61,6 +61,16 @@ Methods:
 - <code title="get /v1/profiles/{platform}/{username}">client.profiles.<a href="./src/resources/profiles.ts">get</a>(username, { ...params }) -> ProfileGetResponse</code>
 - <code title="post /v1/profiles/lookup">client.profiles.<a href="./src/resources/profiles.ts">lookup</a>({ ...params }) -> ProfileLookupResponse</code>
 
+# CreatorEmails
+
+Types:
+
+- <code><a href="./src/resources/creator-emails.ts">CreatorEmailLookupResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/creator-emails/lookup">client.creatorEmails.<a href="./src/resources/creator-emails.ts">lookup</a>({ ...params }) -> CreatorEmailLookupResponse</code>
+
 # Posts
 
 Types:
