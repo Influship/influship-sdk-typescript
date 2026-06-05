@@ -117,6 +117,7 @@ const fuse = new Fuse(
     'client.search.retrieve',
     'client.profiles.get',
     'client.profiles.lookup',
+    'client.creatorEmails.lookup',
     'client.posts.list',
     'client.raw.instagram.getPost',
     'client.raw.instagram.getPosts',

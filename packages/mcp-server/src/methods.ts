@@ -65,6 +65,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/profiles/lookup',
   },
   {
+    clientCallName: 'client.creatorEmails.lookup',
+    fullyQualifiedName: 'creatorEmails.lookup',
+    httpMethod: 'post',
+    httpPath: '/v1/creator-emails/lookup',
+  },
+  {
     clientCallName: 'client.posts.list',
     fullyQualifiedName: 'posts.list',
     httpMethod: 'get',

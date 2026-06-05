@@ -2,6 +2,11 @@
 
 export * from './shared';
 export {
+  CreatorEmails,
+  type CreatorEmailLookupResponse,
+  type CreatorEmailLookupParams,
+} from './creator-emails';
+export {
   Creators,
   type CreatorRetrieveResponse,
   type CreatorAutocompleteResponse,
