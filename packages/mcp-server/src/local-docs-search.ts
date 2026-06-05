@@ -343,6 +343,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'lookup',
+    endpoint: '/v1/creator-emails/lookup',
+    httpMethod: 'post',
+    summary: 'Lookup Creator Emails',
+    description:
+      'Look up known email addresses for creators by creator ID or social username.\n\n**Billing behavior:**\n- Charged only for unique resolved creators with at least one returned email\n- Empty and unresolved results are not billable\n- Returns validation status so unvalidated emails are explicit\n\n**Pricing**: 5 credits per creator with at least one returned email ($0.05)',
+    stainlessPath: '(resource) creatorEmails > (method) lookup',
+    qualified: 'client.creatorEmails.lookup',
+    params: ["creators: { creator_id: string; } | { platform: 'instagram'; username: string; }[];"],
+    response:
+      '{ data: { billing: { billable_results: number; credits_charged: number; }; results: { creator_id: string; emails: object[]; input: object | object; resolved: boolean; }[]; }; }',
+    markdown:
+      "## lookup\n\n`client.creatorEmails.lookup(creators: { creator_id: string; } | { platform: 'instagram'; username: string; }[]): { data: object; }`\n\n**post** `/v1/creator-emails/lookup`\n\nLook up known email addresses for creators by creator ID or social username.\n\n**Billing behavior:**\n- Charged only for unique resolved creators with at least one returned email\n- Empty and unresolved results are not billable\n- Returns validation status so unvalidated emails are explicit\n\n**Pricing**: 5 credits per creator with at least one returned email ($0.05)\n\n### Parameters\n\n- `creators: { creator_id: string; } | { platform: 'instagram'; username: string; }[]`\n  Creator lookups to resolve. Response rows preserve this input order.\n\n### Returns\n\n- `{ data: { billing: { billable_results: number; credits_charged: number; }; results: { creator_id: string; emails: object[]; input: object | object; resolved: boolean; }[]; }; }`\n  Creator email lookup response\n\n  - `data: { billing: { billable_results: number; credits_charged: number; }; results: { creator_id: string; emails: { confidence: number; email: string; first_seen_at: string; is_primary: boolean; last_seen_at: string; status: 'unvalidated' | 'valid' | 'risky' | 'creator_verified'; validated_at: string; }[]; input: { creator_id: string; } | { platform: 'instagram'; username: string; }; resolved: boolean; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.creatorEmails.lookup({ creators: [{ creator_id: '123e4567-e89b-12d3-a456-426614174000' }] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.creatorEmails.lookup',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creatorEmails.lookup({\n  creators: [{ creator_id: '123e4567-e89b-12d3-a456-426614174000' }],\n});\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'creator_emails.lookup',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creator_emails.lookup(\n    creators=[{\n        "creator_id": "123e4567-e89b-12d3-a456-426614174000"\n    }],\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/creator-emails/lookup \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "creators": [\n            {\n              "creator_id": "123e4567-e89b-12d3-a456-426614174000"\n            }\n          ]\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/v1/posts',
     httpMethod: 'get',

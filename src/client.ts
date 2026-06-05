@@ -26,6 +26,11 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  CreatorEmailLookupParams,
+  CreatorEmailLookupResponse,
+  CreatorEmails,
+} from './resources/creator-emails';
+import {
   CreatorAutocompleteParams,
   CreatorAutocompleteResponse,
   CreatorLookalikeParams,
@@ -810,6 +815,10 @@ export class Influship {
    */
   profiles: API.Profiles = new API.Profiles(this);
   /**
+   * Look up known creator email addresses by creator ID or social username. Empty or unresolved results are not billable.
+   */
+  creatorEmails: API.CreatorEmails = new API.CreatorEmails(this);
+  /**
    * Retrieve and analyze social media posts with engagement metrics, media content, and performance data.
    */
   posts: API.Posts = new API.Posts(this);
@@ -820,6 +829,7 @@ Influship.Health = Health;
 Influship.Creators = Creators;
 Influship.Search = Search;
 Influship.Profiles = Profiles;
+Influship.CreatorEmails = CreatorEmails;
 Influship.Posts = Posts;
 Influship.Raw = Raw;
 
@@ -867,6 +877,12 @@ export declare namespace Influship {
     type ProfileLookupResponse as ProfileLookupResponse,
     type ProfileGetParams as ProfileGetParams,
     type ProfileLookupParams as ProfileLookupParams,
+  };
+
+  export {
+    CreatorEmails as CreatorEmails,
+    type CreatorEmailLookupResponse as CreatorEmailLookupResponse,
+    type CreatorEmailLookupParams as CreatorEmailLookupParams,
   };
 
   export {
