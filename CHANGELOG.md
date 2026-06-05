@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-06-05)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** add lookup method to creator_emails resource ([663b04a](https://github.com/Influship/influship-sdk-typescript/commit/663b04abc8e1c5698f1967eeea3e4a613812043b))
+
 ## 0.11.0 (2026-05-27)
 
 Full Changelog: [v0.10.2...v0.11.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.10.2...v0.11.0)
