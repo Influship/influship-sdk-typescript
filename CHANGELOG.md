@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.1 (2026-06-17)
+
+Full Changelog: [v0.12.0...v0.12.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.0...v0.12.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([5c77a7e](https://github.com/Influship/influship-sdk-typescript/commit/5c77a7edf7143904780ab8beeaca3517e19bab16))
+
+
+### Documentation
+
+* **api:** expand handle parameter description in youtube methods ([6026577](https://github.com/Influship/influship-sdk-typescript/commit/6026577de5e7f2c27618320355c8d59ea2f5ffb8))
+
 ## 0.12.0 (2026-06-05)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.11.0...v0.12.0)
