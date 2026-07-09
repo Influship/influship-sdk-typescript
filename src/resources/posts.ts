@@ -19,10 +19,14 @@ export class Posts extends APIResource {
    * **Sort options:**
    *
    * - `recent`: Most recent posts first (default)
-   * - `top_engagement`: Highest engagement rate first
+   * - `top_engagement`: Highest view-based engagement rate first, calculated as
+   *   (likes + comments) / views. Posts without measurable views sort last
    * - `most_likes`: Most likes first
    * - `most_views`: Most views first (video content)
    * - `most_comments`: Most comments first
+   *
+   * Pagination uses an opaque keyset cursor. Pass `next_cursor` back with the same
+   * `sort` value; cursors cannot be reused across sort orders.
    *
    * Also callable as the `get_posts` MCP tool — see
    * [the MCP server guide](/guides/mcp-server) for setup.
