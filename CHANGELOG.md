@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.2 (2026-07-11)
+
+Full Changelog: [v0.12.1...v0.12.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.1...v0.12.2)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([dbf05f9](https://github.com/Influship/influship-sdk-typescript/commit/dbf05f90bfd2f3180396825806ef728e8588c17b))
+
+
+### Documentation
+
+* **api:** clarify top_engagement sorting and pagination cursors in posts.list ([5dec922](https://github.com/Influship/influship-sdk-typescript/commit/5dec9222949c109eec866e72efad8dc9abb03efa))
+
 ## 0.12.1 (2026-06-17)
 
 Full Changelog: [v0.12.0...v0.12.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.0...v0.12.1)
