@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 (2026-07-18)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** add upstream_unavailable error value to RawScraperError ([ca69e3c](https://github.com/Influship/influship-sdk-typescript/commit/ca69e3c5395dfe1ff75c9ff1e15b41a21180def6))
+
 ## 0.14.0 (2026-07-18)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.13.0...v0.14.0)
