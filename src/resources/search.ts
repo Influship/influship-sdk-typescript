@@ -122,6 +122,13 @@ export namespace SearchCreateResponse {
     creator: Shared.CreatorBasic;
 
     /**
+     * True when the query required a country but this creator location is unverified;
+     * false when the known location satisfies it; null when the query set no geography
+     * requirement. Known mismatches are excluded from results.
+     */
+    location_unverified: boolean | null;
+
+    /**
      * Search match information
      */
     match: SearchAPI.MatchInfo;
@@ -143,6 +150,13 @@ export interface SearchRetrieveResponse {
    * Basic creator information
    */
   creator: Shared.CreatorBasic;
+
+  /**
+   * True when the query required a country but this creator location is unverified;
+   * false when the known location satisfies it; null when the query set no geography
+   * requirement. Known mismatches are excluded from results.
+   */
+  location_unverified: boolean | null;
 
   /**
    * Search match information
