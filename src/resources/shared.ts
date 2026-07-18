@@ -66,7 +66,15 @@ export interface ProfileSummary {
 }
 
 export interface RawScraperError {
-  error: 'not_found' | 'private' | 'rate_limited' | 'blocked' | 'invalid_input' | 'timeout' | 'unknown';
+  error:
+    | 'not_found'
+    | 'private'
+    | 'rate_limited'
+    | 'blocked'
+    | 'invalid_input'
+    | 'timeout'
+    | 'upstream_unavailable'
+    | 'unknown';
 
   message: string;
 
