@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0 (2026-07-18)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** add location_unverified field to search create/retrieve responses ([b623797](https://github.com/Influship/influship-sdk-typescript/commit/b623797c5f6caee93f91f4846d580fc9cd263451))
+
 ## 0.13.0 (2026-07-18)
 
 Full Changelog: [v0.12.2...v0.13.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.2...v0.13.0)
