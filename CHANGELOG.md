@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 (2026-07-18)
+
+Full Changelog: [v0.12.2...v0.13.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.2...v0.13.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([8f04af1](https://github.com/Influship/influship-sdk-typescript/commit/8f04af13cb23055475fcf17eb2e7b84a5e5ce5cd))
+
 ## 0.12.2 (2026-07-11)
 
 Full Changelog: [v0.12.1...v0.12.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.12.1...v0.12.2)
