@@ -41,8 +41,9 @@ export class Instagram extends APIResource {
    * Fetch fresh Instagram post-page data for a bounded list of shortcodes. This
    * returns one item per requested shortcode with per-item success or error details.
    *
-   * **Note:** Batch post lookup is capped at 20 shortcodes per request and is
-   * charged for every requested shortcode.
+   * **Note:** Batch post lookup is capped at 20 shortcodes per request. API-key and
+   * OAuth calls are charged only for successful items; x402 and MPP use the
+   * advertised request price.
    *
    * Returns fresh `video_url` and `video_versions[]` per post (signed IG CDN URLs,
    * ~24h validity). Batch up to 20 posts at 1 credit ($0.01) each.
@@ -73,9 +74,12 @@ export class Instagram extends APIResource {
    * **Note:** Live scraping is slower than cached data (2-5 seconds) and costs more.
    * Use cached endpoints when freshness isn't critical.
    *
-   * The `posts[]` array returns up to 12 recent posts with fresh `video_url` for
-   * each video post. This is the cheapest bulk-download path: 0.5 credits ($0.005)
-   * per profile call vs 1 credit per individual raw-post call.
+   * The profile response returns an empty `posts[]` array unless
+   * `include_posts=true`. When posts are included, `post_limit` accepts 1-50 and
+   * defaults to 12. The array contains the recent posts available in Instagram's
+   * source response, up to that limit. Video posts include a fresh `video_url`. This
+   * is the cheapest bulk-download path: 0.5 credits ($0.005) per profile call vs 1
+   * credit per individual raw-post call.
    *
    * **Pricing**: 0.5 credits per profile scraped ($0.005)
    *
@@ -120,8 +124,9 @@ export class Instagram extends APIResource {
    * item per requested shortcode with per-item success or error details. Successful
    * items include the raw post-page data used for transcription.
    *
-   * **Note:** Batch transcription is capped at 10 shortcodes per request and is
-   * charged for every requested shortcode.
+   * **Note:** Batch transcription is capped at 10 shortcodes per request. API-key
+   * and OAuth calls are charged only for successful items; x402 and MPP use the
+   * advertised request price.
    *
    * **Pricing**: 5 credits per transcript ($0.05)
    *
