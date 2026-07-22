@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.16.0 (2026-07-22)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** add evidence fields to creators match and search response types ([08d15be](https://github.com/Influship/influship-sdk-typescript/commit/08d15bedd5dd5fe88664e9bf3906191922715636))
+
+
+### Documentation
+
+* **api:** add upstream recovery note to instagram get_posts ([2b0a758](https://github.com/Influship/influship-sdk-typescript/commit/2b0a758dae561c5b0791dca814cb48653420b31b))
+* **api:** update charging policy and post_limit docs in raw.instagram methods ([20a07b0](https://github.com/Influship/influship-sdk-typescript/commit/20a07b019390064ed07f52e446925ec182a96360))
+
 ## 0.15.0 (2026-07-18)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.14.0...v0.15.0)
