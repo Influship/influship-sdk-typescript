@@ -376,9 +376,24 @@ export namespace CreatorMatchResponse {
     export namespace Match {
       export interface Reason {
         /**
+         * How grounded a match reason is, strongest first. `post_evidence`: backed by a
+         * specific post you can open (see `source_post_id` / `evidence_quote`).
+         * `profile_fact`: backed by a stored profile fact without a clickable source post
+         * — weaker than post-backed. `inferred`: model reasoning over the profile with no
+         * direct post evidence.
+         */
+        provenance: 'post_evidence' | 'profile_fact' | 'inferred';
+
+        /**
          * Human-readable reason for the match
          */
         text: string;
+
+        /**
+         * Verbatim sentence from the source post that best supports this reason. Present
+         * only for `post_evidence` reasons where a genuinely supporting sentence exists.
+         */
+        evidence_quote?: string;
 
         /**
          * ID of the supporting fact, if applicable
