@@ -80,7 +80,26 @@ export type SearchRetrieveResponsesQueryCursor = QueryCursor<SearchRetrieveRespo
  */
 export interface MatchInfo {
   /**
-   * Human-readable match reasons
+   * Rerank relevance as a 0-1 confidence. Mirrors `score`.
+   */
+  confidence: number;
+
+  /**
+   * Evidence-grounded version of `reasons`: each reason with a provenance label and,
+   * where the reason rests on a post, the backing `source_post_id` and a verbatim
+   * `evidence_quote`.
+   */
+  evidence: Array<MatchInfo.Evidence>;
+
+  /**
+   * True when `confidence` is at/below the low-confidence threshold. A non-breaking
+   * marker for the weak tail so you can separate "weaker matches" instead of
+   * treating every result as a strong match.
+   */
+  low_confidence: boolean;
+
+  /**
+   * Human-readable match reasons (plain text).
    */
   reasons: Array<string>;
 
@@ -88,6 +107,46 @@ export interface MatchInfo {
    * Match relevance score (0-1)
    */
   score: number;
+}
+
+export namespace MatchInfo {
+  /**
+   * A single evidence-grounded match reason.
+   */
+  export interface Evidence {
+    /**
+     * Verbatim sentence copied from the source post caption/transcript that best
+     * supports this reason. Present only for `post_evidence` reasons where a genuinely
+     * supporting sentence exists — omitted (null) rather than filled with unrelated
+     * post text. Never model-generated.
+     */
+    evidence_quote: string | null;
+
+    /**
+     * Stored profile fact backing this reason, or null.
+     */
+    fact_id: string | null;
+
+    /**
+     * How grounded a match reason is, strongest first. `post_evidence`: backed by a
+     * specific post you can open (see `source_post_id` / `evidence_quote`).
+     * `profile_fact`: backed by a stored profile fact without a clickable source post
+     * — weaker than post-backed. `inferred`: model reasoning over the profile with no
+     * direct post evidence.
+     */
+    provenance: 'post_evidence' | 'profile_fact' | 'inferred';
+
+    /**
+     * Post that evidences this reason (use with GET /v1/posts/{id}), or null for
+     * non-post-backed reasons.
+     */
+    source_post_id: string | null;
+
+    /**
+     * Human-readable reason this creator matched.
+     */
+    text: string;
+  }
 }
 
 export interface SearchCreateResponse {
