@@ -85,9 +85,9 @@ export interface MatchInfo {
   confidence: number;
 
   /**
-   * Evidence-grounded version of `reasons`: each reason with a provenance label and,
-   * where the reason rests on a post, the backing `source_post_id` and a verbatim
-   * `evidence_quote`.
+   * Evidence-grounded version of `reasons`, in the same order: each reason has a
+   * provenance label and, where it rests on a post, the backing `source_post_id` and
+   * a verbatim `evidence_quote`.
    */
   evidence: Array<MatchInfo.Evidence>;
 
