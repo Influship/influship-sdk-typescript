@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.1 (2026-07-23)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.16.0...v0.16.1)
+
+### Documentation
+
+* **api:** update evidence field description in search MatchInfo model ([843d926](https://github.com/Influship/influship-sdk-typescript/commit/843d926590a4f2b09a7b5ebda0bfb017a513d02d))
+
 ## 0.16.0 (2026-07-22)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.15.0...v0.16.0)
