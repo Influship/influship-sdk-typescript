@@ -189,6 +189,16 @@ export namespace CreatorRetrieveResponse {
     ai_summary: string | null;
 
     /**
+     * Number of stored creator facts available to the last synthesis run
+     */
+    analysis_fact_count: number | null;
+
+    /**
+     * When the synthesized creator analysis was last generated
+     */
+    analysis_updated_at: string | null;
+
+    /**
      * Synthesized audience demographic summary
      */
     audience_demographics: string | null;
