@@ -130,6 +130,36 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/v1/raw/youtube/search',
   },
+  {
+    clientCallName: 'client.raw.tiktok.getProfile',
+    fullyQualifiedName: 'raw.tiktok.getProfile',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/profile/{username}',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.getVideo',
+    fullyQualifiedName: 'raw.tiktok.getVideo',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/video',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.getVideoTranscript',
+    fullyQualifiedName: 'raw.tiktok.getVideoTranscript',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/video/transcript',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.listProfileVideos',
+    fullyQualifiedName: 'raw.tiktok.listProfileVideos',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/profile/{username}/videos',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.listVideoComments',
+    fullyQualifiedName: 'raw.tiktok.listVideoComments',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/video/comments',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

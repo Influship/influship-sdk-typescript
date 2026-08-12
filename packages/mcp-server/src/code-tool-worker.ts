@@ -128,6 +128,11 @@ const fuse = new Fuse(
     'client.raw.youtube.getChannelTranscripts',
     'client.raw.youtube.getTranscript',
     'client.raw.youtube.search',
+    'client.raw.tiktok.getProfile',
+    'client.raw.tiktok.getVideo',
+    'client.raw.tiktok.getVideoTranscript',
+    'client.raw.tiktok.listProfileVideos',
+    'client.raw.tiktok.listVideoComments',
   ],
   { threshold: 1, shouldSort: true },
 );

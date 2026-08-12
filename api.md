@@ -119,3 +119,24 @@ Methods:
 - <code title="get /v1/raw/youtube/channel-transcripts/{handle}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getChannelTranscripts</a>(handle, { ...params }) -> YoutubeGetChannelTranscriptsResponse</code>
 - <code title="get /v1/raw/youtube/transcript/{video_id}">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">getTranscript</a>(videoID, { ...params }) -> YoutubeGetTranscriptResponse</code>
 - <code title="get /v1/raw/youtube/search">client.raw.youtube.<a href="./src/resources/raw/youtube.ts">search</a>({ ...params }) -> YoutubeSearchResponse</code>
+
+## Tiktok
+
+Types:
+
+- <code><a href="./src/resources/raw/tiktok.ts">Profile</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">Transcript</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">Video</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetProfileResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokListProfileVideosResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokListVideoCommentsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/raw/tiktok/profile/{username}">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getProfile</a>(username) -> TiktokGetProfileResponse</code>
+- <code title="get /v1/raw/tiktok/video">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideo</a>({ ...params }) -> TiktokGetVideoResponse</code>
+- <code title="get /v1/raw/tiktok/video/transcript">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideoTranscript</a>({ ...params }) -> TiktokGetVideoTranscriptResponse</code>
+- <code title="get /v1/raw/tiktok/profile/{username}/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listProfileVideos</a>(username, { ...params }) -> TiktokListProfileVideosResponse</code>
+- <code title="get /v1/raw/tiktok/video/comments">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listVideoComments</a>({ ...params }) -> TiktokListVideoCommentsResponse</code>
