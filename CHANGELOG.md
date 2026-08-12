@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 (2026-08-12)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** add tiktok resource with profile/video/transcript/comments endpoints ([861929f](https://github.com/Influship/influship-sdk-typescript/commit/861929f481f6b3c2c6509b183aefecce41acfcb8))
+
 ## 0.17.0 (2026-08-12)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.16.0...v0.17.0)
