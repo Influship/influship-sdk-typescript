@@ -176,7 +176,7 @@ export class Influship {
    *
    * @param {string | undefined} [opts.apiKey=process.env['INFLUSHIP_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['INFLUSHIP_BASE_URL'] ?? https://api.influship.com] - Override the default base URL for the API.
-   * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
+   * @param {number} [opts.timeout=3.5 minutes] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
    * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
@@ -201,7 +201,7 @@ export class Influship {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Influship.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Influship.DEFAULT_TIMEOUT /* 3.5 minutes */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -788,7 +788,7 @@ export class Influship {
   }
 
   static Influship = this;
-  static DEFAULT_TIMEOUT = 60000; // 1 minute
+  static DEFAULT_TIMEOUT = 210000; // 3.5 minutes
 
   static InflushipError = Errors.InflushipError;
   static APIError = Errors.APIError;

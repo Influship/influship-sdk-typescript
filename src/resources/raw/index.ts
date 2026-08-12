@@ -16,6 +16,21 @@ export {
 } from './instagram';
 export { Raw } from './raw';
 export {
+  Tiktok,
+  type Profile,
+  type Transcript,
+  type Video,
+  type TiktokGetProfileResponse,
+  type TiktokGetVideoResponse,
+  type TiktokGetVideoTranscriptResponse,
+  type TiktokListProfileVideosResponse,
+  type TiktokListVideoCommentsResponse,
+  type TiktokGetVideoParams,
+  type TiktokGetVideoTranscriptParams,
+  type TiktokListProfileVideosParams,
+  type TiktokListVideoCommentsParams,
+} from './tiktok';
+export {
   Youtube,
   type TranscriptSegment,
   type YoutubeGetChannelResponse,
