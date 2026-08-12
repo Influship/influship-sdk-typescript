@@ -35,6 +35,11 @@ export interface ProfileSummary {
   id: string;
 
   /**
+   * When the stored public profile data was last refreshed
+   */
+  data_updated_at: string | null;
+
+  /**
    * Engagement rate as a percentage, null if unknown (e.g. 3.5 means 3.5%)
    */
   engagement_rate: number | null;
