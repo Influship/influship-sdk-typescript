@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.17.0 (2026-08-12)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** add analysis_fact_count/analysis_updated_at to creators, data_updated_at to profiles ([14ec7b2](https://github.com/Influship/influship-sdk-typescript/commit/14ec7b2f08b64fb112671f3e297f3b5df1b2e078))
+
+
+### Documentation
+
+* **api:** update evidence field description in search MatchInfo model ([843d926](https://github.com/Influship/influship-sdk-typescript/commit/843d926590a4f2b09a7b5ebda0bfb017a513d02d))
+
 ## 0.16.0 (2026-07-22)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.15.0...v0.16.0)
