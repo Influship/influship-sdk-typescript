@@ -16,6 +16,22 @@ import {
   InstagramSinglePostResponse,
   InstagramTranscriptResponse,
 } from './instagram';
+import * as TiktokAPI from './tiktok';
+import {
+  Profile,
+  Tiktok,
+  TiktokGetProfileResponse,
+  TiktokGetVideoParams,
+  TiktokGetVideoResponse,
+  TiktokGetVideoTranscriptParams,
+  TiktokGetVideoTranscriptResponse,
+  TiktokListProfileVideosParams,
+  TiktokListProfileVideosResponse,
+  TiktokListVideoCommentsParams,
+  TiktokListVideoCommentsResponse,
+  Transcript,
+  Video,
+} from './tiktok';
 import * as YoutubeAPI from './youtube';
 import {
   TranscriptSegment,
@@ -33,10 +49,12 @@ import {
 export class Raw extends APIResource {
   instagram: InstagramAPI.Instagram = new InstagramAPI.Instagram(this._client);
   youtube: YoutubeAPI.Youtube = new YoutubeAPI.Youtube(this._client);
+  tiktok: TiktokAPI.Tiktok = new TiktokAPI.Tiktok(this._client);
 }
 
 Raw.Instagram = Instagram;
 Raw.Youtube = Youtube;
+Raw.Tiktok = Tiktok;
 
 export declare namespace Raw {
   export {
@@ -65,5 +83,21 @@ export declare namespace Raw {
     type YoutubeGetChannelTranscriptsParams as YoutubeGetChannelTranscriptsParams,
     type YoutubeGetTranscriptParams as YoutubeGetTranscriptParams,
     type YoutubeSearchParams as YoutubeSearchParams,
+  };
+
+  export {
+    Tiktok as Tiktok,
+    type Profile as Profile,
+    type Transcript as Transcript,
+    type Video as Video,
+    type TiktokGetProfileResponse as TiktokGetProfileResponse,
+    type TiktokGetVideoResponse as TiktokGetVideoResponse,
+    type TiktokGetVideoTranscriptResponse as TiktokGetVideoTranscriptResponse,
+    type TiktokListProfileVideosResponse as TiktokListProfileVideosResponse,
+    type TiktokListVideoCommentsResponse as TiktokListVideoCommentsResponse,
+    type TiktokGetVideoParams as TiktokGetVideoParams,
+    type TiktokGetVideoTranscriptParams as TiktokGetVideoTranscriptParams,
+    type TiktokListProfileVideosParams as TiktokListProfileVideosParams,
+    type TiktokListVideoCommentsParams as TiktokListVideoCommentsParams,
   };
 }
