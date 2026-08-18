@@ -38,7 +38,7 @@ describe('resource tiktok', () => {
   test.skip('getVideo: required and optional params', async () => {
     const response = await client.raw.tiktok.getVideo({
       url: 'https://www.tiktok.com/@creator/video/7517114944362499342',
-      region: 'GB',
+      region: 'US',
     });
   });
 
@@ -83,7 +83,7 @@ describe('resource tiktok', () => {
         'creator',
         {
           cursor: 'x',
-          region: 'GB',
+          region: 'US',
           sort_by: 'latest',
         },
         { path: '/_stainless_unknown_path' },
