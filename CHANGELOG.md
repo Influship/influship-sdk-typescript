@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.19.0 (2026-08-20)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** add upstream_contract_broken error type to RawScraperError ([d2dbc89](https://github.com/Influship/influship-sdk-typescript/commit/d2dbc8903c7b65b7690d3d77206c54bdee1f8ca0))
+
+
+### Bug Fixes
+
+* make targeted npm republishing reliable ([#38](https://github.com/Influship/influship-sdk-typescript/issues/38)) ([c38a20f](https://github.com/Influship/influship-sdk-typescript/commit/c38a20f7f0f7de5cae11ef3ce3ce5068c9ead7b4))
+
+
+### Chores
+
+* **tests:** update region parameter in tiktok test fixtures ([ac8338c](https://github.com/Influship/influship-sdk-typescript/commit/ac8338c5dd3b48f7e87be33c657308976354b8fa))
+
 ## 0.18.0 (2026-08-12)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.17.0...v0.18.0)
