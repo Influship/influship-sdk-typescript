@@ -79,6 +79,7 @@ export interface RawScraperError {
     | 'invalid_input'
     | 'timeout'
     | 'upstream_unavailable'
+    | 'upstream_contract_broken'
     | 'unknown';
 
   message: string;
