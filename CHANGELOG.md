@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0 (2026-08-22)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** add content_type, sort_by, upload_date params to youtube.search ([1dd2afe](https://github.com/Influship/influship-sdk-typescript/commit/1dd2afea4a118215dddd5b20e288906bfe1b961b))
+
 ## 0.19.0 (2026-08-20)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.18.0...v0.19.0)
