@@ -86,6 +86,18 @@ describe('resource youtube', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getVideo', async () => {
+    const responsePromise = client.raw.youtube.getVideo('dQw4w9WgXcQ');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('search: only required params', async () => {
     const responsePromise = client.raw.youtube.search({ q: 'fitness workout' });
     const rawResponse = await responsePromise.asResponse();
@@ -101,9 +113,35 @@ describe('resource youtube', () => {
   test.skip('search: required and optional params', async () => {
     const response = await client.raw.youtube.search({
       q: 'fitness workout',
+      content_type: 'videos',
       country_code: 'US',
+      cursor: 'x',
+      duration: 'long',
       language_code: 'en',
       limit: 20,
+      sort_by: 'popular',
+      upload_date: 'this_week',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('typeahead: only required params', async () => {
+    const responsePromise = client.raw.youtube.typeahead({ q: 'x' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('typeahead: required and optional params', async () => {
+    const response = await client.raw.youtube.typeahead({
+      q: 'x',
+      country_code: 'xx',
+      language_code: 'xx',
     });
   });
 });

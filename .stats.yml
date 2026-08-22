@@ -1,4 +1,4 @@
-configured_endpoints: 25
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/inf-labs/influship-api-09613a3e9c7b65f959423f16a73674a61a3f8b1ab462aef136f206422019f4f9.yml
-openapi_spec_hash: d1ba1f3741774cc8b90a0f83f7b9c729
-config_hash: 6741b852cffdee43525d12bf4bc5b60d
+configured_endpoints: 27
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/inf-labs/influship-api-cbe99ad981761276f7d3d89f24b420f269a37d4abc8195e51d7870a4cceae82f.yml
+openapi_spec_hash: 64c2915838bf69bcbfd26e0b994d2705
+config_hash: e6b100df61f9bb83368a29c749288c39
