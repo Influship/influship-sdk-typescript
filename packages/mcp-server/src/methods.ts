@@ -125,10 +125,22 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/raw/youtube/transcript/{video_id}',
   },
   {
+    clientCallName: 'client.raw.youtube.getVideo',
+    fullyQualifiedName: 'raw.youtube.getVideo',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/video/{video_id}',
+  },
+  {
     clientCallName: 'client.raw.youtube.search',
     fullyQualifiedName: 'raw.youtube.search',
     httpMethod: 'get',
     httpPath: '/v1/raw/youtube/search',
+  },
+  {
+    clientCallName: 'client.raw.youtube.typeahead',
+    fullyQualifiedName: 'raw.youtube.typeahead',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/youtube/typeahead',
   },
   {
     clientCallName: 'client.raw.tiktok.getProfile',

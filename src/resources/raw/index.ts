@@ -36,9 +36,12 @@ export {
   type YoutubeGetChannelResponse,
   type YoutubeGetChannelTranscriptsResponse,
   type YoutubeGetTranscriptResponse,
+  type YoutubeGetVideoResponse,
   type YoutubeSearchResponse,
+  type YoutubeTypeaheadResponse,
   type YoutubeGetChannelParams,
   type YoutubeGetChannelTranscriptsParams,
   type YoutubeGetTranscriptParams,
   type YoutubeSearchParams,
+  type YoutubeTypeaheadParams,
 } from './youtube';

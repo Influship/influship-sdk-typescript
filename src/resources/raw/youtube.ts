@@ -88,9 +88,29 @@ export class Youtube extends APIResource {
   }
 
   /**
+   * Fetch fresh video metadata including description, exact publish timestamp when
+   * available, views, likes, comments, tags, categories, and channel identity.
+   *
+   * **Pricing**: 0.5 credits per video fetched ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response = await client.raw.youtube.getVideo(
+   *   'dQw4w9WgXcQ',
+   * );
+   * ```
+   */
+  getVideo(videoID: string, options?: RequestOptions): APIPromise<YoutubeGetVideoResponse> {
+    return this._client.get(path`/v1/raw/youtube/video/${videoID}`, options);
+  }
+
+  /**
    * Search YouTube videos and channels.
    *
-   * **Pricing**: 0.5 credits per result returned ($0.005)
+   * Each request fetches one page. Pass `next_cursor` back as `cursor` to fetch and
+   * bill the next page.
+   *
+   * **Pricing**: 0.5 credits per fetched page ($0.005)
    *
    * @example
    * ```ts
@@ -101,6 +121,22 @@ export class Youtube extends APIResource {
    */
   search(query: YoutubeSearchParams, options?: RequestOptions): APIPromise<YoutubeSearchResponse> {
     return this._client.get('/v1/raw/youtube/search', { query, ...options });
+  }
+
+  /**
+   * Get localized YouTube search suggestions for a partial query.
+   *
+   * **Pricing**: 0.5 credits per request ($0.005)
+   *
+   * @example
+   * ```ts
+   * const response = await client.raw.youtube.typeahead({
+   *   q: 'x',
+   * });
+   * ```
+   */
+  typeahead(query: YoutubeTypeaheadParams, options?: RequestOptions): APIPromise<YoutubeTypeaheadResponse> {
+    return this._client.get('/v1/raw/youtube/typeahead', { query, ...options });
   }
 }
 
@@ -432,6 +468,58 @@ export namespace YoutubeGetTranscriptResponse {
   }
 }
 
+export interface YoutubeGetVideoResponse {
+  data: YoutubeGetVideoResponse.Data;
+}
+
+export namespace YoutubeGetVideoResponse {
+  export interface Data {
+    availability: string | null;
+
+    categories: Array<string>;
+
+    channel_handle: string | null;
+
+    channel_id: string | null;
+
+    channel_name: string | null;
+
+    comment_count: number | null;
+
+    description: string;
+
+    duration_seconds: number | null;
+
+    like_count: number | null;
+
+    live_status: string | null;
+
+    /**
+     * Exact publish timestamp when supplied by YouTube, otherwise null
+     */
+    published_at: string | null;
+
+    /**
+     * Publish date in YYYY-MM-DD format when available
+     */
+    published_date: string | null;
+
+    scraped_at: string;
+
+    tags: Array<string>;
+
+    thumbnail_url: string | null;
+
+    title: string;
+
+    url: string;
+
+    video_id: string;
+
+    view_count: number | null;
+  }
+}
+
 export interface YoutubeSearchResponse {
   data: YoutubeSearchResponse.Data;
 }
@@ -442,6 +530,11 @@ export namespace YoutubeSearchResponse {
      * Estimated total results count
      */
     estimated_results: number | null;
+
+    /**
+     * Opaque cursor for the next page, or null when no next page is available
+     */
+    next_cursor: string | null;
 
     /**
      * The search query
@@ -590,6 +683,20 @@ export namespace YoutubeSearchResponse {
   }
 }
 
+export interface YoutubeTypeaheadResponse {
+  data: YoutubeTypeaheadResponse.Data;
+}
+
+export namespace YoutubeTypeaheadResponse {
+  export interface Data {
+    query: string;
+
+    scraped_at: string;
+
+    suggestions: Array<string>;
+  }
+}
+
 export interface YoutubeGetChannelParams {
   /**
    * Include recent videos in response
@@ -638,9 +745,24 @@ export interface YoutubeSearchParams {
   q: string;
 
   /**
+   * Return all result types or only videos
+   */
+  content_type?: 'all' | 'videos';
+
+  /**
    * Country code for localized results (ISO 3166-1 alpha-2)
    */
   country_code?: string;
+
+  /**
+   * Opaque cursor from next_cursor to fetch the next result page
+   */
+  cursor?: string;
+
+  /**
+   * Filter videos by YouTube duration band
+   */
+  duration?: 'any' | 'short' | 'medium' | 'long';
 
   /**
    * Language code for results
@@ -651,6 +773,27 @@ export interface YoutubeSearchParams {
    * Maximum number of results to return
    */
   limit?: number;
+
+  /**
+   * Order results by relevance or view popularity
+   */
+  sort_by?: 'relevance' | 'popular';
+
+  /**
+   * Only return results uploaded within the selected window
+   */
+  upload_date?: 'any' | 'last_hour' | 'today' | 'this_week' | 'this_month' | 'this_year';
+}
+
+export interface YoutubeTypeaheadParams {
+  /**
+   * Partial search query
+   */
+  q: string;
+
+  country_code?: string;
+
+  language_code?: string;
 }
 
 export declare namespace Youtube {
@@ -659,10 +802,13 @@ export declare namespace Youtube {
     type YoutubeGetChannelResponse as YoutubeGetChannelResponse,
     type YoutubeGetChannelTranscriptsResponse as YoutubeGetChannelTranscriptsResponse,
     type YoutubeGetTranscriptResponse as YoutubeGetTranscriptResponse,
+    type YoutubeGetVideoResponse as YoutubeGetVideoResponse,
     type YoutubeSearchResponse as YoutubeSearchResponse,
+    type YoutubeTypeaheadResponse as YoutubeTypeaheadResponse,
     type YoutubeGetChannelParams as YoutubeGetChannelParams,
     type YoutubeGetChannelTranscriptsParams as YoutubeGetChannelTranscriptsParams,
     type YoutubeGetTranscriptParams as YoutubeGetTranscriptParams,
     type YoutubeSearchParams as YoutubeSearchParams,
+    type YoutubeTypeaheadParams as YoutubeTypeaheadParams,
   };
 }

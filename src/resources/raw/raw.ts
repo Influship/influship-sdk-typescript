@@ -42,8 +42,11 @@ import {
   YoutubeGetChannelTranscriptsResponse,
   YoutubeGetTranscriptParams,
   YoutubeGetTranscriptResponse,
+  YoutubeGetVideoResponse,
   YoutubeSearchParams,
   YoutubeSearchResponse,
+  YoutubeTypeaheadParams,
+  YoutubeTypeaheadResponse,
 } from './youtube';
 
 export class Raw extends APIResource {
@@ -78,11 +81,14 @@ export declare namespace Raw {
     type YoutubeGetChannelResponse as YoutubeGetChannelResponse,
     type YoutubeGetChannelTranscriptsResponse as YoutubeGetChannelTranscriptsResponse,
     type YoutubeGetTranscriptResponse as YoutubeGetTranscriptResponse,
+    type YoutubeGetVideoResponse as YoutubeGetVideoResponse,
     type YoutubeSearchResponse as YoutubeSearchResponse,
+    type YoutubeTypeaheadResponse as YoutubeTypeaheadResponse,
     type YoutubeGetChannelParams as YoutubeGetChannelParams,
     type YoutubeGetChannelTranscriptsParams as YoutubeGetChannelTranscriptsParams,
     type YoutubeGetTranscriptParams as YoutubeGetTranscriptParams,
     type YoutubeSearchParams as YoutubeSearchParams,
+    type YoutubeTypeaheadParams as YoutubeTypeaheadParams,
   };
 
   export {
