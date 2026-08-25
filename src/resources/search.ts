@@ -107,6 +107,14 @@ export interface MatchInfo {
    * Match relevance score (0-1)
    */
   score: number;
+
+  /**
+   * Whether this individual result was covered by AI reranking or conservatively
+   * reconciled from retrieval. Treat absence as reranked for responses from older
+   * servers during rolling deployment. Do not present `score` as an AI fit score for
+   * retrieval_fallback results.
+   */
+  ranking_source?: 'reranked' | 'retrieval_fallback';
 }
 
 export namespace MatchInfo {
@@ -171,6 +179,17 @@ export interface SearchCreateResponse {
    * Total number of results across all pages
    */
   total: number;
+
+  /**
+   * Whether results were fully AI-reranked, partially reranked, or returned from
+   * retrieval fallback. Treat absence as reranked for responses from older servers
+   * during rolling deployment. Inspect each match.ranking_source before presenting
+   * its score as an AI fit score.
+   */
+  quality?:
+    | SearchCreateResponse.UnionMember0
+    | SearchCreateResponse.UnionMember1
+    | SearchCreateResponse.UnionMember2;
 }
 
 export namespace SearchCreateResponse {
@@ -201,6 +220,34 @@ export namespace SearchCreateResponse {
      * Abbreviated profile information
      */
     relevant_profile: Shared.ProfileSummary | null;
+  }
+
+  export interface UnionMember0 {
+    mode: 'reranked';
+
+    reason: null;
+  }
+
+  export interface UnionMember1 {
+    mode: 'partially_reranked';
+
+    reason:
+      | 'content_policy'
+      | 'incomplete_rerank_output'
+      | 'partial_batch_failure'
+      | 'provider_error'
+      | 'soft_timeout';
+  }
+
+  export interface UnionMember2 {
+    mode: 'retrieval_fallback';
+
+    reason:
+      | 'content_policy'
+      | 'incomplete_rerank_output'
+      | 'partial_batch_failure'
+      | 'provider_error'
+      | 'soft_timeout';
   }
 }
 
