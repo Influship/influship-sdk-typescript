@@ -334,9 +334,9 @@ export interface TiktokGetVideoParams {
   url: string;
 
   /**
-   * Two-letter region code
+   * TikTok resolution region (US only)
    */
-  region?: string;
+  region?: 'US';
 }
 
 export interface TiktokGetVideoTranscriptParams {
@@ -353,9 +353,9 @@ export interface TiktokListProfileVideosParams {
   cursor?: string;
 
   /**
-   * Two-letter region code
+   * TikTok resolution region (US only)
    */
-  region?: string;
+  region?: 'US';
 
   /**
    * Video ordering
