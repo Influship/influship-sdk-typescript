@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.1 (2026-08-28)
+
+Full Changelog: [v0.20.0...v0.20.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.0...v0.20.1)
+
+### Bug Fixes
+
+* **types:** restrict region parameter to 'US' in tiktok methods ([c52c389](https://github.com/Influship/influship-sdk-typescript/commit/c52c389b87f7d3207a4ff85938a0c9ba5f29aa4b))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([c25f0db](https://github.com/Influship/influship-sdk-typescript/commit/c25f0db3701b638f42e18df3d1bb0a8e517c04a7))
+
 ## 0.20.0 (2026-08-22)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.19.0...v0.20.0)
