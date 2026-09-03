@@ -95,6 +95,10 @@ export class Creators extends APIResource {
    * 2. Optionally weight seeds to prioritize certain creators
    * 3. Get ranked results with similarity scores and shared traits
    *
+   * If none of the supplied seeds is available for similarity matching, the endpoint
+   * returns `404 seed_not_found`. Choose another seed instead of retrying the same
+   * request.
+   *
    * Also callable as the `find_lookalike_creators` MCP tool — see
    * [the MCP server guide](/guides/mcp-server) for setup.
    *
