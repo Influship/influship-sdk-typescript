@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.20.2 (2026-09-05)
+
+Full Changelog: [v0.20.1...v0.20.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.1...v0.20.2)
+
+### Documentation
+
+* **api:** clarify 404 error handling in creators lookalike method ([f2f1129](https://github.com/Influship/influship-sdk-typescript/commit/f2f1129744765b75f6507aa4b8f03bf193b9bd5b))
+* **mcp:** document code execution modes and the local code runner ([3db5185](https://github.com/Influship/influship-sdk-typescript/commit/3db51858e4c0b8102b5a855d508cd00a7970816e))
+
 ## 0.20.1 (2026-08-28)
 
 Full Changelog: [v0.20.0...v0.20.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.0...v0.20.1)
