@@ -4,6 +4,7 @@ import MiniSearch from 'minisearch';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { getLogger } from './logger';
+import { correctInstagramProfileDocs } from './instagram-profile-docs';
 
 type PerLanguageData = {
   method?: string;
@@ -1071,7 +1072,7 @@ export class LocalDocsSearch {
 
   static async create(opts?: { docsDir?: string }): Promise<LocalDocsSearch> {
     const instance = new LocalDocsSearch();
-    instance.indexMethods(EMBEDDED_METHODS);
+    instance.indexMethods(EMBEDDED_METHODS.map(correctInstagramProfileDocs));
     for (const readme of EMBEDDED_READMES) {
       instance.indexProse(readme.content, `readme:${readme.language}`);
     }
