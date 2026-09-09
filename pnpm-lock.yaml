@@ -106,9 +106,6 @@ importers:
       influship:
         specifier: workspace:*
         version: link:../..
-      jq-web:
-        specifier: https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz
-        version: https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz
       minisearch:
         specifier: ^7.2.0
         version: 7.2.0
@@ -3091,14 +3088,6 @@ packages:
         integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==,
       }
     engines: { node: '>=10' }
-
-  jq-web@https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz:
-    resolution:
-      {
-        integrity: sha512-6nmDSHGJm8Cclf2oSuO9xQ7vt5x5bDiuTKX2rkyW1K7Uo2SHeI4ZvpgMITKy+8p3bbEnKovTPGoHhApa6v/PbA==,
-        tarball: https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz,
-      }
-    version: 0.8.8
 
   js-tokens@4.0.0:
     resolution:
@@ -6912,8 +6901,6 @@ snapshots:
   jose@6.2.12: {}
 
   joycon@3.1.1: {}
-
-  jq-web@https://github.com/stainless-api/jq-web/releases/download/v0.8.8/jq-web.tar.gz: {}
 
   js-tokens@4.0.0: {}
 

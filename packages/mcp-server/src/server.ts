@@ -25,16 +25,19 @@ export const newMcpServer = async ({
   stainlessApiKey?: string | undefined;
   customInstructionsPath?: string | undefined;
 }) =>
+  // Keep release annotations off the generated version line to avoid merge conflicts.
+  // x-release-please-start-version
   new McpServer(
     {
       name: 'influship_api',
-      version: '0.21.0', // x-release-please-version
+      version: '0.21.0',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
       capabilities: { tools: {}, logging: {} },
     },
   );
+// x-release-please-end
 
 /**
  * Initializes the provided MCP Server with the given tools and handlers.
