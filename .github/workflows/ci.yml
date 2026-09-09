@@ -15,6 +15,23 @@ on:
       - 'stl-preview-base/**'
 
 jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+        with:
+          version: '10.30.1'
+      - run: ./scripts/bootstrap
+      - run: pnpm build
+      - run: pnpm test --runInBand
+      - run: pnpm --filter influship-api-mcp test --runInBand
   lint:
     timeout-minutes: 10
     name: lint

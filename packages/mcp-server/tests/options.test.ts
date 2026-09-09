@@ -16,6 +16,8 @@ describe('parseCLIOptions', () => {
     const result = parseCLIOptions();
 
     expect(result.transport).toBe('stdio');
+    expect(result.codeExecutionMode).toBe('local');
+    expect(result.docsSearchMode).toBe('local');
 
     cleanup();
   });

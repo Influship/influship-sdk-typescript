@@ -14,6 +14,7 @@ on:
 
 jobs:
   publish:
+    if: github.repository == 'Influship/influship-sdk-typescript'
     name: publish
     runs-on: ubuntu-latest
     permissions:
@@ -33,22 +34,29 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
 
       - name: Publish to NPM
         run: |
-          if [ -n "$INPUT_PATH" ]; then
-            PATHS_RELEASED="[\"$INPUT_PATH\"]"
-          else
-            PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
-          fi
-          pnpm tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+          case "$INPUT_PATH" in ''|.|packages/mcp-server) ;; *) echo 'Invalid package path' >&2; exit 1 ;; esac
+          DATA=$(jq -cn --arg path "$INPUT_PATH" '{paths_released: (if $path == "" then [".", "packages/mcp-server"] else [$path] end | tojson)}')
+          export DATA
+          pnpm tsn scripts/publish-packages.ts
         env:
           INPUT_PATH: ${{ github.event.inputs.path }}
 
       - name: Upload MCP Server DXT GitHub release asset
         run: |
-          gh release upload ${{ github.event.release.tag_name }} \
-            packages/mcp-server/influship_api.mcpb
+          if [ -n "$INPUT_PATH" ] && [ "$INPUT_PATH" != "packages/mcp-server" ]; then
+            exit 0
+          fi
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          if [ -z "$RELEASE_TAG" ]; then
+            RELEASE_TAG="$(gh release view --json tagName --jq .tagName)"
+          fi
+          gh release upload "$RELEASE_TAG" \
+            packages/mcp-server/influship_api.mcpb \
+            --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_PATH: ${{ github.event.inputs.path }}
