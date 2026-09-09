@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.21.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.2...v0.21.0) (2026-09-09)
+
+
+### Features
+
+* **sdk:** migrate TypeScript and MCP to self-hosted generation ([c5f51f0](https://github.com/Influship/influship-sdk-typescript/commit/c5f51f0ff1cd39e765ba02dc0012040fd9deb93b))
+
+
+### Bug Fixes
+
+* **mcp:** refresh vulnerable runtime dependencies and audit releases ([#2](https://github.com/Influship/influship-sdk-typescript/issues/2)) ([11fff9f](https://github.com/Influship/influship-sdk-typescript/commit/11fff9f7acf09cf7edb36357e2debf612833b892))
+
+
+### Chores
+
+* preserve production 0.20.2 release in self-hosted migration ([3684ed2](https://github.com/Influship/influship-sdk-typescript/commit/3684ed25fda464c2b82d9c58ba7dc5c1b5b63a56))
+
 ## 0.20.2 (2026-09-08)
 
 Full Changelog: [v0.20.1...v0.20.2](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.1...v0.20.2)
