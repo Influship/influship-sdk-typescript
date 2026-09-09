@@ -503,17 +503,15 @@ export namespace InstagramGetProfileResponse {
 
     full_name: string;
 
-    highlight_reel_count: number;
-
-    is_business: boolean;
-
     is_private: boolean;
-
-    is_professional: boolean;
 
     is_verified: boolean;
 
-    media_count: number;
+    /**
+     * Total profile media count, or null when unavailable. Zero means an observed
+     * empty profile; this is not the number of posts returned.
+     */
+    media_count: number | null;
 
     posts: Array<Data.Post>;
 
