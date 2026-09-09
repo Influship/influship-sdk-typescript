@@ -67,11 +67,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.health.check();\n\nconsole.log(response.ok);",
       },
-      python: {
-        method: 'health.check',
-        example:
-          'from influship import Influship\n\nclient = Influship()\nresponse = client.health.check()\nprint(response.ok)',
-      },
       http: {
         example: 'curl https://api.influship.com/health \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
@@ -96,11 +91,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.creators.retrieve',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst creator = await client.creators.retrieve('123e4567-e89b-12d3-a456-426614174000');\n\nconsole.log(creator.data);",
-      },
-      python: {
-        method: 'creators.retrieve',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\ncreator = client.creators.retrieve(\n    id="123e4567-e89b-12d3-a456-426614174000",\n)\nprint(creator.data)',
       },
       http: {
         example: 'curl https://api.influship.com/v1/creators/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -132,11 +122,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.autocomplete({ q: 'fitness' });\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'creators.autocomplete',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creators.autocomplete(\n    q="fitness",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/creators/autocomplete \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -149,7 +134,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Find Similar Creators',
     description:
-      'Find creators similar to provided seed creators using AI-powered similarity matching. Analyzes content themes, audience overlap, posting style, and engagement patterns.\n\n**Use cases:**\n- Expand campaigns with creators similar to proven performers\n- Find alternatives when preferred creators are unavailable\n- Discover emerging creators in the same niche\n\n**How it works:**\n1. Provide 1-10 seed creators (by ID or platform/username)\n2. Optionally weight seeds to prioritize certain creators\n3. Get ranked results with similarity scores and shared traits\n\nAlso callable as the `find_lookalike_creators` MCP tool — see [the MCP server guide](/guides/mcp-server) for setup.\n\n**Pricing**: 1.5 credits per creator returned ($0.015)',
+      'Find creators similar to provided seed creators using AI-powered similarity matching. Analyzes content themes, audience overlap, posting style, and engagement patterns.\n\n**Use cases:**\n- Expand campaigns with creators similar to proven performers\n- Find alternatives when preferred creators are unavailable\n- Discover emerging creators in the same niche\n\n**How it works:**\n1. Provide 1-10 seed creators (by ID or platform/username)\n2. Optionally weight seeds to prioritize certain creators\n3. Get ranked results with similarity scores and shared traits\n\nIf none of the supplied seeds is available for similarity matching, the endpoint returns `404 seed_not_found`. Choose another seed instead of retrying the same request.\n\nAlso callable as the `find_lookalike_creators` MCP tool — see [the MCP server guide](/guides/mcp-server) for setup.\n\n**Pricing**: 1.5 credits per creator returned ($0.015)',
     stainlessPath: '(resource) creators > (method) lookalike',
     qualified: 'client.creators.lookalike',
     params: [
@@ -161,17 +146,12 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ creator: { id: string; avatar_url: string; bio: string; name: string; }; primary_profile: { id: string; data_updated_at: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; similarity: { score: number; shared_traits: string[]; }; }",
     markdown:
-      "## lookalike\n\n`client.creators.lookalike(seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[], cursor?: string, filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }, limit?: number): { creator: creator_basic; primary_profile: profile_summary; similarity: object; }`\n\n**post** `/v1/creators/lookalike`\n\nFind creators similar to provided seed creators using AI-powered similarity matching. Analyzes content themes, audience overlap, posting style, and engagement patterns.\n\n**Use cases:**\n- Expand campaigns with creators similar to proven performers\n- Find alternatives when preferred creators are unavailable\n- Discover emerging creators in the same niche\n\n**How it works:**\n1. Provide 1-10 seed creators (by ID or platform/username)\n2. Optionally weight seeds to prioritize certain creators\n3. Get ranked results with similarity scores and shared traits\n\nAlso callable as the `find_lookalike_creators` MCP tool — see [the MCP server guide](/guides/mcp-server) for setup.\n\n**Pricing**: 1.5 credits per creator returned ($0.015)\n\n### Parameters\n\n- `seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[]`\n  Seed creators to find similar creators for\n\n- `cursor?: string`\n  Pagination cursor for next page\n\n- `filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }`\n  Additional filters\n  - `engagement_rate?: { max?: number; min?: number; }`\n    Filter by engagement rate\n  - `followers?: { max?: number; min?: number; }`\n    Filter by follower count\n  - `verified?: boolean`\n    Filter by verified status\n\n- `limit?: number`\n  Maximum results to return\n\n### Returns\n\n- `{ creator: { id: string; avatar_url: string; bio: string; name: string; }; primary_profile: { id: string; data_updated_at: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; similarity: { score: number; shared_traits: string[]; }; }`\n\n  - `creator: { id: string; avatar_url: string; bio: string; name: string; }`\n  - `primary_profile: { id: string; data_updated_at: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }`\n  - `similarity: { score: number; shared_traits: string[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse);\n}\n```",
+      "## lookalike\n\n`client.creators.lookalike(seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[], cursor?: string, filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }, limit?: number): { creator: creator_basic; primary_profile: profile_summary; similarity: object; }`\n\n**post** `/v1/creators/lookalike`\n\nFind creators similar to provided seed creators using AI-powered similarity matching. Analyzes content themes, audience overlap, posting style, and engagement patterns.\n\n**Use cases:**\n- Expand campaigns with creators similar to proven performers\n- Find alternatives when preferred creators are unavailable\n- Discover emerging creators in the same niche\n\n**How it works:**\n1. Provide 1-10 seed creators (by ID or platform/username)\n2. Optionally weight seeds to prioritize certain creators\n3. Get ranked results with similarity scores and shared traits\n\nIf none of the supplied seeds is available for similarity matching, the endpoint returns `404 seed_not_found`. Choose another seed instead of retrying the same request.\n\nAlso callable as the `find_lookalike_creators` MCP tool — see [the MCP server guide](/guides/mcp-server) for setup.\n\n**Pricing**: 1.5 credits per creator returned ($0.015)\n\n### Parameters\n\n- `seeds: { creator_id?: string; platform?: 'instagram'; username?: string; weight?: number; }[]`\n  Seed creators to find similar creators for\n\n- `cursor?: string`\n  Pagination cursor for next page\n\n- `filters?: { engagement_rate?: { max?: number; min?: number; }; followers?: { max?: number; min?: number; }; verified?: boolean; }`\n  Additional filters\n  - `engagement_rate?: { max?: number; min?: number; }`\n    Filter by engagement rate\n  - `followers?: { max?: number; min?: number; }`\n    Filter by follower count\n  - `verified?: boolean`\n    Filter by verified status\n\n- `limit?: number`\n  Maximum results to return\n\n### Returns\n\n- `{ creator: { id: string; avatar_url: string; bio: string; name: string; }; primary_profile: { id: string; data_updated_at: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }; similarity: { score: number; shared_traits: string[]; }; }`\n\n  - `creator: { id: string; avatar_url: string; bio: string; name: string; }`\n  - `primary_profile: { id: string; data_updated_at: string; engagement_rate: number; followers: number; is_verified: boolean; platform: 'instagram'; url: string; username: string; }`\n  - `similarity: { score: number; shared_traits: string[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse);\n}\n```",
     perLanguage: {
       typescript: {
         method: 'client.creators.lookalike',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const creatorLookalikeResponse of client.creators.lookalike({ seeds: [{}] })) {\n  console.log(creatorLookalikeResponse.creator);\n}",
-      },
-      python: {
-        method: 'creators.lookalike',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.creators.lookalike(\n    seeds=[{}],\n)\npage = page.data[0]\nprint(page.creator)',
       },
       http: {
         example:
@@ -201,11 +181,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.creators.match',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creators.match({\n  creators: [{}, {}],\n  intent: { query: 'Promote our new plant-based protein powder' },\n});\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'creators.match',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creators.match(\n    creators=[{}, {}],\n    intent={\n        "query": "Promote our new plant-based protein powder"\n    },\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -239,11 +214,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst search = await client.search.create({ query: 'fitness influencers who post workout videos' });\n\nconsole.log(search.search_id);",
       },
-      python: {
-        method: 'search.create',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nsearch = client.search.create(\n    query="fitness influencers who post workout videos",\n)\nprint(search.search_id)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/search \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "query": "fitness influencers who post workout videos",\n          "creator_kinds": [\n            "INFLUENCER"\n          ],\n          "filters": {\n            "engagement_rate": {\n              "min": 2\n            },\n            "followers": {\n              "max": 500000,\n              "min": 50000\n            },\n            "verified": true\n          },\n          "limit": 10,\n          "platforms": [\n            "instagram"\n          ]\n        }\'',
@@ -270,11 +240,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const searchRetrieveResponse of client.search.retrieve(\n  '123e4567-e89b-12d3-a456-426614174000',\n)) {\n  console.log(searchRetrieveResponse.creator);\n}",
       },
-      python: {
-        method: 'search.retrieve',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.search.retrieve(\n    id="123e4567-e89b-12d3-a456-426614174000",\n)\npage = page.data[0]\nprint(page.creator)',
-      },
       http: {
         example: 'curl https://api.influship.com/v1/search/$ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
@@ -299,11 +264,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.profiles.get',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst profile = await client.profiles.get('fitness_coach_jane', { platform: 'instagram' });\n\nconsole.log(profile.data);",
-      },
-      python: {
-        method: 'profiles.get',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nprofile = client.profiles.get(\n    username="fitness_coach_jane",\n    platform="instagram",\n)\nprint(profile.data)',
       },
       http: {
         example:
@@ -331,11 +291,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.profiles.lookup({\n  profiles: [\n    { platform: 'instagram', username: 'fitness_coach_jane' },\n    { platform: 'instagram', username: 'wellness_guru' },\n    { platform: 'instagram', username: 'healthy_eating_tips' },\n  ],\n});\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'profiles.lookup',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.profiles.lookup(\n    profiles=[{\n        "platform": "instagram",\n        "username": "fitness_coach_jane",\n    }, {\n        "platform": "instagram",\n        "username": "wellness_guru",\n    }, {\n        "platform": "instagram",\n        "username": "healthy_eating_tips",\n    }],\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/profiles/lookup \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "profiles": [\n            {\n              "platform": "instagram",\n              "username": "fitness_coach_jane"\n            },\n            {\n              "platform": "instagram",\n              "username": "wellness_guru"\n            },\n            {\n              "platform": "instagram",\n              "username": "healthy_eating_tips"\n            }\n          ]\n        }\'',
@@ -361,11 +316,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.creatorEmails.lookup',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.creatorEmails.lookup({\n  creators: [{ creator_id: '123e4567-e89b-12d3-a456-426614174000' }],\n});\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'creator_emails.lookup',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.creator_emails.lookup(\n    creators=[{\n        "creator_id": "123e4567-e89b-12d3-a456-426614174000"\n    }],\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -400,11 +350,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const postListResponse of client.posts.list()) {\n  console.log(postListResponse.id);\n}",
       },
-      python: {
-        method: 'posts.list',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\npage = client.posts.list()\npage = page.data[0]\nprint(page.id)',
-      },
       http: {
         example: 'curl https://api.influship.com/v1/posts \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
@@ -430,11 +375,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getProfile('fitness_coach_jane');\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.instagram.get_profile',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_profile(\n    username="fitness_coach_jane",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/instagram/profile/$USERNAME \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -459,11 +399,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.raw.instagram.getPost',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getPost('C0ABC123xyz');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.instagram.get_post',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_post(\n    "C0ABC123xyz",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -491,11 +426,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getPosts({\n  shortcodes: ['C0ABC123xyz', 'D1DEF456uvw'],\n});\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.instagram.get_posts',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_posts(\n    shortcodes=["C0ABC123xyz", "D1DEF456uvw"],\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/instagram/posts \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "shortcodes": [\n            "C0ABC123xyz",\n            "D1DEF456uvw"\n          ]\n        }\'',
@@ -521,11 +451,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.raw.instagram.getTranscript',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getTranscript('C0ABC123xyz');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.instagram.get_transcript',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_transcript(\n    shortcode="C0ABC123xyz",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -553,11 +478,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.instagram.getTranscripts({\n  shortcodes: ['C0ABC123xyz', 'D1DEF456uvw'],\n});\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.instagram.get_transcripts',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.instagram.get_transcripts(\n    shortcodes=["C0ABC123xyz", "D1DEF456uvw"],\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/instagram/transcripts \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "shortcodes": [\n            "C0ABC123xyz",\n            "D1DEF456uvw"\n          ],\n          "language": "en"\n        }\'',
@@ -584,11 +504,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannel('@techreviews');\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.youtube.get_channel',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_channel(\n    handle="@techreviews",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/youtube/channel/$HANDLE \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -614,11 +529,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.raw.youtube.getTranscript',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getTranscript('dQw4w9WgXcQ');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.youtube.get_transcript',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_transcript(\n    video_id="dQw4w9WgXcQ",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -651,11 +561,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.raw.youtube.getChannelTranscripts',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getChannelTranscripts('@techreviews');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.youtube.get_channel_transcripts',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_channel_transcripts(\n    handle="@techreviews",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -693,11 +598,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.search({ q: 'fitness workout' });\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.youtube.search',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.search(\n    q="fitness workout",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/youtube/search \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -724,11 +624,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.getVideo('dQw4w9WgXcQ');\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.youtube.get_video',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.get_video(\n    "dQw4w9WgXcQ",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/youtube/video/$VIDEO_ID \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -754,11 +649,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.youtube.typeahead({ q: 'x' });\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.youtube.typeahead',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.youtube.typeahead(\n    q="x",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/youtube/typeahead \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
@@ -771,24 +661,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get Live TikTok Profile',
     description:
-      'Fetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.5 credits per profile scraped ($0.005)',
+      'Fetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.2 credits per profile scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) get_profile',
     qualified: 'client.raw.tiktok.getProfile',
     params: ['username: string;'],
     response:
       '{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }',
     markdown:
-      "## get_profile\n\n`client.raw.tiktok.getProfile(username: string): { data: profile; }`\n\n**get** `/v1/raw/tiktok/profile/{username}`\n\nFetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.5 credits per profile scraped ($0.005)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n### Returns\n\n- `{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }`\n\n  - `data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getProfile('creator');\n\nconsole.log(response);\n```",
+      "## get_profile\n\n`client.raw.tiktok.getProfile(username: string): { data: profile; }`\n\n**get** `/v1/raw/tiktok/profile/{username}`\n\nFetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.2 credits per profile scraped ($0.002)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n### Returns\n\n- `{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }`\n\n  - `data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getProfile('creator');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getProfile',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getProfile('creator');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.tiktok.get_profile',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_profile(\n    "creator",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -802,24 +687,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'List Live TikTok Profile Videos',
     description:
-      'Fetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video page scraped ($0.005)',
+      'Fetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video page scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) list_profile_videos',
     qualified: 'client.raw.tiktok.listProfileVideos',
     params: ['username: string;', 'cursor?: string;', "region?: 'US';", "sort_by?: 'latest' | 'popular';"],
     response:
       '{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }',
     markdown:
-      "## list_profile_videos\n\n`client.raw.tiktok.listProfileVideos(username: string, cursor?: string, region?: 'US', sort_by?: 'latest' | 'popular'): { data: object; }`\n\n**get** `/v1/raw/tiktok/profile/{username}/videos`\n\nFetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video page scraped ($0.005)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n- `sort_by?: 'latest' | 'popular'`\n  Video ordering\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listProfileVideos('creator');\n\nconsole.log(response);\n```",
+      "## list_profile_videos\n\n`client.raw.tiktok.listProfileVideos(username: string, cursor?: string, region?: 'US', sort_by?: 'latest' | 'popular'): { data: object; }`\n\n**get** `/v1/raw/tiktok/profile/{username}/videos`\n\nFetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video page scraped ($0.002)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n- `sort_by?: 'latest' | 'popular'`\n  Video ordering\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listProfileVideos('creator');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.listProfileVideos',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listProfileVideos('creator');\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.tiktok.list_profile_videos',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_profile_videos(\n    username="creator",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -833,27 +713,48 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get Live TikTok Video',
     description:
-      'Fetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video scraped ($0.005)',
+      'Fetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) get_video',
     qualified: 'client.raw.tiktok.getVideo',
     params: ['url: string;', "region?: 'US';"],
-    response: '{ data: { scraped_at: string; video: object; }; }',
+    response: '{ data: { scraped_at: string; video: video; }; }',
     markdown:
-      "## get_video\n\n`client.raw.tiktok.getVideo(url: string, region?: 'US'): { data: object; }`\n\n**get** `/v1/raw/tiktok/video`\n\nFetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video scraped ($0.005)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n### Returns\n\n- `{ data: { scraped_at: string; video: object; }; }`\n\n  - `data: { scraped_at: string; video: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideo({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## get_video\n\n`client.raw.tiktok.getVideo(url: string, region?: 'US'): { data: video_response; }`\n\n**get** `/v1/raw/tiktok/video`\n\nFetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video scraped ($0.002)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n### Returns\n\n- `{ data: { scraped_at: string; video: video; }; }`\n\n  - `data: { scraped_at: string; video: { author: object; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: object; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideo({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getVideo',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideo({\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.tiktok.get_video',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_video(\n    url="https://www.tiktok.com/@creator/video/7517114944362499342",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/tiktok/video \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_videos',
+    endpoint: '/v1/raw/tiktok/videos',
+    httpMethod: 'post',
+    summary: 'Get TikTok Videos in a Batch',
+    description:
+      'Fetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.',
+    stainlessPath: '(resource) raw.tiktok > (method) get_videos',
+    qualified: 'client.raw.tiktok.getVideos',
+    params: ['urls: string[];'],
+    response:
+      '{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }',
+    markdown:
+      "## get_videos\n\n`client.raw.tiktok.getVideos(urls: string[]): { data: object; }`\n\n**post** `/v1/raw/tiktok/videos`\n\nFetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.\n\n### Parameters\n\n- `urls: string[]`\n\n### Returns\n\n- `{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }`\n\n  - `data: { failed: number; items: { data: object; success: true; url: string; } | { error: { code: string; message: string; }; status: number; success: false; url: string; }[]; requested: number; scraped_at: string; succeeded: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/videos \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "urls": [\n            "https://example.com"\n          ]\n        }\'',
       },
     },
   },
@@ -863,28 +764,49 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'List Live TikTok Video Comments',
     description:
-      'Fetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.5 credits per comment page scraped ($0.005)',
+      'Fetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.2 credits per comment page scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) list_video_comments',
     qualified: 'client.raw.tiktok.listVideoComments',
     params: ['url: string;', 'cursor?: string;'],
     response:
       '{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }',
     markdown:
-      "## list_video_comments\n\n`client.raw.tiktok.listVideoComments(url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comments`\n\nFetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.5 credits per comment page scraped ($0.005)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listVideoComments({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## list_video_comments\n\n`client.raw.tiktok.listVideoComments(url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comments`\n\nFetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.2 credits per comment page scraped ($0.002)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listVideoComments({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.listVideoComments',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listVideoComments({\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
       },
-      python: {
-        method: 'raw.tiktok.list_video_comments',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_video_comments(\n    url="https://www.tiktok.com/@creator/video/7517114944362499342",\n)\nprint(response.data)',
-      },
       http: {
         example:
           'curl https://api.influship.com/v1/raw/tiktok/video/comments \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_comment_replies',
+    endpoint: '/v1/raw/tiktok/video/comment/replies',
+    httpMethod: 'get',
+    summary: 'List Live TikTok Comment Replies',
+    description:
+      'Fetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_comment_replies',
+    qualified: 'client.raw.tiktok.listCommentReplies',
+    params: ['comment_id: string;', 'url: string;', 'cursor?: string;'],
+    response:
+      '{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }',
+    markdown:
+      "## list_comment_replies\n\n`client.raw.tiktok.listCommentReplies(comment_id: string, url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comment/replies`\n\nFetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)\n\n### Parameters\n\n- `comment_id: string`\n  Numeric ID of the parent comment\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listCommentReplies({ comment_id: '7517114944362499343', url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listCommentReplies',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listCommentReplies({\n  comment_id: '7517114944362499343',\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/comment/replies \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },
@@ -894,24 +816,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get TikTok Video Transcript',
     description:
-      'Fetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 5 credits per transcript ($0.05)',
+      'Fetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 2.5 credits per transcript ($0.025)',
     stainlessPath: '(resource) raw.tiktok > (method) get_video_transcript',
     qualified: 'client.raw.tiktok.getVideoTranscript',
     params: ['url: string;'],
     response:
       "{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }",
     markdown:
-      "## get_video_transcript\n\n`client.raw.tiktok.getVideoTranscript(url: string): { data: transcript; }`\n\n**get** `/v1/raw/tiktok/video/transcript`\n\nFetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 5 credits per transcript ($0.05)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscript({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## get_video_transcript\n\n`client.raw.tiktok.getVideoTranscript(url: string): { data: transcript; }`\n\n**get** `/v1/raw/tiktok/video/transcript`\n\nFetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 2.5 credits per transcript ($0.025)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscript({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getVideoTranscript',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideoTranscript({\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
-      },
-      python: {
-        method: 'raw.tiktok.get_video_transcript',
-        example:
-          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_video_transcript(\n    url="https://www.tiktok.com/@creator/video/7517114944362499342",\n)\nprint(response.data)',
       },
       http: {
         example:
@@ -919,14 +836,191 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'get_video_transcripts',
+    endpoint: '/v1/raw/tiktok/video/transcripts',
+    httpMethod: 'post',
+    summary: 'Get TikTok Transcripts in a Batch',
+    description:
+      'Process up to 10 video URLs with ordered per-item results. Choose auto (default, $0.025 per item) or captions ($0.002 per item, never generates). Account credits charge successful items only. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.',
+    stainlessPath: '(resource) raw.tiktok > (method) get_video_transcripts',
+    qualified: 'client.raw.tiktok.getVideoTranscripts',
+    params: ['urls: string[];', "mode?: 'auto' | 'captions';"],
+    response:
+      "{ data: { failed: number; items: object | object[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }; }",
+    markdown:
+      "## get_video_transcripts\n\n`client.raw.tiktok.getVideoTranscripts(urls: string[], mode?: 'auto' | 'captions'): { data: object; }`\n\n**post** `/v1/raw/tiktok/video/transcripts`\n\nProcess up to 10 video URLs with ordered per-item results. Choose auto (default, $0.025 per item) or captions ($0.002 per item, never generates). Account credits charge successful items only. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.\n\n### Parameters\n\n- `urls: string[]`\n\n- `mode?: 'auto' | 'captions'`\n\n### Returns\n\n- `{ data: { failed: number; items: object | object[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }; }`\n\n  - `data: { failed: number; items: { data: object; success: true; url: string; } | { error: { code: string; message: string; }; status: number; success: false; url: string; }[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscripts({ urls: ['https://example.com'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideoTranscripts',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideoTranscripts({ urls: ['https://example.com'] });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/transcripts \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "urls": [\n            "https://example.com"\n          ]\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'get_video_captions',
+    endpoint: '/v1/raw/tiktok/video/captions',
+    httpMethod: 'get',
+    summary: 'Get TikTok Video Captions',
+    description:
+      'Return available TikTok captions without generating a transcript. Returns transcript_not_available when captions are unavailable. Successful cached results are charged at the ordinary rate.\n\n**Pricing**: 0.2 credits per successful caption response ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) get_video_captions',
+    qualified: 'client.raw.tiktok.getVideoCaptions',
+    params: ['url: string;'],
+    response:
+      "{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }; }",
+    markdown:
+      "## get_video_captions\n\n`client.raw.tiktok.getVideoCaptions(url: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/captions`\n\nReturn available TikTok captions without generating a transcript. Returns transcript_not_available when captions are unavailable. Successful cached results are charged at the ordinary rate.\n\n**Pricing**: 0.2 credits per successful caption response ($0.002)\n\n### Parameters\n\n- `url: string`\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoCaptions({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideoCaptions',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideoCaptions({ url: 'https://example.com' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/captions \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_music',
+    endpoint: '/v1/raw/tiktok/music',
+    httpMethod: 'get',
+    summary: 'Get TikTok Sound Details',
+    description:
+      'Fetch metadata for a TikTok sound clip by music_id. Unknown fields are null. Audio and cover URLs are temporary upstream links, not durable downloads.\n\n**Pricing**: 0.2 credits per sound lookup ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) get_music',
+    qualified: 'client.raw.tiktok.getMusic',
+    params: ['music_id: string;'],
+    response:
+      '{ data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }; }',
+    markdown:
+      "## get_music\n\n`client.raw.tiktok.getMusic(music_id: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/music`\n\nFetch metadata for a TikTok sound clip by music_id. Unknown fields are null. Audio and cover URLs are temporary upstream links, not durable downloads.\n\n**Pricing**: 0.2 credits per sound lookup ($0.002)\n\n### Parameters\n\n- `music_id: string`\n  TikTok sound clip ID, not a recording or album ID\n\n### Returns\n\n- `{ data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }; }`\n\n  - `data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getMusic({ music_id: '496' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getMusic',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getMusic({ music_id: '496' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/music \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_music_videos',
+    endpoint: '/v1/raw/tiktok/music/videos',
+    httpMethod: 'get',
+    summary: 'Get TikTok Music Videos',
+    description:
+      'Fetch one page of TikTok videos using a sound clip, identified by music_id. Continue with next_cursor and the same music_id; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per music video page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_music_videos',
+    qualified: 'client.raw.tiktok.listMusicVideos',
+    params: ['music_id: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## list_music_videos\n\n`client.raw.tiktok.listMusicVideos(music_id: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/music/videos`\n\nFetch one page of TikTok videos using a sound clip, identified by music_id. Continue with next_cursor and the same music_id; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per music video page ($0.002)\n\n### Parameters\n\n- `music_id: string`\n  TikTok sound clip ID, not a recording or album ID\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listMusicVideos({ music_id: '496' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listMusicVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listMusicVideos({ music_id: '496' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/music/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'search_users',
+    endpoint: '/v1/raw/tiktok/search/users',
+    httpMethod: 'get',
+    summary: 'Search TikTok Users',
+    description:
+      'Fetch one page of TikTok user search results. Unknown profile fields are null. Continue with next_cursor and the same query; treat cursors as opaque. A successful page is charged once, including an empty page.\n\n**Pricing**: 0.2 credits per user search page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) search_users',
+    qualified: 'client.raw.tiktok.searchUsers',
+    params: ['query: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }; }',
+    markdown:
+      "## search_users\n\n`client.raw.tiktok.searchUsers(query: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/search/users`\n\nFetch one page of TikTok user search results. Unknown profile fields are null. Continue with next_cursor and the same query; treat cursors as opaque. A successful page is charged once, including an empty page.\n\n**Pricing**: 0.2 credits per user search page ($0.002)\n\n### Parameters\n\n- `query: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.searchUsers({ query: 'query' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.searchUsers',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.searchUsers({ query: 'query' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/search/users \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'search_videos',
+    endpoint: '/v1/raw/tiktok/search/videos',
+    httpMethod: 'get',
+    summary: 'Search TikTok Videos',
+    description:
+      'Fetch one relevance-ordered page of TikTok videos matching a query. Continue with next_cursor and the same query; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per video search page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) search_videos',
+    qualified: 'client.raw.tiktok.searchVideos',
+    params: ['query: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## search_videos\n\n`client.raw.tiktok.searchVideos(query: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/search/videos`\n\nFetch one relevance-ordered page of TikTok videos matching a query. Continue with next_cursor and the same query; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per video search page ($0.002)\n\n### Parameters\n\n- `query: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.searchVideos({ query: 'query' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.searchVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.searchVideos({ query: 'query' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/search/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_hashtag_videos',
+    endpoint: '/v1/raw/tiktok/hashtag/videos',
+    httpMethod: 'get',
+    summary: 'Get TikTok Hashtag Videos',
+    description:
+      'Fetch one page of videos under a hashtag, supplied without #. Continue with next_cursor and the same hashtag; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per hashtag video page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_hashtag_videos',
+    qualified: 'client.raw.tiktok.listHashtagVideos',
+    params: ['hashtag: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## list_hashtag_videos\n\n`client.raw.tiktok.listHashtagVideos(hashtag: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/hashtag/videos`\n\nFetch one page of videos under a hashtag, supplied without #. Continue with next_cursor and the same hashtag; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per hashtag video page ($0.002)\n\n### Parameters\n\n- `hashtag: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listHashtagVideos({ hashtag: 'hashtag' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listHashtagVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listHashtagVideos({ hashtag: 'hashtag' });\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/hashtag/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [
-  {
-    language: 'python',
-    content:
-      '# Influship Python API library\n\n<!-- prettier-ignore -->\n[![PyPI version](https://img.shields.io/pypi/v/influship.svg?label=pypi%20(stable))](https://pypi.org/project/influship/)\n\nThe Influship Python library provides convenient access to the Influship REST API from any Python 3.9+\napplication. The library includes type definitions for all request params and response fields,\nand offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).\n\n\n\nIt is generated with [Stainless](https://www.stainless.com/).\n\n## MCP Server\n\nUse the Influship MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.\n\n[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=influship-api-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImluZmx1c2hpcC1hcGktbWNwIl0sImVudiI6eyJJTkZMVVNISVBfQVBJX0tFWSI6Ik15IEFQSSBLZXkifX0)\n[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22influship-api-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22influship-api-mcp%22%5D%2C%22env%22%3A%7B%22INFLUSHIP_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)\n\n> Note: You may need to set environment variables in your MCP client.\n\n## Documentation\n\nThe REST API documentation can be found on [influship.mintlify.app](https://influship.mintlify.app). The full API of this library can be found in [api.md](api.md).\n\n## Installation\n\n```sh\n# install from PyPI\npip install influship\n```\n\n## Usage\n\nThe full API of this library can be found in [api.md](api.md).\n\n```python\nimport os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\n\nsearch = client.search.create(\n    query="sustainable fashion creators with engaged audiences",\n    limit=25,\n)\nprint(search.search_id)\n```\n\nWhile you can provide an `api_key` keyword argument,\nwe recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)\nto add `INFLUSHIP_API_KEY="My API Key"` to your `.env` file\nso that your API Key is not stored in source control.\n\n## Async usage\n\nSimply import `AsyncInfluship` instead of `Influship` and use `await` with each API call:\n\n```python\nimport os\nimport asyncio\nfrom influship import AsyncInfluship\n\nclient = AsyncInfluship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\n\nasync def main() -> None:\n  search = await client.search.create(\n      query="sustainable fashion creators with engaged audiences",\n      limit=25,\n  )\n  print(search.search_id)\n\nasyncio.run(main())\n```\n\nFunctionality between the synchronous and asynchronous clients is otherwise identical.\n\n### With aiohttp\n\nBy default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.\n\nYou can enable this by installing `aiohttp`:\n\n```sh\n# install from PyPI\npip install influship[aiohttp]\n```\n\nThen you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:\n\n```python\nimport os\nimport asyncio\nfrom influship import DefaultAioHttpClient\nfrom influship import AsyncInfluship\n\nasync def main() -> None:\n  async with AsyncInfluship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n    http_client=DefaultAioHttpClient(),\n) as client:\n    search = await client.search.create(\n        query="sustainable fashion creators with engaged audiences",\n        limit=25,\n    )\n    print(search.search_id)\n\nasyncio.run(main())\n```\n\n\n\n## Using types\n\nNested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:\n\n- Serializing back into JSON, `model.to_json()`\n- Converting to a dictionary, `model.to_dict()`\n\nTyped requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.\n\n## Pagination\n\nList methods in the Influship API are paginated.\n\nThis library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:\n\n```python\nfrom influship import Influship\n\nclient = Influship()\n\nall_searches = []\n# Automatically fetches more pages as needed.\nfor search in client.search.retrieve(\n    id="search_abc123",\n    cursor="eyJvZmZzZXQiOjEwfQ==",\n    limit=10,\n):\n    # Do something with search here\n    all_searches.append(search)\nprint(all_searches)\n```\n\nOr, asynchronously:\n\n```python\nimport asyncio\nfrom influship import AsyncInfluship\n\nclient = AsyncInfluship()\n\nasync def main() -> None:\n    all_searches = []\n    # Iterate through items across all pages, issuing requests as needed.\n    async for search in client.search.retrieve(\n    id="search_abc123",\n    cursor="eyJvZmZzZXQiOjEwfQ==",\n    limit=10,\n):\n        all_searches.append(search)\n    print(all_searches)\n\nasyncio.run(main())\n```\n\nAlternatively, you can use the `.has_next_page()`, `.next_page_info()`, or  `.get_next_page()` methods for more granular control working with pages:\n\n```python\nfirst_page = await client.search.retrieve(\n    id="search_abc123",\n    cursor="eyJvZmZzZXQiOjEwfQ==",\n    limit=10,\n)\nif first_page.has_next_page():\n    print(f"will fetch next page using these details: {first_page.next_page_info()}")\n    next_page = await first_page.get_next_page()\n    print(f"number of items we just fetched: {len(next_page.data)}")\n\n# Remove `await` for non-async usage.\n```\n\nOr just work directly with the returned data:\n\n```python\nfirst_page = await client.search.retrieve(\n    id="search_abc123",\n    cursor="eyJvZmZzZXQiOjEwfQ==",\n    limit=10,\n)\n\nprint(f"next page cursor: {first_page.next_cursor}") # => "next page cursor: ..."\nfor search in first_page.data:\n    print(search.creator)\n\n# Remove `await` for non-async usage.\n```\n\n## Nested params\n\nNested parameters are dictionaries, typed using `TypedDict`, for example:\n\n```python\nfrom influship import Influship\n\nclient = Influship()\n\nsearch = client.search.create(\n    query="fitness influencers who post workout videos",\n    filters={\n        "engagement_rate": {\n            "min": 2\n        },\n        "followers": {\n            "max": 500000,\n            "min": 50000,\n        },\n        "verified": True,\n    },\n)\nprint(search.filters)\n```\n\n\n\n## Handling errors\n\nWhen the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `influship.APIConnectionError` is raised.\n\nWhen the API returns a non-success status code (that is, 4xx or 5xx\nresponse), a subclass of `influship.APIStatusError` is raised, containing `status_code` and `response` properties.\n\nAll errors inherit from `influship.APIError`.\n\n```python\nimport influship\nfrom influship import Influship\n\nclient = Influship()\n\ntry:\n    client.search.create(\n        query="fitness influencers in Los Angeles",\n        limit=10,\n    )\nexcept influship.APIConnectionError as e:\n    print("The server could not be reached")\n    print(e.__cause__) # an underlying Exception, likely raised within httpx.\nexcept influship.RateLimitError as e:\n    print("A 429 status code was received; we should back off a bit.")\nexcept influship.APIStatusError as e:\n    print("Another non-200-range status code was received")\n    print(e.status_code)\n    print(e.response)\n```\n\nError codes are as follows:\n\n| Status Code | Error Type                 |\n| ----------- | -------------------------- |\n| 400         | `BadRequestError`          |\n| 401         | `AuthenticationError`      |\n| 403         | `PermissionDeniedError`    |\n| 404         | `NotFoundError`            |\n| 422         | `UnprocessableEntityError` |\n| 429         | `RateLimitError`           |\n| >=500       | `InternalServerError`      |\n| N/A         | `APIConnectionError`       |\n\n### Retries\n\nCertain errors are automatically retried 2 times by default, with a short exponential backoff.\nConnection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,\n429 Rate Limit, and >=500 Internal errors are all retried by default.\n\nYou can use the `max_retries` option to configure or disable retry settings:\n\n```python\nfrom influship import Influship\n\n# Configure the default for all requests:\nclient = Influship(\n    # default is 2\n    max_retries=0,\n)\n\n# Or, configure per-request:\nclient.with_options(max_retries = 5).search.create(\n    query="fitness influencers in Los Angeles",\n    limit=10,\n)\n```\n\n### Timeouts\n\nBy default requests time out after 3.5 minutes. You can configure this with a `timeout` option,\nwhich accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:\n\n```python\nfrom influship import Influship\n\n# Configure the default for all requests:\nclient = Influship(\n    # 20 seconds (default is 3.5 minutes)\n    timeout=20.0,\n)\n\n# More granular control:\nclient = Influship(\n    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),\n)\n\n# Override per-request:\nclient.with_options(timeout = 5.0).search.create(\n    query="fitness influencers in Los Angeles",\n    limit=10,\n)\n```\n\nOn timeout, an `APITimeoutError` is thrown.\n\nNote that requests that time out are [retried twice by default](#retries).\n\n\n\n## Advanced\n\n### Logging\n\nWe use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.\n\nYou can enable logging by setting the environment variable `INFLUSHIP_LOG` to `info`.\n\n```shell\n$ export INFLUSHIP_LOG=info\n```\n\nOr to `debug` for more verbose logging.\n\n### How to tell whether `None` means `null` or missing\n\nIn an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:\n\n```py\nif response.my_field is None:\n  if \'my_field\' not in response.model_fields_set:\n    print(\'Got json like {}, without a "my_field" key present at all.\')\n  else:\n    print(\'Got json like {"my_field": null}.\')\n```\n\n### Accessing raw response data (e.g. headers)\n\nThe "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,\n\n```py\nfrom influship import Influship\n\nclient = Influship()\nresponse = client.search.with_raw_response.create(\n    query="fitness influencers in Los Angeles",\n    limit=10,\n)\nprint(response.headers.get(\'X-My-Header\'))\n\nsearch = response.parse()  # get the object that `search.create()` would have returned\nprint(search.search_id)\n```\n\nThese methods return an [`APIResponse`](https://github.com/Influship/influship-sdk-python/tree/main/src/influship/_response.py) object.\n\nThe async client returns an [`AsyncAPIResponse`](https://github.com/Influship/influship-sdk-python/tree/main/src/influship/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.\n\n#### `.with_streaming_response`\n\nThe above interface eagerly reads the full response body when you make the request, which may not always be what you want.\n\nTo stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.\n\n```python\nwith client.search.with_streaming_response.create(\n    query="fitness influencers in Los Angeles",\n    limit=10,\n) as response :\n    print(response.headers.get(\'X-My-Header\'))\n\n    for line in response.iter_lines():\n      print(line)\n```\n\nThe context manager is required so that the response will reliably be closed.\n\n### Making custom/undocumented requests\n\nThis library is typed for convenient access to the documented API.\n\nIf you need to access undocumented endpoints, params, or response properties, the library can still be used.\n\n#### Undocumented endpoints\n\nTo make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other\nhttp verbs. Options on the client will be respected (such as retries) when making this request.\n\n```py\nimport httpx\n\nresponse = client.post(\n    "/foo",\n    cast_to=httpx.Response,\n    body={"my_param": True},\n)\n\nprint(response.headers.get("x-foo"))\n```\n\n#### Undocumented request params\n\nIf you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request\noptions.\n\n#### Undocumented response properties\n\nTo access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You\ncan also get all the extra fields on the Pydantic model as a dict with\n[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).\n\n### Configuring the HTTP client\n\nYou can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:\n\n- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)\n- Custom [transports](https://www.python-httpx.org/advanced/transports/)\n- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality\n\n```python\nimport httpx\nfrom influship import Influship, DefaultHttpxClient\n\nclient = Influship(\n    # Or use the `INFLUSHIP_BASE_URL` env var\n    base_url="http://my.test.server.example.com:8083",\n    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),\n)\n```\n\nYou can also customize the client on a per-request basis by using `with_options()`:\n\n```python\nclient.with_options(http_client=DefaultHttpxClient(...))\n```\n\n### Managing HTTP resources\n\nBy default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.\n\n```py\nfrom influship import Influship\n\nwith Influship() as client:\n  # make requests here\n  ...\n\n# HTTP client is now closed\n```\n\n## Versioning\n\nThis package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:\n\n1. Changes that only affect static types, without breaking runtime behavior.\n2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_\n3. Changes that we do not expect to impact the vast majority of users in practice.\n\nWe take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.\n\nWe are keen for your feedback; please open an [issue](https://www.github.com/Influship/influship-sdk-python/issues) with questions, bugs, or suggestions.\n\n### Determining the installed version\n\nIf you\'ve upgraded to the latest version but aren\'t seeing any new features you were expecting then your python environment is likely still using an older version.\n\nYou can determine the version that is being used at runtime with:\n\n```py\nimport influship\nprint(influship.__version__)\n```\n\n## Requirements\n\nPython 3.9 or higher.\n\n## Contributing\n\nSee [the contributing documentation](./CONTRIBUTING.md).\n',
-  },
   {
     language: 'typescript',
     content:
