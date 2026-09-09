@@ -141,7 +141,7 @@ const localDenoHandler = async ({
   const packageNodeModulesPath = path.resolve(packageRoot, 'node_modules');
 
   // Check if deno is in PATH
-  const { execSync } = await import('node:child_process');
+  const { execSync, spawn } = await import('node:child_process');
   try {
     execSync('command -v deno', { stdio: 'ignore' });
     denoPath = 'deno';
@@ -181,6 +181,17 @@ const localDenoHandler = async ({
 
   const worker = await newDenoHTTPWorker(url.pathToFileURL(workerPath), {
     denoExecutable: denoPath,
+    // deno-http-worker grants read/write but predates Deno's Unix net permission.
+    // Its bootstrap's first argument is the generated IPC socket path.
+    spawnFunc(command, args, options) {
+      const bootstrapIndex = args.findIndex((arg) => arg.startsWith('data:text/typescript,'));
+      const socket = args[bootstrapIndex + 1];
+      if (bootstrapIndex < 0 || !socket || !path.isAbsolute(socket) || !socket.endsWith('-deno-http.sock')) {
+        throw new Error('Unexpected Deno worker bootstrap arguments');
+      }
+      const scopedArgs = args.map((arg) => (arg.startsWith('--allow-net=') ? `${arg},unix:${socket}` : arg));
+      return spawn(command, scopedArgs, options);
+    },
     runFlags: [
       `--node-modules-dir=manual`,
       `--allow-read=${allowRead}`,

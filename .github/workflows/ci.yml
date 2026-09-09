@@ -29,9 +29,15 @@ jobs:
         with:
           version: '10.30.1'
       - run: ./scripts/bootstrap
+      - run: pnpm audit --prod --audit-level=high
       - run: pnpm build
       - run: pnpm test --runInBand
       - run: pnpm --filter influship-api-mcp test --runInBand
+      - name: Install isolated Deno for execution smoke test
+        run: |
+          npm install --prefix "$RUNNER_TEMP/mcp-deno" deno@2.9.6
+          echo "$RUNNER_TEMP/mcp-deno/node_modules/.bin" >> "$GITHUB_PATH"
+      - run: node scripts/smoke-mcp.mjs
   lint:
     timeout-minutes: 10
     name: lint

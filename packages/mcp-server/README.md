@@ -80,8 +80,11 @@ This server runs code locally. Each code tool call is executed in a Deno subproc
 same machine as the MCP server, restricted to reading the server's own files and to making
 network requests to your API host.
 
-Deno must be installed for the code tool to work. Install it from https://deno.land, or add it
-to the MCP server's dependencies with `npm install deno`.
+Deno 2.9.6 or later must be installed for the code tool to work. Install it from
+https://deno.land, or add it to the MCP server's dependencies with `npm install deno`.
+The worker also receives access to its exact private IPC socket; this does not
+grant access to other network hosts or Unix sockets. Documentation search runs
+in Node.js and does not need Deno or a Stainless API key.
 
 ## Running remotely
 
