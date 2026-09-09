@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.21.0...v0.21.1) (2026-09-09)
+
+
+### Bug Fixes
+
+* **mcp:** remove unused URL dependency and avoid release annotation conflicts ([#3](https://github.com/Influship/influship-sdk-typescript/issues/3)) ([6049e82](https://github.com/Influship/influship-sdk-typescript/commit/6049e82b7a070bdce801701e40e21c42cfc6e9a4))
+
 ## [0.21.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.20.2...v0.21.0) (2026-09-09)
 
 
