@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.22.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.21.1...v0.22.0) (2026-09-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** remove unreliable raw Instagram profile fields
+
+### Features
+
+* **api:** remove unreliable raw Instagram profile fields ([0e1783e](https://github.com/Influship/influship-sdk-typescript/commit/0e1783ec05bb25edde693932fbdabd4f102857c1))
+
+
+### Bug Fixes
+
+* **mcp:** preserve nullable Instagram totals in documentation ([#4](https://github.com/Influship/influship-sdk-typescript/issues/4)) ([4563878](https://github.com/Influship/influship-sdk-typescript/commit/45638788b07aff2a29276b2cdddc4086c30df72b))
+
 ## [0.21.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.21.0...v0.21.1) (2026-09-09)
 
 
