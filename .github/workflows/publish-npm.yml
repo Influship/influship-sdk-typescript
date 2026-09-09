@@ -38,27 +38,17 @@ jobs:
       - name: Publish to NPM
         run: |
           if [ -n "$INPUT_PATH" ]; then
-            DATA="$(node -e 'process.stdout.write(JSON.stringify({ paths_released: JSON.stringify([process.env.INPUT_PATH]) }))')"
+            PATHS_RELEASED="[\"$INPUT_PATH\"]"
           else
-            DATA='{"paths_released":"[\".\",\"packages/mcp-server\"]"}'
+            PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
           fi
-          export DATA
-          pnpm tsn scripts/publish-packages.ts
+          pnpm tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
         env:
           INPUT_PATH: ${{ github.event.inputs.path }}
 
       - name: Upload MCP Server DXT GitHub release asset
         run: |
-          if [ -n "$INPUT_PATH" ] && [ "$INPUT_PATH" != "packages/mcp-server" ]; then
-            exit 0
-          fi
-          RELEASE_TAG="${{ github.event.release.tag_name }}"
-          if [ -z "$RELEASE_TAG" ]; then
-            RELEASE_TAG="$(gh release view --json tagName --jq .tagName)"
-          fi
-          gh release upload "$RELEASE_TAG" \
-            packages/mcp-server/influship_api.mcpb \
-            --clobber
+          gh release upload ${{ github.event.release.tag_name }} \
+            packages/mcp-server/influship_api.mcpb
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          INPUT_PATH: ${{ github.event.inputs.path }}
