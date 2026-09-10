@@ -760,6 +760,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'get_videos',
+    endpoint: '/v1/raw/tiktok/videos',
+    httpMethod: 'post',
+    summary: 'Get TikTok Videos in a Batch',
+    description:
+      'Fetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.',
+    stainlessPath: '(resource) raw.tiktok > (method) get_videos',
+    qualified: 'client.raw.tiktok.getVideos',
+    params: ['urls: string[];'],
+    response:
+      '{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }',
+    markdown:
+      "## get_videos\n\n`client.raw.tiktok.getVideos(urls: string[]): { data: object; }`\n\n**post** `/v1/raw/tiktok/videos`\n\nFetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.\n\n### Parameters\n\n- `urls: string[]`\n\n### Returns\n\n- `{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }`\n\n  - `data: { failed: number; items: { data: object; success: true; url: string; } | { error: { code: string; message: string; }; status: number; success: false; url: string; }[]; requested: number; scraped_at: string; succeeded: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.get_videos',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_videos(\n    urls=["https://example.com"],\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/videos \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "urls": [\n            "https://example.com"\n          ]\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list_video_comments',
     endpoint: '/v1/raw/tiktok/video/comments',
     httpMethod: 'get',
@@ -804,6 +835,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.raw.tiktok.listCommentReplies',
         example:
           "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listCommentReplies({\n  comment_id: '7517114944362499343',\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/comment/replies \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_comment_replies',
+    endpoint: '/v1/raw/tiktok/video/comment/replies',
+    httpMethod: 'get',
+    summary: 'List Live TikTok Comment Replies',
+    description:
+      'Fetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_comment_replies',
+    qualified: 'client.raw.tiktok.listCommentReplies',
+    params: ['comment_id: string;', 'url: string;', 'cursor?: string;'],
+    response:
+      '{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }',
+    markdown:
+      "## list_comment_replies\n\n`client.raw.tiktok.listCommentReplies(comment_id: string, url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comment/replies`\n\nFetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)\n\n### Parameters\n\n- `comment_id: string`\n  Numeric ID of the parent comment\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listCommentReplies({ comment_id: '7517114944362499343', url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listCommentReplies',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listCommentReplies({\n  comment_id: '7517114944362499343',\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.list_comment_replies',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_comment_replies(\n    comment_id="7517114944362499343",\n    url="https://www.tiktok.com/@creator/video/7517114944362499342",\n)\nprint(response.data)',
       },
       http: {
         example:
