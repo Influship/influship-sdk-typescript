@@ -771,14 +771,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get Live TikTok Profile',
     description:
-      'Fetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.5 credits per profile scraped ($0.005)',
+      'Fetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.2 credits per profile scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) get_profile',
     qualified: 'client.raw.tiktok.getProfile',
     params: ['username: string;'],
     response:
       '{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }',
     markdown:
-      "## get_profile\n\n`client.raw.tiktok.getProfile(username: string): { data: profile; }`\n\n**get** `/v1/raw/tiktok/profile/{username}`\n\nFetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.5 credits per profile scraped ($0.005)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n### Returns\n\n- `{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }`\n\n  - `data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getProfile('creator');\n\nconsole.log(response);\n```",
+      "## get_profile\n\n`client.raw.tiktok.getProfile(username: string): { data: profile; }`\n\n**get** `/v1/raw/tiktok/profile/{username}`\n\nFetch a normalized TikTok profile with current identity, biography, verification, and audience metrics.\n\n**Pricing**: 0.2 credits per profile scraped ($0.002)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n### Returns\n\n- `{ data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }; }`\n\n  - `data: { avatar_url: string; biography: string; display_name: string; external_url: string; follower_count: number; following_count: number; is_business: boolean; is_private: boolean; is_verified: boolean; like_count: number; profile_url: string; scraped_at: string; user_id: string; username: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getProfile('creator');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getProfile',
@@ -802,14 +802,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'List Live TikTok Profile Videos',
     description:
-      'Fetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video page scraped ($0.005)',
+      'Fetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video page scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) list_profile_videos',
     qualified: 'client.raw.tiktok.listProfileVideos',
     params: ['username: string;', 'cursor?: string;', "region?: 'US';", "sort_by?: 'latest' | 'popular';"],
     response:
       '{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }',
     markdown:
-      "## list_profile_videos\n\n`client.raw.tiktok.listProfileVideos(username: string, cursor?: string, region?: 'US', sort_by?: 'latest' | 'popular'): { data: object; }`\n\n**get** `/v1/raw/tiktok/profile/{username}/videos`\n\nFetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video page scraped ($0.005)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n- `sort_by?: 'latest' | 'popular'`\n  Video ordering\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listProfileVideos('creator');\n\nconsole.log(response);\n```",
+      "## list_profile_videos\n\n`client.raw.tiktok.listProfileVideos(username: string, cursor?: string, region?: 'US', sort_by?: 'latest' | 'popular'): { data: object; }`\n\n**get** `/v1/raw/tiktok/profile/{username}/videos`\n\nFetch one cursor-paginated page of normalized TikTok videos. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video page scraped ($0.002)\n\n### Parameters\n\n- `username: string`\n  TikTok username, with or without a leading @\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n- `sort_by?: 'latest' | 'popular'`\n  Video ordering\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; scraped_at: string; username: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listProfileVideos('creator');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.listProfileVideos',
@@ -833,13 +833,13 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get Live TikTok Video',
     description:
-      'Fetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video scraped ($0.005)',
+      'Fetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) get_video',
     qualified: 'client.raw.tiktok.getVideo',
     params: ['url: string;', "region?: 'US';"],
-    response: '{ data: { scraped_at: string; video: object; }; }',
+    response: '{ data: { scraped_at: string; video: video; }; }',
     markdown:
-      "## get_video\n\n`client.raw.tiktok.getVideo(url: string, region?: 'US'): { data: object; }`\n\n**get** `/v1/raw/tiktok/video`\n\nFetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.5 credits per video scraped ($0.005)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n### Returns\n\n- `{ data: { scraped_at: string; video: object; }; }`\n\n  - `data: { scraped_at: string; video: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideo({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## get_video\n\n`client.raw.tiktok.getVideo(url: string, region?: 'US'): { data: video_response; }`\n\n**get** `/v1/raw/tiktok/video`\n\nFetch normalized details and current engagement metrics for a TikTok video URL. Signed media URLs are temporary and should be downloaded promptly.\n\n**Pricing**: 0.2 credits per video scraped ($0.002)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `region?: 'US'`\n  TikTok resolution region (US only)\n\n### Returns\n\n- `{ data: { scraped_at: string; video: video; }; }`\n\n  - `data: { scraped_at: string; video: { author: object; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: object; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideo({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getVideo',
@@ -858,19 +858,50 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'get_videos',
+    endpoint: '/v1/raw/tiktok/videos',
+    httpMethod: 'post',
+    summary: 'Get TikTok Videos in a Batch',
+    description:
+      'Fetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.',
+    stainlessPath: '(resource) raw.tiktok > (method) get_videos',
+    qualified: 'client.raw.tiktok.getVideos',
+    params: ['urls: string[];'],
+    response:
+      '{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }',
+    markdown:
+      "## get_videos\n\n`client.raw.tiktok.getVideos(urls: string[]): { data: object; }`\n\n**post** `/v1/raw/tiktok/videos`\n\nFetch up to 20 video URLs with ordered per-item results. Duplicate entries remain distinct requested items. Account credits charge successful items only at $0.002 each. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.\n\n### Parameters\n\n- `urls: string[]`\n\n### Returns\n\n- `{ data: { failed: number; items: object | object[]; requested: number; scraped_at: string; succeeded: number; }; }`\n\n  - `data: { failed: number; items: { data: object; success: true; url: string; } | { error: { code: string; message: string; }; status: number; success: false; url: string; }[]; requested: number; scraped_at: string; succeeded: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideos({ urls: ['https://example.com'] });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.get_videos',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_videos(\n    urls=["https://example.com"],\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/videos \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "urls": [\n            "https://example.com"\n          ]\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list_video_comments',
     endpoint: '/v1/raw/tiktok/video/comments',
     httpMethod: 'get',
     summary: 'List Live TikTok Video Comments',
     description:
-      'Fetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.5 credits per comment page scraped ($0.005)',
+      'Fetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.2 credits per comment page scraped ($0.002)',
     stainlessPath: '(resource) raw.tiktok > (method) list_video_comments',
     qualified: 'client.raw.tiktok.listVideoComments',
     params: ['url: string;', 'cursor?: string;'],
     response:
       '{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }',
     markdown:
-      "## list_video_comments\n\n`client.raw.tiktok.listVideoComments(url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comments`\n\nFetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.5 credits per comment page scraped ($0.005)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listVideoComments({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## list_video_comments\n\n`client.raw.tiktok.listVideoComments(url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comments`\n\nFetch one cursor-paginated page of normalized comments for a TikTok video URL.\n\n**Pricing**: 0.2 credits per comment page scraped ($0.002)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listVideoComments({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.listVideoComments',
@@ -889,19 +920,50 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list_comment_replies',
+    endpoint: '/v1/raw/tiktok/video/comment/replies',
+    httpMethod: 'get',
+    summary: 'List Live TikTok Comment Replies',
+    description:
+      'Fetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_comment_replies',
+    qualified: 'client.raw.tiktok.listCommentReplies',
+    params: ['comment_id: string;', 'url: string;', 'cursor?: string;'],
+    response:
+      '{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }',
+    markdown:
+      "## list_comment_replies\n\n`client.raw.tiktok.listCommentReplies(comment_id: string, url: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/comment/replies`\n\nFetch one cursor-paginated page of replies to a numeric parent comment ID. Keep the same video URL and parent comment ID when continuing with next_cursor.\n\n**Pricing**: 0.2 credits per reply page scraped ($0.002)\n\n### Parameters\n\n- `comment_id: string`\n  Numeric ID of the parent comment\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n- `cursor?: string`\n  Opaque cursor from the previous response\n\n### Returns\n\n- `{ data: { comments: { author: object; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }; }`\n\n  - `data: { comments: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_id: string; created_at: string; is_pinned: boolean; like_count: number; reply_count: number; text: string; video_id: string; }[]; has_more: boolean; next_cursor: string; parent_comment_id: string; scraped_at: string; total: number; video_id: string; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listCommentReplies({ comment_id: '7517114944362499343', url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listCommentReplies',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listCommentReplies({\n  comment_id: '7517114944362499343',\n  url: 'https://www.tiktok.com/@creator/video/7517114944362499342',\n});\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.list_comment_replies',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_comment_replies(\n    comment_id="7517114944362499343",\n    url="https://www.tiktok.com/@creator/video/7517114944362499342",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/comment/replies \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'get_video_transcript',
     endpoint: '/v1/raw/tiktok/video/transcript',
     httpMethod: 'get',
     summary: 'Get TikTok Video Transcript',
     description:
-      'Fetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 5 credits per transcript ($0.05)',
+      'Fetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 2.5 credits per transcript ($0.025)',
     stainlessPath: '(resource) raw.tiktok > (method) get_video_transcript',
     qualified: 'client.raw.tiktok.getVideoTranscript',
     params: ['url: string;'],
     response:
       "{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }",
     markdown:
-      "## get_video_transcript\n\n`client.raw.tiktok.getVideoTranscript(url: string): { data: transcript; }`\n\n**get** `/v1/raw/tiktok/video/transcript`\n\nFetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 5 credits per transcript ($0.05)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscript({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
+      "## get_video_transcript\n\n`client.raw.tiktok.getVideoTranscript(url: string): { data: transcript; }`\n\n**get** `/v1/raw/tiktok/video/transcript`\n\nFetch or generate a normalized TikTok transcript with plain text and timestamped segments. The detected-language transcript is reused on later requests.\n\n**Pricing**: 2.5 credits per transcript ($0.025)\n\n### Parameters\n\n- `url: string`\n  HTTPS TikTok video or share URL\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: object[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions' | 'generated'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscript({ url: 'https://www.tiktok.com/@creator/video/7517114944362499342' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.raw.tiktok.getVideoTranscript',
@@ -916,6 +978,223 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.influship.com/v1/raw/tiktok/video/transcript \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_video_transcripts',
+    endpoint: '/v1/raw/tiktok/video/transcripts',
+    httpMethod: 'post',
+    summary: 'Get TikTok Transcripts in a Batch',
+    description:
+      'Process up to 10 video URLs with ordered per-item results. Choose auto (default, $0.025 per item) or captions ($0.002 per item, never generates). Account credits charge successful items only. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.',
+    stainlessPath: '(resource) raw.tiktok > (method) get_video_transcripts',
+    qualified: 'client.raw.tiktok.getVideoTranscripts',
+    params: ['urls: string[];', "mode?: 'auto' | 'captions';"],
+    response:
+      "{ data: { failed: number; items: object | object[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }; }",
+    markdown:
+      "## get_video_transcripts\n\n`client.raw.tiktok.getVideoTranscripts(urls: string[], mode?: 'auto' | 'captions'): { data: object; }`\n\n**post** `/v1/raw/tiktok/video/transcripts`\n\nProcess up to 10 video URLs with ordered per-item results. Choose auto (default, $0.025 per item) or captions ($0.002 per item, never generates). Account credits charge successful items only. Premium payments quote all requested items and are nonrefundable once settled, including partial or failed items in a completed batch.\n\n### Parameters\n\n- `urls: string[]`\n\n- `mode?: 'auto' | 'captions'`\n\n### Returns\n\n- `{ data: { failed: number; items: object | object[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }; }`\n\n  - `data: { failed: number; items: { data: object; success: true; url: string; } | { error: { code: string; message: string; }; status: number; success: false; url: string; }[]; mode: 'auto' | 'captions'; requested: number; scraped_at: string; succeeded: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoTranscripts({ urls: ['https://example.com'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideoTranscripts',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideoTranscripts({ urls: ['https://example.com'] });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.get_video_transcripts',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_video_transcripts(\n    urls=["https://example.com"],\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/transcripts \\\n    -H \'Content-Type: application/json\' \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY" \\\n    -d \'{\n          "urls": [\n            "https://example.com"\n          ]\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'get_video_captions',
+    endpoint: '/v1/raw/tiktok/video/captions',
+    httpMethod: 'get',
+    summary: 'Get TikTok Video Captions',
+    description:
+      'Return available TikTok captions without generating a transcript. Returns transcript_not_available when captions are unavailable. Successful cached results are charged at the ordinary rate.\n\n**Pricing**: 0.2 credits per successful caption response ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) get_video_captions',
+    qualified: 'client.raw.tiktok.getVideoCaptions',
+    params: ['url: string;'],
+    response:
+      "{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }; }",
+    markdown:
+      "## get_video_captions\n\n`client.raw.tiktok.getVideoCaptions(url: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/video/captions`\n\nReturn available TikTok captions without generating a transcript. Returns transcript_not_available when captions are unavailable. Successful cached results are charged at the ordinary rate.\n\n**Pricing**: 0.2 credits per successful caption response ($0.002)\n\n### Parameters\n\n- `url: string`\n\n### Returns\n\n- `{ data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }; }`\n\n  - `data: { duration_seconds: number; full_text: string; language: string; scraped_at: string; segments: { end_ms: number; start_ms: number; text: string; }[]; source: 'captions'; transcript: string; url: string; video_id: string; word_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getVideoCaptions({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getVideoCaptions',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getVideoCaptions({ url: 'https://example.com' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.get_video_captions',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_video_captions(\n    url="https://example.com",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/video/captions \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'get_music',
+    endpoint: '/v1/raw/tiktok/music',
+    httpMethod: 'get',
+    summary: 'Get TikTok Sound Details',
+    description:
+      'Fetch metadata for a TikTok sound clip by music_id. Unknown fields are null. Audio and cover URLs are temporary upstream links, not durable downloads.\n\n**Pricing**: 0.2 credits per sound lookup ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) get_music',
+    qualified: 'client.raw.tiktok.getMusic',
+    params: ['music_id: string;'],
+    response:
+      '{ data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }; }',
+    markdown:
+      "## get_music\n\n`client.raw.tiktok.getMusic(music_id: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/music`\n\nFetch metadata for a TikTok sound clip by music_id. Unknown fields are null. Audio and cover URLs are temporary upstream links, not durable downloads.\n\n**Pricing**: 0.2 credits per sound lookup ($0.002)\n\n### Parameters\n\n- `music_id: string`\n  TikTok sound clip ID, not a recording or album ID\n\n### Returns\n\n- `{ data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }; }`\n\n  - `data: { album: string; author: string; cover_url: string; duration_seconds: number; music_id: string; play_url: string; scraped_at: string; title: string; video_count: number; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.getMusic({ music_id: '496' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.getMusic',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.getMusic({ music_id: '496' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.get_music',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.get_music(\n    music_id="496",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/music \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_music_videos',
+    endpoint: '/v1/raw/tiktok/music/videos',
+    httpMethod: 'get',
+    summary: 'Get TikTok Music Videos',
+    description:
+      'Fetch one page of TikTok videos using a sound clip, identified by music_id. Continue with next_cursor and the same music_id; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per music video page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_music_videos',
+    qualified: 'client.raw.tiktok.listMusicVideos',
+    params: ['music_id: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## list_music_videos\n\n`client.raw.tiktok.listMusicVideos(music_id: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/music/videos`\n\nFetch one page of TikTok videos using a sound clip, identified by music_id. Continue with next_cursor and the same music_id; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per music video page ($0.002)\n\n### Parameters\n\n- `music_id: string`\n  TikTok sound clip ID, not a recording or album ID\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; music_id: string; next_cursor: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listMusicVideos({ music_id: '496' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listMusicVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listMusicVideos({ music_id: '496' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.list_music_videos',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_music_videos(\n    music_id="496",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/music/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'search_users',
+    endpoint: '/v1/raw/tiktok/search/users',
+    httpMethod: 'get',
+    summary: 'Search TikTok Users',
+    description:
+      'Fetch one page of TikTok user search results. Unknown profile fields are null. Continue with next_cursor and the same query; treat cursors as opaque. A successful page is charged once, including an empty page.\n\n**Pricing**: 0.2 credits per user search page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) search_users',
+    qualified: 'client.raw.tiktok.searchUsers',
+    params: ['query: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }; }',
+    markdown:
+      "## search_users\n\n`client.raw.tiktok.searchUsers(query: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/search/users`\n\nFetch one page of TikTok user search results. Unknown profile fields are null. Continue with next_cursor and the same query; treat cursors as opaque. A successful page is charged once, including an empty page.\n\n**Pricing**: 0.2 credits per user search page ($0.002)\n\n### Parameters\n\n- `query: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; users: { avatar_url: string; biography: string; display_name: string; follower_count: number; following_count: number; is_verified: boolean; user_id: string; username: string; video_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.searchUsers({ query: 'query' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.searchUsers',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.searchUsers({ query: 'query' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.search_users',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.search_users(\n    query="query",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/search/users \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'search_videos',
+    endpoint: '/v1/raw/tiktok/search/videos',
+    httpMethod: 'get',
+    summary: 'Search TikTok Videos',
+    description:
+      'Fetch one relevance-ordered page of TikTok videos matching a query. Continue with next_cursor and the same query; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per video search page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) search_videos',
+    qualified: 'client.raw.tiktok.searchVideos',
+    params: ['query: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## search_videos\n\n`client.raw.tiktok.searchVideos(query: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/search/videos`\n\nFetch one relevance-ordered page of TikTok videos matching a query. Continue with next_cursor and the same query; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per video search page ($0.002)\n\n### Parameters\n\n- `query: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; next_cursor: string; query: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.searchVideos({ query: 'query' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.searchVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.searchVideos({ query: 'query' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.search_videos',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.search_videos(\n    query="query",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/search/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'list_hashtag_videos',
+    endpoint: '/v1/raw/tiktok/hashtag/videos',
+    httpMethod: 'get',
+    summary: 'Get TikTok Hashtag Videos',
+    description:
+      'Fetch one page of videos under a hashtag, supplied without #. Continue with next_cursor and the same hashtag; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per hashtag video page ($0.002)',
+    stainlessPath: '(resource) raw.tiktok > (method) list_hashtag_videos',
+    qualified: 'client.raw.tiktok.listHashtagVideos',
+    params: ['hashtag: string;', 'cursor?: string;'],
+    response:
+      '{ data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: object[]; }; }',
+    markdown:
+      "## list_hashtag_videos\n\n`client.raw.tiktok.listHashtagVideos(hashtag: string, cursor?: string): { data: object; }`\n\n**get** `/v1/raw/tiktok/hashtag/videos`\n\nFetch one page of videos under a hashtag, supplied without #. Continue with next_cursor and the same hashtag; cursors are opaque. Duplicate results are preserved. Each successful page, including an empty page, is charged once. Media links are temporary.\n\n**Pricing**: 0.2 credits per hashtag video page ($0.002)\n\n### Parameters\n\n- `hashtag: string`\n\n- `cursor?: string`\n\n### Returns\n\n- `{ data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: object[]; }; }`\n\n  - `data: { has_more: boolean; hashtag: string; next_cursor: string; scraped_at: string; videos: { author: { avatar_url: string; display_name: string; is_verified: boolean; user_id: string; username: string; }; comment_count: number; created_at: string; description: string; duration_seconds: number; has_watermark: boolean; hashtags: string[]; images: string[]; is_pinned: boolean; like_count: number; media_type: 'video' | 'slideshow'; music: { author: string; duration_seconds: number; music_id: string; title: string; }; save_count: number; share_count: number; thumbnail_url: string; url: string; video_id: string; video_url: string; view_count: number; }[]; }`\n\n### Example\n\n```typescript\nimport Influship from 'influship';\n\nconst client = new Influship();\n\nconst response = await client.raw.tiktok.listHashtagVideos({ hashtag: 'hashtag' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.raw.tiktok.listHashtagVideos',
+        example:
+          "import Influship from 'influship';\n\nconst client = new Influship({\n  apiKey: process.env['INFLUSHIP_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.raw.tiktok.listHashtagVideos({ hashtag: 'hashtag' });\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'raw.tiktok.list_hashtag_videos',
+        example:
+          'import os\nfrom influship import Influship\n\nclient = Influship(\n    api_key=os.environ.get("INFLUSHIP_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.raw.tiktok.list_hashtag_videos(\n    hashtag="hashtag",\n)\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.influship.com/v1/raw/tiktok/hashtag/videos \\\n    -H "X-API-Key: $INFLUSHIP_API_KEY"',
       },
     },
   },

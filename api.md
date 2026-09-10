@@ -128,19 +128,41 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/raw/tiktok.ts">BatchFailure</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">Profile</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">Transcript</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TranscriptBatchSuccess</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">Video</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">VideoBatchSuccess</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">VideoResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetMusicResponse</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">TiktokGetProfileResponse</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoCaptionsResponse</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoTranscriptResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideoTranscriptsResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokGetVideosResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokListCommentRepliesResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokListHashtagVideosResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokListMusicVideosResponse</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">TiktokListProfileVideosResponse</a></code>
 - <code><a href="./src/resources/raw/tiktok.ts">TiktokListVideoCommentsResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokSearchUsersResponse</a></code>
+- <code><a href="./src/resources/raw/tiktok.ts">TiktokSearchVideosResponse</a></code>
 
 Methods:
 
+- <code title="get /v1/raw/tiktok/music">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getMusic</a>({ ...params }) -> TiktokGetMusicResponse</code>
 - <code title="get /v1/raw/tiktok/profile/{username}">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getProfile</a>(username) -> TiktokGetProfileResponse</code>
 - <code title="get /v1/raw/tiktok/video">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideo</a>({ ...params }) -> TiktokGetVideoResponse</code>
+- <code title="get /v1/raw/tiktok/video/captions">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideoCaptions</a>({ ...params }) -> TiktokGetVideoCaptionsResponse</code>
 - <code title="get /v1/raw/tiktok/video/transcript">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideoTranscript</a>({ ...params }) -> TiktokGetVideoTranscriptResponse</code>
+- <code title="post /v1/raw/tiktok/video/transcripts">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideoTranscripts</a>({ ...params }) -> TiktokGetVideoTranscriptsResponse</code>
+- <code title="post /v1/raw/tiktok/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">getVideos</a>({ ...params }) -> TiktokGetVideosResponse</code>
+- <code title="get /v1/raw/tiktok/video/comment/replies">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listCommentReplies</a>({ ...params }) -> TiktokListCommentRepliesResponse</code>
+- <code title="get /v1/raw/tiktok/hashtag/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listHashtagVideos</a>({ ...params }) -> TiktokListHashtagVideosResponse</code>
+- <code title="get /v1/raw/tiktok/music/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listMusicVideos</a>({ ...params }) -> TiktokListMusicVideosResponse</code>
 - <code title="get /v1/raw/tiktok/profile/{username}/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listProfileVideos</a>(username, { ...params }) -> TiktokListProfileVideosResponse</code>
 - <code title="get /v1/raw/tiktok/video/comments">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">listVideoComments</a>({ ...params }) -> TiktokListVideoCommentsResponse</code>
+- <code title="get /v1/raw/tiktok/search/users">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">searchUsers</a>({ ...params }) -> TiktokSearchUsersResponse</code>
+- <code title="get /v1/raw/tiktok/search/videos">client.raw.tiktok.<a href="./src/resources/raw/tiktok.ts">searchVideos</a>({ ...params }) -> TiktokSearchVideosResponse</code>

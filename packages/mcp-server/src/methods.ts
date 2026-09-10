@@ -143,6 +143,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/raw/youtube/typeahead',
   },
   {
+    clientCallName: 'client.raw.tiktok.getMusic',
+    fullyQualifiedName: 'raw.tiktok.getMusic',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/music',
+  },
+  {
     clientCallName: 'client.raw.tiktok.getProfile',
     fullyQualifiedName: 'raw.tiktok.getProfile',
     httpMethod: 'get',
@@ -155,10 +161,46 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/raw/tiktok/video',
   },
   {
+    clientCallName: 'client.raw.tiktok.getVideoCaptions',
+    fullyQualifiedName: 'raw.tiktok.getVideoCaptions',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/video/captions',
+  },
+  {
     clientCallName: 'client.raw.tiktok.getVideoTranscript',
     fullyQualifiedName: 'raw.tiktok.getVideoTranscript',
     httpMethod: 'get',
     httpPath: '/v1/raw/tiktok/video/transcript',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.getVideoTranscripts',
+    fullyQualifiedName: 'raw.tiktok.getVideoTranscripts',
+    httpMethod: 'post',
+    httpPath: '/v1/raw/tiktok/video/transcripts',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.getVideos',
+    fullyQualifiedName: 'raw.tiktok.getVideos',
+    httpMethod: 'post',
+    httpPath: '/v1/raw/tiktok/videos',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.listCommentReplies',
+    fullyQualifiedName: 'raw.tiktok.listCommentReplies',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/video/comment/replies',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.listHashtagVideos',
+    fullyQualifiedName: 'raw.tiktok.listHashtagVideos',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/hashtag/videos',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.listMusicVideos',
+    fullyQualifiedName: 'raw.tiktok.listMusicVideos',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/music/videos',
   },
   {
     clientCallName: 'client.raw.tiktok.listProfileVideos',
@@ -171,6 +213,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'raw.tiktok.listVideoComments',
     httpMethod: 'get',
     httpPath: '/v1/raw/tiktok/video/comments',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.searchUsers',
+    fullyQualifiedName: 'raw.tiktok.searchUsers',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/search/users',
+  },
+  {
+    clientCallName: 'client.raw.tiktok.searchVideos',
+    fullyQualifiedName: 'raw.tiktok.searchVideos',
+    httpMethod: 'get',
+    httpPath: '/v1/raw/tiktok/search/videos',
   },
 ];
 
