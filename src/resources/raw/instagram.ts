@@ -24,6 +24,11 @@ export class Instagram extends APIResource {
    * (multi-bitrate). These are signed Instagram CDN URLs valid for ~24h — download
    * promptly. For carousels with embedded videos, see `carousel_items[].video_url`.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 1 credit per post scraped ($0.01)
    *
    * @example
@@ -49,6 +54,11 @@ export class Instagram extends APIResource {
    *
    * Returns fresh `video_url` and `video_versions[]` per post (signed IG CDN URLs,
    * ~24h validity). Batch up to 20 posts at 1 credit ($0.01) each.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 1 credit per post scraped ($0.01)
    *
@@ -83,6 +93,11 @@ export class Instagram extends APIResource {
    * is the cheapest bulk-download path: 0.5 credits ($0.005) per profile call vs 1
    * credit per individual raw-post call.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.5 credits per profile scraped ($0.005)
    *
    * @example
@@ -103,6 +118,11 @@ export class Instagram extends APIResource {
   /**
    * Transcribe an Instagram video post by shortcode and return the raw post-page
    * data used for transcription.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 5 credits per transcript ($0.05)
    *
@@ -129,6 +149,11 @@ export class Instagram extends APIResource {
    * **Note:** Batch transcription is capped at 10 shortcodes per request. API-key
    * and OAuth calls are charged only for successful items; x402 and MPP use the
    * advertised request price.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 5 credits per transcript ($0.05)
    *

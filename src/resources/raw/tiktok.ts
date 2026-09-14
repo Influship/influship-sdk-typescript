@@ -14,6 +14,11 @@ export class Tiktok extends APIResource {
    * Fetch metadata for a TikTok sound clip by music_id. Unknown fields are null.
    * Audio and cover URLs are temporary upstream links, not durable downloads.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per sound lookup ($0.002)
    *
    * @example
@@ -30,6 +35,11 @@ export class Tiktok extends APIResource {
   /**
    * Fetch a normalized TikTok profile with current identity, biography,
    * verification, and audience metrics.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.2 credits per profile scraped ($0.002)
    *
@@ -48,6 +58,11 @@ export class Tiktok extends APIResource {
    * Fetch normalized details and current engagement metrics for a TikTok video URL.
    * Signed media URLs are temporary and should be downloaded promptly.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per video scraped ($0.002)
    *
    * @example
@@ -65,6 +80,11 @@ export class Tiktok extends APIResource {
    * Return available TikTok captions without generating a transcript. Returns
    * transcript_not_available when captions are unavailable. Successful cached
    * results are charged at the ordinary rate.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.2 credits per successful caption response ($0.002)
    *
@@ -85,6 +105,11 @@ export class Tiktok extends APIResource {
   /**
    * Fetch or generate a normalized TikTok transcript with plain text and timestamped
    * segments. The detected-language transcript is reused on later requests.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 2.5 credits per transcript ($0.025)
    *
@@ -111,6 +136,11 @@ export class Tiktok extends APIResource {
    * nonrefundable once settled, including partial or failed items in a completed
    * batch.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * @example
    * ```ts
    * const response =
@@ -132,6 +162,11 @@ export class Tiktok extends APIResource {
    * $0.002 each. Premium payments quote all requested items and are nonrefundable
    * once settled, including partial or failed items in a completed batch.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * @example
    * ```ts
    * const response = await client.raw.tiktok.getVideos({
@@ -146,6 +181,11 @@ export class Tiktok extends APIResource {
   /**
    * Fetch one cursor-paginated page of replies to a numeric parent comment ID. Keep
    * the same video URL and parent comment ID when continuing with next_cursor.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.2 credits per reply page scraped ($0.002)
    *
@@ -172,6 +212,11 @@ export class Tiktok extends APIResource {
    * preserved. Each successful page, including an empty page, is charged once. Media
    * links are temporary.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per hashtag video page ($0.002)
    *
    * @example
@@ -194,6 +239,11 @@ export class Tiktok extends APIResource {
    * results are preserved. Each successful page, including an empty page, is charged
    * once. Media links are temporary.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per music video page ($0.002)
    *
    * @example
@@ -214,6 +264,11 @@ export class Tiktok extends APIResource {
    * Fetch one cursor-paginated page of normalized TikTok videos. Signed media URLs
    * are temporary and should be downloaded promptly.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per video page scraped ($0.002)
    *
    * @example
@@ -233,6 +288,11 @@ export class Tiktok extends APIResource {
 
   /**
    * Fetch one cursor-paginated page of normalized comments for a TikTok video URL.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.2 credits per comment page scraped ($0.002)
    *
@@ -255,6 +315,11 @@ export class Tiktok extends APIResource {
    * Continue with next_cursor and the same query; treat cursors as opaque. A
    * successful page is charged once, including an empty page.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.2 credits per user search page ($0.002)
    *
    * @example
@@ -276,6 +341,11 @@ export class Tiktok extends APIResource {
    * with next_cursor and the same query; cursors are opaque. Duplicate results are
    * preserved. Each successful page, including an empty page, is charged once. Media
    * links are temporary.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.2 credits per video search page ($0.002)
    *

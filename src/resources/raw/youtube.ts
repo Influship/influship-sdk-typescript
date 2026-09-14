@@ -14,6 +14,11 @@ export class Youtube extends APIResource {
    * Fetch fresh YouTube channel data including subscriber count, video count, and
    * total views.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.5 credits per channel scraped ($0.005)
    *
    * @example
@@ -41,6 +46,11 @@ export class Youtube extends APIResource {
    * - Sort by popular (most views), newest, or oldest
    * - Partial success — individual video failures don't block the response
    * - Optional timestamped segments for each transcript
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.5 credits per transcript fetched ($0.005)
    *
@@ -70,6 +80,11 @@ export class Youtube extends APIResource {
    * - Auto-generated captions
    * - Multiple language tracks
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.5 credits per transcript ($0.005)
    *
    * @example
@@ -91,6 +106,11 @@ export class Youtube extends APIResource {
    * Fetch fresh video metadata including description, exact publish timestamp when
    * available, views, likes, comments, tags, categories, and channel identity.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.5 credits per video fetched ($0.005)
    *
    * @example
@@ -110,6 +130,11 @@ export class Youtube extends APIResource {
    * Each request fetches one page. Pass `next_cursor` back as `cursor` to fetch and
    * bill the next page.
    *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
+   *
    * **Pricing**: 0.5 credits per fetched page ($0.005)
    *
    * @example
@@ -125,6 +150,11 @@ export class Youtube extends APIResource {
 
   /**
    * Get localized YouTube search suggestions for a partial query.
+   *
+   * **Availability:** When live data is temporarily unavailable this endpoint
+   * returns `503` with `error.code: service_unavailable` in the standard error
+   * envelope. Honor `Retry-After` when present and retry with bounded backoff; you
+   * are not charged for `503` responses.
    *
    * **Pricing**: 0.5 credits per request ($0.005)
    *
