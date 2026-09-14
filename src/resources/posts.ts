@@ -9,12 +9,15 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Posts extends APIResource {
   /**
-   * Retrieve posts for a creator or profile with engagement metrics and media data.
+   * Retrieve Instagram posts for a creator or profile with engagement metrics and
+   * media data. Only Instagram posts are returned.
    *
    * **Query options:**
    *
-   * - By creator: Use `creator_id` to get posts across all their profiles
-   * - By profile: Use `platform` + `username` for a specific profile's posts
+   * - By creator: Use `creator_id` to get posts across all of their Instagram
+   *   profiles. Creators without an Instagram profile return an empty page
+   * - By profile: Use `platform` + `username` for a specific profile's posts.
+   *   Usernames are matched case-insensitively
    *
    * **Sort options:**
    *
