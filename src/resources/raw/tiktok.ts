@@ -56,7 +56,8 @@ export class Tiktok extends APIResource {
 
   /**
    * Fetch normalized details and current engagement metrics for a TikTok video URL.
-   * Signed media URLs are temporary and should be downloaded promptly.
+   * Malformed URL inputs return HTTP 400; correct the input before retrying. Signed
+   * media URLs are temporary and should be downloaded promptly.
    *
    * **Availability:** When live data is temporarily unavailable this endpoint
    * returns `503` with `error.code: service_unavailable` in the standard error
