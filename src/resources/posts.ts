@@ -144,15 +144,18 @@ export namespace PostListResponse {
     duration_seconds: number | null;
 
     /**
-     * Thumbnail URL. For videos, this is the cover frame.
+     * Thumbnail URL. For videos, this is the cover frame. A durable hosted image URL
+     * when one is available; otherwise the platform thumbnail URL, which expires. If a
+     * video has no hosted cover and its platform cover has expired, this is a hosted
+     * frame from the video.
      */
     thumbnail_url: string | null;
 
     /**
-     * Cover/primary image URL for image and carousel posts. Null for video posts —
-     * call GET /v1/raw/instagram/post/{shortcode} for a fresh, downloadable video URL.
-     * Returned image URLs may expire; download promptly. Persistent hosted media URLs
-     * are on the roadmap.
+     * Cover/primary image URL for image and carousel posts. A durable hosted image URL
+     * when one is available; otherwise the platform image URL, which expires, so
+     * download it promptly. Null for video posts — call GET
+     * /v1/raw/instagram/post/{shortcode} for a fresh, downloadable video URL.
      */
     url: string | null;
   }
@@ -170,7 +173,8 @@ export namespace PostListResponse {
       is_video: boolean;
 
       /**
-       * Thumbnail URL for this item. Cover frame for videos.
+       * Thumbnail URL for this item. Cover frame for videos. A durable hosted image URL
+       * when one is available; otherwise the platform thumbnail URL, which expires.
        */
       thumbnail_url: string | null;
     }
