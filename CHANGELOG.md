@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.22.1](https://github.com/Influship/influship-sdk-typescript/compare/v0.22.0...v0.22.1) (2026-10-05)
+
+
+### Bug Fixes
+
+* **api:** correct live-route timeouts, ingest quota ordering, and error envelopes ([880b62b](https://github.com/Influship/influship-sdk-typescript/commit/880b62b531d48ece1a564f103d1cc77e85c5e1cf))
+* **api:** return only Instagram posts from GET /v1/posts ([d22ebac](https://github.com/Influship/influship-sdk-typescript/commit/d22ebac41a77cf8f1ef3682b27c3c44a2f2b44ed))
+* connect developer resources with runnable API examples ([fc0e96e](https://github.com/Influship/influship-sdk-typescript/commit/fc0e96e68c3d49641f797274f482f4ffe1c6000e))
+* recover Instagram login rejections through native profiles ([6e8a464](https://github.com/Influship/influship-sdk-typescript/commit/6e8a4646cf84b97bba7ea5fd9cdb2d67c9dbad40))
+* respect the configured release automation runner ([#6](https://github.com/Influship/influship-sdk-typescript/issues/6)) ([510540c](https://github.com/Influship/influship-sdk-typescript/commit/510540c9bd3f0f016a30c2bf9f9c9d91bafecae8))
+* respect the configured SDK verification runner ([#5](https://github.com/Influship/influship-sdk-typescript/issues/5)) ([aa51502](https://github.com/Influship/influship-sdk-typescript/commit/aa515022fe39549d8ef404313e3609a29c927645))
+
 ## [0.22.0](https://github.com/Influship/influship-sdk-typescript/compare/v0.21.1...v0.22.0) (2026-09-09)
 
 
