@@ -86,6 +86,11 @@ export class Instagram extends APIResource {
    * **Note:** Live scraping is slower than cached data (2-5 seconds) and costs more.
    * Use cached endpoints when freshness isn't critical.
    *
+   * If a complete requested profile cannot be recovered within the request deadline,
+   * this endpoint returns `503` with `service_unavailable`. Preserve any cached
+   * profile and retry with bounded backoff; an unavailable source response is not
+   * evidence of an empty or inactive profile.
+   *
    * The profile response returns an empty `posts[]` array unless
    * `include_posts=true`. When posts are included, `post_limit` accepts 1-50 and
    * defaults to 12. The array contains the recent posts available in Instagram's
