@@ -16,7 +16,7 @@ For example:
 
 \`\`\`
 async function run(client) {
-  const search = await client.search.create({ query: 'sustainable fashion creators with engaged audiences', limit: 25 });
+  const search = await client.search.create({ query: 'sustainable fashion creators with engaged audiences', limit: 5 });
 
   console.log(search.search_id);
 }

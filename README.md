@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Influship REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [influship.mintlify.app](https://influship.mintlify.app). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.influship.com](https://docs.influship.com). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -37,7 +37,7 @@ const client = new Influship({
 
 const search = await client.search.create({
   query: 'sustainable fashion creators with engaged audiences',
-  limit: 25,
+  limit: 5,
 });
 
 console.log(search.search_id);
@@ -57,7 +57,7 @@ const client = new Influship({
 
 const params: Influship.SearchCreateParams = {
   query: 'fitness influencers in Los Angeles',
-  limit: 10,
+  limit: 5,
 };
 const search: Influship.SearchCreateResponse = await client.search.create(params);
 ```
@@ -73,7 +73,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const search = await client.search
-  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .create({ query: 'fitness influencers in Los Angeles', limit: 5 })
   .catch(async (err) => {
     if (err instanceof Influship.APIError) {
       console.log(err.status); // 400
@@ -114,7 +114,7 @@ const client = new Influship({
 });
 
 // Or, configure per-request:
-await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
+await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 5 }, {
   maxRetries: 5,
 });
 ```
@@ -131,7 +131,7 @@ const client = new Influship({
 });
 
 // Override per-request:
-await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 10 }, {
+await client.search.create({ query: 'fitness influencers in Los Angeles', limit: 5 }, {
   timeout: 5 * 1000,
 });
 ```
@@ -192,13 +192,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Influship();
 
 const response = await client.search
-  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .create({ query: 'fitness influencers in Los Angeles', limit: 5 })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: search, response: raw } = await client.search
-  .create({ query: 'fitness influencers in Los Angeles', limit: 10 })
+  .create({ query: 'fitness influencers in Los Angeles', limit: 5 })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(search.search_id);
